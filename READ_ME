@@ -1,0 +1,18 @@
+This directory contains everything concerning the window handler:
+
+  demo		Contains some simple demo programs.
+  dev_tty	Contains some parts of the source code for the ABC1600 terminal
+		emulator and tty driver.
+  doc		Contains documentation.
+  examples	Contains simple examples.
+  gdrv		Contains header files for communication with the ABC1600
+		graphic emulator.
+  hnd		Contains the window handler and its start-up program.
+  install	Contains various things used to install the window handler.
+  test		Contains various test programs.
+  wcmds		Contains small commands related to the window handler.
+  wincl		Contains header files to be used when writing programs which
+		communicates with the window handler.
+  wlib		Contains a searchable library containing functions to access
+		the window handler.
+  wsh		Contains the window shell and related programs.

@@ -1,0 +1,271 @@
+:
+: This script constructs the necessary directories, copies the handler,
+: commands, and other files to them and makes sure that the files have
+: the right owner and privilegies.
+:
+if uid
+then :
+else echo "makebinary: you must be super user to do this" ; exit 1
+fi
+:
+: Create the necessary directories.
+:
+if test -d etc
+then :
+else
+echo "Creating the ./etc directory."
+mkdir etc
+chown root etc
+chgrp 50 etc
+chmod 0755 etc
+fi
+if test -d usr
+then :
+else
+echo "Creating the ./usr directory."
+mkdir usr
+chown root usr
+chgrp 50 usr
+chmod 0755 usr
+fi
+if test -d usr/window
+then :
+else
+echo "Creating the ./usr/window directory."
+mkdir usr/window
+chown root usr/window
+chgrp 50 usr/window
+chmod 0755 usr/window
+fi
+if test -d usr/window/bin
+then :
+else
+echo "Creating the ./usr/window/bin directory."
+mkdir usr/window/bin
+chown bin usr/window/bin
+chgrp bin usr/window/bin
+chmod 0755 usr/window/bin
+fi
+if test -d usr/window/demo
+then :
+else
+echo "Creating the ./usr/window/demo directory."
+mkdir usr/window/demo
+chown bin usr/window/demo
+chgrp bin usr/window/demo
+chmod 0755 usr/window/demo
+fi
+if test -d usr/window/etc
+then :
+else
+echo "Creating the ./usr/window/etc directory."
+mkdir usr/window/etc
+chown bin usr/window/etc
+chgrp bin usr/window/etc
+chmod 0755 usr/window/etc
+fi
+if test -d usr/window/info
+then :
+else
+echo "Creating the ./usr/window/info directory."
+mkdir usr/window/info
+chown bin usr/window/info
+chgrp bin usr/window/info
+chmod 0755 usr/window/info
+fi
+:
+: Move the files to their appropriate places.
+:
+echo "Copying the file whgo."
+cp ../hnd/whgo/whgo usr/window
+strip usr/window/whgo
+chown root usr/window/whgo
+chgrp 50 usr/window/whgo
+chmod 0700 usr/window/whgo
+:
+echo "Copying the file whp."
+cp ../hnd/csrc/whp usr/window
+strip usr/window/whp
+chown root usr/window/whp
+chgrp 50 usr/window/whp
+chmod 0700 usr/window/whp
+:
+echo "Copying the file whl."
+cp ../hnd/csrc/whl usr/window
+strip usr/window/whl
+chown root usr/window/whl
+chgrp 50 usr/window/whl
+chmod 0700 usr/window/whl
+:
+echo "Copying the file wsh."
+cp ../wsh/wsh/wsh usr/window
+strip usr/window/wsh
+chown bin usr/window/wsh
+chgrp bin usr/window/wsh
+chmod 0711 usr/window/wsh
+:
+echo "Copying the file wshpp."
+cp ../wsh/wshpp/wshpp usr/window/bin
+strip usr/window/bin/wshpp
+chown bin usr/window/bin/wshpp
+chgrp bin usr/window/bin/wshpp
+chmod 0711 usr/window/bin/wshpp
+:
+echo "Copying the file wshdis."
+cp ../wsh/wshdis/wshdis usr/window/bin
+strip usr/window/bin/wshdis
+chown bin usr/window/bin/wshdis
+chgrp bin usr/window/bin/wshdis
+chmod 0711 usr/window/bin/wshdis
+:
+echo "Copying the file wopen."
+cp ../wcmds/wopen usr/window/bin
+strip usr/window/bin/wopen
+chown bin usr/window/bin/wopen
+chgrp bin usr/window/bin/wopen
+chmod 0711 usr/window/bin/wopen
+:
+echo "Copying the file whead."
+cp ../wcmds/whead usr/window/bin
+strip usr/window/bin/whead
+chown bin usr/window/bin/whead
+chgrp bin usr/window/bin/whead
+chmod 0711 usr/window/bin/whead
+:
+echo "Copying the file wicon."
+cp ../wcmds/wicon usr/window/bin
+strip usr/window/bin/wicon
+chown bin usr/window/bin/wicon
+chgrp bin usr/window/bin/wicon
+chmod 0711 usr/window/bin/wicon
+:
+echo "Copying the file rmicons."
+cp ../wcmds/rmicons usr/window/bin
+strip usr/window/bin/rmicons
+chown bin usr/window/bin/rmicons
+chgrp bin usr/window/bin/rmicons
+chmod 0711 usr/window/bin/rmicons
+:
+echo "Copying the file wtop."
+cp ../wcmds/wtop usr/window/bin
+strip usr/window/bin/wtop
+chown bin usr/window/bin/wtop
+chgrp bin usr/window/bin/wtop
+chmod 0711 usr/window/bin/wtop
+:
+echo "Copying the file wzoom."
+cp ../wcmds/wzoom usr/window/bin
+strip usr/window/bin/wzoom
+chown bin usr/window/bin/wzoom
+chgrp bin usr/window/bin/wzoom
+chmod 0711 usr/window/bin/wzoom
+:
+echo "Copying the file wfont."
+cp ../wcmds/wfont usr/window/bin
+strip usr/window/bin/wfont
+chown bin usr/window/bin/wfont
+chgrp bin usr/window/bin/wfont
+chmod 0711 usr/window/bin/wfont
+:
+echo "Copying the file wbg."
+cp ../wcmds/wbg usr/window/bin
+strip usr/window/bin/wbg
+chown bin usr/window/bin/wbg
+chgrp bin usr/window/bin/wbg
+chmod 0711 usr/window/bin/wbg
+:
+echo "Copying the file wmsk."
+cp ../wcmds/wmsk usr/window/bin
+strip usr/window/bin/wmsk
+chown bin usr/window/bin/wmsk
+chgrp bin usr/window/bin/wmsk
+chmod 0711 usr/window/bin/wmsk
+:
+echo "Copying the file wmp."
+cp ../wcmds/wmp usr/window/bin
+strip usr/window/bin/wmp
+chown bin usr/window/bin/wmp
+chgrp bin usr/window/bin/wmp
+chmod 0711 usr/window/bin/wmp
+:
+echo "Copying the file widtp."
+cp ../wcmds/widtp usr/window/bin
+strip usr/window/bin/widtp
+chown bin usr/window/bin/widtp
+chgrp bin usr/window/bin/widtp
+chmod 0711 usr/window/bin/widtp
+:
+echo "Copying the file wpictrd."
+cp ../wcmds/wpictrd usr/window/bin
+strip usr/window/bin/wpictrd
+chown bin usr/window/bin/wpictrd
+chgrp bin usr/window/bin/wpictrd
+chmod 0711 usr/window/bin/wpictrd
+:
+echo "Copying the file wdsize."
+cp ../wcmds/wdsize usr/window/bin
+strip usr/window/bin/wdsize
+chown bin usr/window/bin/wdsize
+chgrp bin usr/window/bin/wdsize
+chmod 0711 usr/window/bin/wdsize
+:
+echo "Copying the file whelp."
+cp ../wcmds/whelp usr/window/bin
+strip usr/window/bin/whelp
+chown bin usr/window/bin/whelp
+chgrp bin usr/window/bin/whelp
+chmod 0711 usr/window/bin/whelp
+:
+echo "Copying the file mkwinuser."
+cp mkwinuser usr/window/bin
+chown bin usr/window/bin/mkwinuser
+chgrp bin usr/window/bin/mkwinuser
+chmod 0711 usr/window/bin/mkwinuser
+:
+echo "Copying the file .profile."
+cp .profile usr/window/etc
+chown bin usr/window/etc/.profile
+chgrp bin usr/window/etc/.profile
+chmod 0755 usr/window/etc/.profile
+:
+echo "Copying the file stdsh.wd."
+cp ../wsh/wd/stdsh.wd usr/window/etc
+chown bin usr/window/etc/stdsh.wd
+chgrp bin usr/window/etc/stdsh.wd
+chmod 0644 usr/window/etc/stdsh.wd
+:
+echo "Copying the file demo.wd."
+cp ../wsh/wd/demo.wd usr/window/etc
+chown bin usr/window/etc/demo.wd
+chgrp bin usr/window/etc/demo.wd
+chmod 0644 usr/window/etc/demo.wd
+:
+echo "Copying the file bg_abc1600.st."
+cp ../wsh/st/bg_abc1600.st usr/window/etc
+chown bin usr/window/etc/bg_abc1600.st
+chgrp bin usr/window/etc/bg_abc1600.st
+chmod 0644 usr/window/etc/bg_abc1600.st
+:
+echo "Copying the file bg_dots.st."
+cp ../wsh/st/bg_dots.st usr/window/etc
+chown bin usr/window/etc/bg_dots.st
+chgrp bin usr/window/etc/bg_dots.st
+chmod 0644 usr/window/etc/bg_dots.st
+:
+echo "Creating the file .window."
+../wsh/wshpp/wshpp ../wsh/wd/stdsh.wd -o etc/.window
+chown bin etc/.window
+chgrp bin etc/.window
+chmod 0644 etc/.window
+:
+echo "Copying the file mkwinsystem."
+cp mkwinsystem usr/window/etc
+chown root usr/window/etc/mkwinsystem
+chgrp 50 usr/window/etc/mkwinsystem
+chmod 0755 usr/window/etc/mkwinsystem
+:
+echo "Copying the file wh_panics."
+cp ../doc/wh_panics usr/window/info
+chown bin usr/window/info/wh_panics
+chgrp bin usr/window/info/wh_panics
+chmod 0644 usr/window/info/wh_panics

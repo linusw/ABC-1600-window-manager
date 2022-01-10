@@ -1,0 +1,71 @@
+#
+# This file contains a simple window handler menu example.
+# It must be processed by the window preprocessor - wshpp - before it
+# can be used by the window shell - wsh.
+#
+# 1985-04-02, Peter Andersson, Luxor Datorer AB
+#
+
+#
+# What to do on initialization.
+#
+init:menu1
+
+#
+# The menu with two choices (starting a shell and log out).
+#
+menu1:window1:string1:choice1:choice2
+
+#
+# The text in the menu window.
+#
+string1:\e[4;4HSHELL     LOGGA UT
+
+#
+# The menu window.
+#
+window1:pxor#0:pyor#924:pxsi#200:pysi#100:pvxo#0:pvyo#0:pvxs#200:pvys#100:\
+       :lxor#0:lyor#668:lxsi#200:lysi#100:lvxo#0:lvyo#0:lvxs#200:lvys#100:\
+       :bord#0:colr#0:pfnt#0x41:lfnt#0x41:\
+       :pmod:lmod:ncur:spec
+
+#
+# The two icons in the menu window.
+#
+icon1:pxor#0:pyor#0:pxsi#100:pysi#100:\
+     :lxor#0:lyor#0:lxsi#100:lysi#100:\
+     :pmod:lmod:inve:rqst
+
+icon2:pxor#100:pyor#0:pxsi#100:pysi#100:\
+     :lxor#100:lyor#0:lxsi#100:lysi#100:\
+     :pmod:lmod:inve:rqst
+
+#
+# The choices which can be chosen from the menu.
+#
+choice1:icon1:action1
+
+choice2:icon2:action2
+
+#
+# What to do when an option has been chosen using the mouse.
+#
+action1:terminal10:menu1
+
+action2:logout:menu1
+
+#
+# The terminal window for the shell.
+#
+terminal10:window10:header10:command10
+
+window10:pxor#24:pyor#344:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+	:lxor#100:lyor#100:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+        :bord#2:colr#1:pfnt#0x41:lfnt#0x41:\
+        :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+header10:head= SHELL :invt
+
+command10:/bin/sh,sh
+
+

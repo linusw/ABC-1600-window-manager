@@ -1,0 +1,1770 @@
+	1985-07-29, Peter Andersson, Luxor Datorer AB
+
+
+	ABC1600 WINDOW HANDLER
+	======================
+
+	The ABC1600 Window Handler is, as indicated by the name, implemented
+	as a handler under ABCenix and has special calls to open new windows,
+	move windows around, return the status of a window, remove windows,
+	etc. It also automatically takes care of things like:
+
+	  -  Moving and altering sizes of windows, using a mouse.
+	  -  Convert pointing to a specified area inside a window to a
+	     command sequence (e.g. pointing to icon's).
+	  -  Moving text between windows.
+
+
+	1.	The Model
+		=========
+
+	When several windows are present on the screen each of them is thought
+	of as being at a certain level. The window on the top is at level 0
+	and it receives all the input from the keyboard. All the other windows
+	are at lower levels; the window one step from the top is at level 1
+	and so forth.
+	To switch to another window (i.e. attach the input from the keyboard
+	to another window), that window must be put at level 0. When this is
+	done, all windows previously at higher levels than the new level 0
+	window are moved one level down. The level 0 window can also be moved
+	to the bottom, making all other windows moving one level up.
+	The output from the processes connected to a certain window are always
+	sent to that window, regardless of if it is at level 0 or not.
+	Each window emulates a DEC VT100 terminal augmented by ABC1600 private
+	escape sequences. The ABC1600 private escape sequences are compatible
+	with or similar to their counterparts in the ABC1600 terminal
+	emulator. See wh_escapes.doc for further details regarding the escape
+	sequences.
+
+
+	2.	Starting and Terminating the Window Handler
+		===========================================
+
+	The window handler is started by giving the command:
+
+		/usr/window/whgo
+
+	This is a start-up program, usually started by the rc script, which
+	mounts itself on the '/win' directory and  waits in the background
+	until the window handler is activated. This is done with an open
+	request, which in C can look like:
+
+		fd = open("/win/activate", 2);
+
+	The file descriptor returned (greater than or equal to zero if no
+	errors) can later be used to disactivate the handler and also to issue
+	some special requests to it.
+	On activation of the window handler, 'whgo' performs some
+	initializations and then executes a portrait or landscape mode version
+	of the handler, depending on the direction of the screen.
+	A close request is used to disactivate the window handler:
+
+		close(fd);
+
+	When the handler receives this request it sends hangup signals to all
+	processes in the windows, resets the screen, and then executes 'whgo'
+	again.
+	The terminate signal will terminate the window handler in a controlled
+	manner witout executing 'whgo'.
+
+
+	3.	Opening Windows
+		===============
+
+	When the window handler has been activated, windows can be opened by
+	issuing an open request to the handler:
+
+		fd = open("/win", 2);
+
+	This will not create a window on the screen, it just tells the handler
+	to allocate space for a new window. The returned value - 'fd' - is
+	greater than or equal to zero if the open was successful and is used
+	to write to, read from, send I/O control requests to, and close the
+	window.
+	To acctually create the window on the screen, the Wincreat request is
+	used (see below).
+
+
+	4.	Closing Windows
+		===============
+
+	To close a window, a close request shall be sent to the handler with
+	the file descriptor obtained when the window was opened:
+
+		close(fd);
+
+	This will cause the handler to remove the window from the screen.
+
+
+	5.	Write to and Read from Windows
+		==============================
+
+	To write to a window the standard write system call can be used with
+	the file descriptor obtained when the window was opened:
+
+		write(fd, bp, bc);
+
+	To read from (through) a window, i.e. get input from the keyboard, the
+	read system call can be used:
+
+		cnt = read(fd, bp, bc);
+
+
+	6.	Window Requests
+		===============
+
+	The following is a description of all the requests which are
+	implemented to manipulate the windows from other processes.
+	They are all macros, and the definitions of them can be found in the
+	file <win/w_macros.h>. The constant definitions can be found in
+	<win/w_const.h>, the structure declarations in <win/w_structs.h>, and
+	new variable type declarations can be found in <win/w_types.h>.
+	The requests returns a negative value if they fail.
+	The unions included in most of the structures below are reserved for
+	future use. To guarantee compatibility with future versions, the
+	member of the union must be zero.
+
+
+	6.1	Create Window
+		=============
+
+	To create a window the following request is used:
+
+		Wincreat(fd, bp);
+		int		fd;
+		struct winstruc	*bp;
+
+	'fd' is the file descriptor obtained from the open request and the
+	structure winstruc looks like:
+
+		typedef		 short	pix_d;
+		typedef 	 short	cur_d;
+		typedef		 char	sint;
+		typedef	unsigned short	word;
+		typedef unsigned long	uflags;
+
+		struct	winstruc
+		{
+			pix_d	wp_xorig;
+			pix_d	wl_xorig;
+			pix_d	wp_yorig;
+			pix_d	wl_yorig;
+			pix_d	wp_xsize;
+			pix_d	wl_xsize;
+			pix_d	wp_ysize;
+			pix_d	wl_ysize;
+			pix_d	wp_vxorig;
+			pix_d	wl_vxorig;
+			pix_d	wp_vyorig;
+			pix_d	wl_vyorig;
+			pix_d	wp_vxsize;
+			pix_d	wl_vxsize;
+			pix_d	wp_vysize;
+			pix_d	wl_vysize;
+			short	w_color;
+			sint	w_border;
+			char	wp_font;
+			char	wl_font;
+			char	w_curfont;
+			sint	w_level;
+			sint	w_uboxes;
+			cur_d	w_xcur;
+			cur_d	w_ycur;
+			pix_d	w_xgcur;
+			pix_d	w_ygcur;
+			sint	w_tsig;
+			sint	w_ntsig;
+			sint	w_rsig;
+			sint	w_csig;
+			word	w_boxes;
+			uflags	w_flags;
+			sint	w_rstat;
+			union
+			{
+				long	w_xxx;
+			} w_pad;
+		};
+
+	The meaning of the structure members are:
+
+	  wp_xorig	The x coordinate of the lower left corner of the
+			virtual screen relative to the lower left corner of
+			the screen. The coordinates are expressed in terms of
+			pixels. If the lower left corner is to the left of the
+			lower left corner of the screen, this value is
+			negative. This coordinate is used in portrait mode.
+
+	  wl_xorig	As 'wp_xorig', but used in landscape mode.
+
+	  wp_yorig	The y coordinate of the lower left corner of the
+			virtual screen in portrait mode.
+
+	  wl_yorig	As 'wp_yorig', but used in landscape mode.
+
+	  wp_xsize	The horizontal size of the virtual screen expressed in
+			pixels in portrait mode.
+
+	  wl_xsize	As 'wp_xsize', but used in landscape mode.
+
+	  wp_ysize	The vertical size of the virtual screen expressed in
+			pixels in portrait mode.
+
+	  wl_ysize	As 'wp_ysize', but used in landscape mode.
+
+	  wp_vxorig	The x coordinate of the lower left corner of the
+			window (excluding the border) relative to the lower
+			left corner of the virtual screen in portrait mode.
+
+	  wl_vxorig	As 'wp_vxorig', but used in landscape mode.
+
+	  wp_vyorig	The y coordinate of the lower left corner of the
+			window in portrait mode.
+
+	  wl_vyorig	As 'wp_vyorig', but used in landscape mode.
+
+	  wp_vxsize	The horizontal size of the window in portrait mode.
+
+	  wl_vxsize	As 'wp_vxsize', but used in landscape mode.
+
+	  wp_vysize	The vertical size of the window in portrait mode.
+
+	  wl_vysize	As 'wp_vysize', but used in landscape mode.
+
+	  w_color	Background colour in the window (BLACK or WHITE).
+
+	  w_border	The type of the border:
+			NOBORDER - No border.
+			SLBORDER - Single line border.
+			DLBORDER - Double lines border.
+			DSSSBORD - The left side is a double lines border and 
+				   the rest of the sides are single line
+				   borders.
+			SDSSBORD - The right side is a double lines border and
+				   the rest of the sides are single line
+				   borders.
+			SSDSBORD - The upper side is a double lines border and
+				   the rest of the sides are single line
+				   borders.
+			SSSDBORD - The lower side is a double lines border and
+				   the rest of the sides are single line
+				   borders.
+			DDSSBORD - The left and right sides are double lines
+				   borders and the upper and lower sides are
+				   single line borders.
+			DSDSBORD - The left and upper sides are double lines
+				   borders and the right and lower sides are
+				   single line borders.
+			DSSDBORD - The left and lower sides are double lines
+				   borders and the right and upper sides are
+				   single line borders.
+			SDDSBORD - The right and upper sides are double lines
+				   borders and the left and lower sides are
+				   single line borders.
+			SDSDBORD - The right and lower sides are double lines
+				   borders and the left and upper sides are
+				   single line borders.
+			SSDDBORD - The upper and lower sides are double lines
+				   borders and the left and right sides are
+				   single line borders.
+			DDDSBORD - The lower side is a single line border and
+				   the rest are double lines borders.
+			DDSDBORD - The upper side is a single line border and
+				   the rest are double lines borders.
+			DSDDBORD - The right side is a single line border and
+				   the rest are double lines borders.
+			SDDDBORD - The left side is a single line border and
+				   the rest are double lines borders.
+
+	  wp_font	The initial font in portrait mode. The font can be in
+			the range 'A' - 'Z'.
+
+	  wl_font	As 'wp_font', but used in landscape mode.
+
+	  w_curfont	The currently used font.
+
+	  w_level	The level of the window. A newly created window will
+			be on level 0 if it is not a special and not a child
+			window, and on the lowest level if it is a special
+			window (see the SPECIAL flag), and on the top level
+			of its window group if it is a child window.
+
+	  w_uboxes	The maximal number of user defined boxes allowed (see
+			the Winubox() request). The value of this member is
+			significant only if the BX_USER flag in 'w_boxes' is
+			set (to be compatible with older versions of the
+			window handler, it was done in this way). If BX_USER
+			is not set, this value is assumed to be zero.
+
+	  w_xcur	x coordinate for the text cursor position. This is
+			only used to return the initial position of the
+			cursor, which is the upper left corner of the window.
+
+	  w_ycur	y coordinate for the text cursor position.
+
+	  w_xgcur	x coordinate for the graphic cursor. This one is
+			only used to return the initial position (which is
+			the lower left corner of the window).
+
+	  w_ygcur	y coordinate for the graphic cursor.
+
+	  w_tsig	The signal to be sent to the processes in the window
+			when it has moved to the top level (level zero). If
+			0, no signal will be sent.
+
+	  w_ntsig	As above, but signals are sent when the window moves
+			from the top level to a lower level.
+
+	  w_rsig	The signal to be sent to the processes in the window
+			when the window has changed in some way. If 0, no
+			signal will be sent.
+
+	  w_csig	The signal to be sent to the processes in the window
+			when the close box in the border is used. If 0, no
+			signal is sent, instead all requests to this window
+			will be terminated with bad status.
+
+	  w_boxes	Contains flags indicating which boxes shall be present
+			in the border:
+
+			BX_HSCR - Scroll left and right boxes and the
+				  horizontal visible indicator shall be
+				  present in the border.
+			BX_VSCR - Scroll up and down boxes and the vertical
+				  visible indicator shall be present in the
+				  border.
+			BX_CLOS - The close box shall be present in the
+				  border.
+			BX_SIZE - The size box shall be present in the border.
+			BX_MOVE - The move box shall be present in the border.
+			BX_ZOOM - The zoom box shall be present in the border.
+			BX_AVIS - The scroll boxes and the horizontal and
+				  vertical visible indicators are only visible
+				  if the whole virtual screen is not visible.
+			BX_BLOW - The "blow up" box shall be present in the
+				  border (see the Windflsz() request).
+			BX_HELP - The help box shall be present in the border
+				  (see the Winhelp() request).
+			BX_USER - Indicates that the value of the 'w_uboxes'
+				  member is significant.
+
+	  w_flags	Contains some flags:
+
+			PMODE      - Indicates that coordinates have been
+				     given for portrait mode.
+			LMODE      - Indicates that coordinates have been
+				     given for landscape mode.
+			SAVETEXT   - Save the text contents of the virtual
+				     screen.
+			SAVEBITMAP - Save the bitmap contents of the virtual
+				     screen (virtual bitmap) (reserved for
+				     future use).
+			OVERLAP    - The window is overlapped flag.
+			LOCK       - The window is locked on the highest level
+				     (level 0).
+			NOOVER     - The window must not be overlapped by
+				     another window.
+			NOCURSOR   - Cursor not visible.
+			NOMOVE     - The window must not be moved or change
+				     size.
+			ALLSCR     - The window must be the whole virtual
+				     screen.
+			SPECIAL    - A special window will be added on the
+				     lowest level. Special windows are always
+				     on lower levels than non-special windows
+				     and their level does not change when the
+				     level of other windows are changed. They
+				     can for example be used as menu windows.
+			KEYSCROLL  - Every time a key is pressed it is checked
+				     if the whole cursor is visible and if not
+				     the window is scrolled.
+			WRITSCROLL - After each write request to the window,
+				     it is checked if the whole cursor is
+				     visible and if not the window is
+				     scrolled.
+			ALTMPNT    - Allocate space to store a mouse pointer
+				     which is used when we point to this
+				     window. Initially the mouse pointer will
+				     be the same as the global pointer.
+				     See the Winchmpnt() request.
+			RELATIVE   - The coordinates 'w_xorig' and 'w_yorig'
+				     are supposed to be relative to the lower
+				     left corner of the parent in this window
+				     group (see section 8).
+			NOCPIN	   - Makes it impossible to copy text into
+				     this window using the text copy facility
+				     of the window handler.
+			NOCPOUT	   - Makes it impossible to copy text from
+				     this window using the text copy facility
+				     of the window handler. Instead the status
+				     of the middle mouse button is reported on
+				     mouse position reports. Note that the
+				     middle button is only reported if this
+				     flag is set.
+			TXTSIZE	   - The 'wp_xsize', 'wl_xsize', 'wp_ysize',
+				     'wl_ysize', 'wp_vxorig', 'wl_vxorig',
+				     'wp_vyorig', 'wl_vyorig', 'wp_vxsize',
+				     'wl_vxsize', 'wp_vysize', and 'wl_vysize'
+				     members are supposed to be given in term
+				     of characters instead of pixels.
+				     Note that in this case 'wp_vxorig',
+				     'wl_vxorig', 'wp_vyorig', and 'wl_vyorig'
+				     must be given relative to the upper left
+				     corner of the virtual screen.
+			WGROUP	   - This window shall belong to a window
+				     group (see section 8).
+			REL_ULC    - This window shall follow its parent
+				     window relative the upper left corner
+				     of the parent (this flag has no effect
+				     if the window is not a child window).
+			REL_URC    - This window shall follow its parent
+				     window relative the upper right corner
+				     of the parent (this flag has no effect
+				     if the window is not a child window).
+			REL_LLC    - This window shall follow its parent
+				     window relative the lower left corner
+				     of the parent (this flag has no effect
+				     if the window is not a child window).
+			REL_LRC    - This window shall follow its parent
+				     window relative the lower right corner
+				     of the parent (this flag has no effect
+				     if the window is not a child window).
+
+			Note that at most one of the flags REL_ULC, REL_URC,
+			REL_LLC, or REL_LRC may be set.
+			All these flags are single bits in the flags word.
+			Of these only the OVERLAP flag is non-significant when
+			creating a window.
+			All the remaining bits should be zero to guarantee
+			compatibility with future versions.
+
+	  w_rstat	Return status:
+			W_OK      - OK.
+			WE_ILPARA - an illegal parameter was specified.
+			WE_LORO   - the window can not be created because of
+				    another window with the NOOVER or LOCK
+				    flag set.
+			WE_ALRCR  - the window has already been created.
+			WE_ALLSCR - the whole virtual screen is not visible
+				    and the ALLSCR flag is set.
+			WE_NOMEM  - enough memory does not remain to create
+				    the window.
+			WE_FATHER - the window has the RELATIVE flag set, but
+				    there is no parent window.
+			WE_ILMOD  - the coordinates for the current screen
+				    mode has not been given, e.g. the screen
+				    is in landscape mode and the LMODE flag
+				    is not set.
+			WE_NOFONT - the specified default font can not be
+				    loaded.
+
+	Of the above members, only the following are used when a window is
+	created:
+
+		wp_xorig or wl_xorig, wp_yorig or wl_yorig, wp_xsize or
+		wl_xsize, wp_ysize or wl_ysize, wp_vxorig or wl_vxorig,
+		wp_vyorig or wl_vyorig, wp_vxsize or wl_vxsize, wp_vysize
+		or wl_vysize, w_color, w_border, wp_font or wl_font, w_tsig,
+		w_ntsig, w_rsig, w_csig, w_boxes, w_flags
+
+	On exit the values of these members remains the same, except for some
+	adjustments that may occur in order to make the window fit, etc.
+	The other members have on exit received their initial values.
+
+
+	6.2	Move Window to Level Zero
+		=========================
+
+	The level zero window is the window that receives the keyboard input.
+	The request
+
+		Winlevel(fd, bp)
+		int		fd;
+		struct winlevel	*bp;
+
+	is used to move a window which does not belong to a window group to
+	the zero level. If the window indicated by 'fd' belongs to a window
+	group, the whole group is moved to the top without altering the
+	relative levels inside the group.
+	The winlevel structure looks like:
+
+		typedef	char	sint;
+
+		struct	winlevel
+		{
+			sint	l_rstat;
+			union
+			{
+				long	l_xxx;
+			} l_pad;
+		};
+
+	where 'l_rstat' is the return status:
+
+		W_OK       - everything is well.
+		WE_NOTCR   - the window has not been created yet.
+		WE_SPECIAL - the window can not be moved to the top because
+			     it is a special window.
+		WE_LORO    - the level can not be changed because of another
+			     window with the LOCK or NOOVER flags set.
+
+
+	6.3	Move Window to the Top Level of its Window Group
+		================================================
+
+	To move a window, belonging to a window group, to the top level of the
+	group, use the request:
+
+		Win1lev(fd, bp)
+		int		 fd;
+		struct	winlevel *bp;
+
+	'fd' is the file descriptor for the window and the winlevel structure
+	was described in section 6.2.
+
+
+	6.4	Alter a Window
+		==============
+
+	To alter the size, position, etc. of a window, the request
+
+		Winalter(fd, bp);
+		int		fd;
+		struct winstruc	*bp;
+
+	is used. If the window is a parent of a window group, all the
+	children are also moved according to the flags REL_ULC, REL_URC,
+	REL_LLC, and REL_LRC. If none of these flags are set for a child
+	window, the child is not moved.
+	The winstruc structure was described in section 6.1. On entry to this
+	request, the following structure member values are significant:
+
+		wp_xorig or wl_xorig, wp_yorig or wl_yorig, wp_vxorig or
+		wl_vxorig, wp_vyorig or wl_vyorig, wp_vxsize or wl_vxsize,
+		wp_vysize or wl_vysize
+
+	Further the PMODE and LMODE flags in 'w_flags' are used to check that
+	the data is relevant and if the TXTSIZE flag is set, the coordinates
+	and sizes are interpreted in units of characters. The size of the
+	current default font is used.
+	The remaining parameters can not be changed using this request, but
+	the current values of them are returned.
+	'w_rstat' is the return status:
+
+		W_OK      - all is well.
+		WE_NOTCR  - the window has not been created yet.
+		WE_ILPARA - an illegal parameter value was used.
+		WE_LORO   - the window can not be altered because of another
+			    window with the LOCK or NOOVER flags set.
+		WE_ALLSCR - the whole virtual screen will not be visible and
+			    the ALLSCR flag for the window is set.
+		WE_NOMOVE - it is not allowed to change the location or the
+			    size of the window (the NOMOVE flag is set).
+		WE_ILMOD  - data for the current screen mode is not present.
+
+
+	6.5	Alter a Window without Affecting Child Windows
+		==============================================
+
+	This request is identical to the Winalter() request, except that if
+	the specified window is a parent of a window group, its child windows
+	are not moved.
+	The request is:
+
+		Win1alter(fd, bp)
+		int		 fd;
+		struct	winstruc *bp;
+
+
+	6.6	Set up Default Size and Location for a Window
+		=============================================
+
+	When the "blow up" box is used the size and location of the window
+	toggles between the default size and location and the size and
+	location it had before it was altered to the default.
+	When a window is created, its initial default size and location will
+	be the same as the initial size and location of the window.
+	When the default font is changed, the default size and location will
+	be set to the same as the size and location of the window after the
+	default font has been changed.
+	To set up another default size and location, use the request:
+
+		Windflsz(fd, bp)
+		int		 fd;
+		struct	winstruc *bp;
+
+	The winstruc structure was described in section 6.1. On entry to this
+	request the following structure members are significant:
+
+		wp_xorig or wl_xorig, wp_yorig or wl_yorig, wp_vxorig or
+		wl_vxorig, wp_vyorig or wl_vyorig, wp_vxsize or wl_vxsize,
+		wp_vysize or wl_vysize
+
+	Further the PMODE and LMODE flags in 'w_flags' are used to check that
+	the data is relevant and if the TXTSIZE flag is set the coordinates
+	and sizes are interpreted in units of characters. The size of the
+	current default font is used.
+	The return status - 'w_rstat' - is:
+
+		W_OK      - all is well.
+		WE_NOTCR  - the window has not been created yet.
+		WE_ILMOD  - data for the current screen mode is missing.
+		WE_ILPARA - an illegal value was specified.
+
+
+	6.7	Alter Window Flags
+		==================
+
+	To alter the flags in the 'w_flags' word for a window, use the
+	request:
+
+		Winflags(fd, bp);
+		int		 fd;
+		struct	flgstruc *bp;
+
+	The flgstruc structure looks like:
+
+		typedef	unsigned long	uflags;
+		typedef		 char	sint;
+
+		struct	flgstruc
+		{
+			uflags	f_flags;
+			sint	f_rstat;
+			union
+			{
+				long	f_xxx;
+			} f_pad;
+		};
+
+	'f_flags' is the new flags for the window.
+	The following flags may be altered: LOCK, NOOVER, NOCURSOR, NOMOVE,
+	ALLSCR, KEYSCROLL, WRITSCROLL, NOCPIN, NOCPOUT, REL_ULC, REL_URC,
+	REL_LLC, and REL_LRC.
+	The following flags are ignored: PMODE, LMODE, SAVETEXT, SAVEBITMAP,
+	OVERLAP, SPECIAL, ALTMPNT, RELATIVE, TXTSIZE, and WGROUP.
+	The the bits not used in the flags word should be zero to guarantee
+	compatibility with future versions.
+	'f_rstat' is the return status:
+
+		W_OK      - everything is OK.
+		WE_LORO   - the flags can not be altered in this way because
+			    the window is overlapped or it is not on the top
+			    level.
+		WE_ALLSCR - the whole virtual screen is not visible and the
+			    ALLSCR flag was set.
+
+
+	6.8	Get Window Status
+		=================
+
+	To get the current status of a window, use the request
+
+		Winstat(fd, bp);
+		int		fd;
+		struct winstruc	*bp;
+
+	The winstruc structure was described in section 6.1.
+	On exit all the members are set to their current values. Only one of
+	portrait or landscape mode coordinates and font is returned,
+	depending on the mode of the screen. Which one is indicated by the
+	PMODE and LMODE flags.
+	The return status 'w_rstat' is:
+
+		W_OK     - all is well.
+		WE_NOTCR - the window has not been created yet.
+
+
+	6.9	Insert a Header in a Window Border
+		==================================
+
+	To insert a header, such as the program name, in the border of a
+	window, use the request
+
+		Winheader(fd, bp);
+		int		 fd;
+		struct headstruc *bp;
+
+	where the headstruc structure looks like:
+
+		typedef	unsigned short	word;
+
+		struct	headstruc
+		{
+			char	h_hdr[HDRSIZE];
+			word	h_flags;
+			union
+			{
+				long	h_xxx;
+			} h_pad;
+		};
+
+	'h_hdr[]' is the header string, 'h_flags' contains some flags:
+
+		H_INVHD  - Invert the window header (relative the window
+			   background).
+		H_INVTOP - Invert the top window header (relative H_INVHD).
+
+	The remaining bits should be zero to guarantee compatibility with
+	future versions.
+	Note that the header can be added before the window is created.
+
+
+	6.10	Icon Support
+		============
+
+	The window handler can automatically take care of decoding commands
+	given by first pointing to an icon, menu item, etc. and then pressing
+	an appropriate key on the mouse or the keyboard.
+	The request
+
+		Winicon(fd, bp);
+		int		fd;
+		struct	winicon	*bp;
+
+	is used to specify that when the pointer points inside a specified
+	area in the window, a specified code sequence shall be sent to the
+	calling process by putting it in the keyboard input buffer for the
+	window.
+	The winicon structure looks like:
+
+		typedef		 short	pix_d;
+		typedef	unsigned short	word;
+		typedef		 char	sint;
+
+		struct	winicon
+		{
+			pix_d	ip_xorig;
+			pix_d	il_xorig;
+			pix_d	ip_yorig;
+			pix_d	il_yorig;
+			pix_d	ip_xsize;
+			pix_d	il_xsize;
+			pix_d	ip_ysize;
+			pix_d	il_ysize;
+			char	i_cmdseq[ICONSEQLEN];
+			word	i_flags;
+			sint	i_rstat;
+			union
+			{
+				long	i_xxx;
+			} i_pad;
+		};
+
+	'ip_xorig', 'il_xorig' and 'ip_yorig', 'il_yorig' is the lower left
+	corner of the area relative to the lower left corner of the virtual
+	screen in portrait and landscape mode, respectively. 'ip_xsize',
+	'il_xsize' and 'ip_ysize', 'il_ysize' is the width and height of the
+	area in portrait and landscape mode, respectively.
+	'i_cmdseq[]' is the sequence to be sent to the calling process (it
+	can be of zero length).
+	'i_flags' contains some flags indicating the type of icon and some
+	attributes:
+
+		I_PMODE   - Portrait mode coordinates are given.
+		I_LMODE   - Landscape mode coordinates are given.
+		I_PRESS   - Send the sequence when the mouse pointer points to
+			    the area and the left button is pressed.
+		I_RELEASE - Send the sequence when the mouse pointer points to
+			    the area and the left button is released.
+		I_INVERT  - Invert the area occupied by the icon when the
+			    mouse pointer is pointing to it.
+		I_ENTER   - The sequence is sent when the mouse pointer moves
+			    into the area. The area does not have to be
+			    visible. The I_INVERT flag is ignored.
+		I_LEAVE   - As I_ENTER but the sequence is sent when we leave
+			    the area.
+		I_REMOVE  - The icon is removed when the sequence has been
+			    sent.
+		I_RQST    - The sequence is sent only if there is a pending
+			    read request to the window.
+		I_SETCHK  - When I_ENTER and/or I_LEAVE is set, it is checked
+			    if the mouse pointer is inside or outside,
+			    respectively, the specified area, and if so the
+			    sequence is sent immediately.
+		I_LZERO   - The sequence is sent only if it is the level zero
+			    window.
+		I_TEXT	  - The coordinates and sizes of the icon is supposed
+			    to be given in term of characters instead of
+			    pixels. Note that 'ip_xorig' and 'ip_yorig' or
+			    'il_xorig' and 'il_yorig' in this case are inter-
+			    preted as the character position relative the
+			    upper left corner of the virtual screen.
+			    When the default font is changed, the locations
+			    and sizes of icons set up with this flag set are
+			    adjusted.
+
+	The remaining bits should be zero to guarantee compatibility with
+	future versions.
+	Note that if no one of I_PRESS, I_RELEASE, I_ENTER, or I_LEAVE is
+	given, I_PRESS is assumed. I_ENTER and I_LEAVE overrides I_PRESS and
+	I_RELEASE.
+
+	The return status 'i_rstat' is:
+
+		W_OK      - everything is well.
+		WE_NOTCR  - the window is not created yet.
+		WE_ILPARA - any of the input parameters are illegal.
+		WE_NOICON - no memory left for the new icon.
+		WE_ONICON - the icon will come above another icon in the same
+			    window.
+		WE_ILMOD  - no coordinates are given for the current screen
+			    mode.
+
+	6.11	Remove Icon's
+		=============
+
+	To remove all set up icon's for a window, use the request:
+
+		Rmicons(fd);
+		int	fd;
+
+
+	6.12	Mouse Substitute Keys
+		=====================
+
+	To make it possible to use the window handler without a mouse, the
+	different functions supported by the mouse can be simulated by
+	function and other special keys on the ABC99 keyboard (these keys
+	generates codes with the most significant bit set).
+	To specify these keys, use the request:
+
+		Winmsub(fd, bp);
+		int		fd;
+		struct	substit	*bp;
+
+	The file descriptor used must be the one obtained when the window
+	handler was activated (the first open request to the handler). The
+	structure substit looks like:
+
+		typedef	char	sint;
+
+		struct	substit
+		{
+			sint		c_initflg;
+			unsigned char	c_keys[SUBSTKEYS];
+			unsigned char	c_step;
+			unsigned char	c_lstep;
+			union
+			{
+				long	c_xxx;
+			} c_pad;
+		};
+
+	The meaning of the different members are:
+
+	  c_initflg	If ON the mouse simulation keys will be enabled after
+			this request. If OFF they will initially be disabled.
+	  c_keys[]	The keys used as substitue for the mouse.
+	  c_step	Step for normal mouse pointer move (no. of pixels).
+	  c_lstep	Step for long mouse pointer move (no. of pixels).
+
+	The index for the different keys in the 'c_keys[]' array are:
+
+	  S_ONOFF	The key used to toggle the mouse simulation keys on or
+			off. When off, the keys behaves as normal (except
+			'S_ONOFF').
+	  S_MPU		Move mouse pointer up.
+	  S_MPD		Move mouse pointer down.
+	  S_MPL		Move mouse pointer left.
+	  S_MPR		Move mouse pointer right.
+	  S_MPUL	Move mouse pointer up - left.
+	  S_MPUR	Move mouse pointer up - right.
+	  S_MPDL	Move mouse pointer down - left.
+	  S_MPDR	Move mouse pointer down - right.
+	  S_LMPU	Move mouse pointer up long.
+	  S_LMPD	Move mouse pointer down long.
+	  S_LMPL	Move mouse pointer left long.
+	  S_LMPR	Move mouse pointer right long.
+	  S_LMPUL	Move mouse pointer up - left long.
+	  S_LMPUR	Move mouse pointer up - right long.
+	  S_LMPDL	Move mouse pointer down - left long.
+	  S_LMPDR	Move mouse pointer down - right long.
+	  S_PCMD	Point to command key (replaces the left key on the
+			mouse).
+	  S_CHWIN	Change window level key (replaces the right key on the
+			mouse).
+	  S_MCA		Mark text area to copy (replaces the middle key on the
+			mouse).
+
+	Pressing and releasing a button on the mouse is replaced by pressing
+	the chosen keyboard key twice.
+	Note that no keys will be occupied by these keys if this request has
+	not been issued.
+
+
+	6.13	Alter the Background Pattern
+		============================
+
+	To alter the pattern of the background, use the request:
+
+		Winchbg(fd, bp)
+		int		  fd;
+		struct	chbgstruc *bp;
+
+	'fd' must be the file descriptor obtained when the window handler was
+	activated.
+	The chbgstruc structure looks like:
+
+		typedef	unsigned short	word;
+
+		struct	chbgstruc
+		{
+			word	cb_bitmap[BGPSIZE];
+			union
+			{
+				long	cb_xxx;
+			} cb_pad;
+		};
+
+	'cb_bitmap[]' is the bit pattern of a 16 x BGPSIZE pixels area which
+	will be repeated all over the background.
+	Note that the most significant bit in a "word" is displayed to the
+	left on the screen.
+
+
+	6.14	Get the Visible Parts of a Window or the Background
+		===================================================
+
+	To get the visible parts of a window or the background, use the
+	request:
+
+		Wingetvis(fd, bp, bc)
+		int		fd;
+		struct	buffer	*bp;
+		int		bc;
+
+	'fd' is the file descriptor for the window, or the file descriptor
+	obtained when the window handler was activated if the visible parts
+	of the background are desired.
+	'bc' is the size of the buffer structure.
+	The buffer structure looks like:
+
+		struct	buffer
+		{
+			struct	visdes	v;
+			struct	rectdes	b[VSIZE];
+		};
+
+	The visdes structure is a parameter structure and looks like:
+
+		typedef	char	sint;
+
+		struct	visdes
+		{
+			short	v_nrect;
+			sint	v_rstat;
+			union
+			{
+				long	v_xxx;
+			} v_pad;
+		};
+
+	The rectdes structure describes one rectangle which the visible part
+	of the virtual screen or the background can be divided into:
+
+		typedef	short	pix_d;
+
+		struct	rectdes
+		{
+			pix_d	r_xorig;
+			pix_d	r_yorig;
+			pix_d	r_xsize;
+			pix_d	r_ysize;
+		};
+
+	where 'r_xorig' and 'r_yorig' are the x and y coordinates respectively
+	of the lower left corner of the rectangle. 'r_xsize' and 'r_ysize' are
+	the width and height, respectively, of the rectangle.
+	When this request is executed the 'v_nrect' member of visdes should
+	contain the number of rectdes structures (VSIZE) in the buffer
+	structure. The request returns the actual number of rectangles that
+	the virtual screen (or the background) can be divided into in
+	'v_nrect'.
+	'v_rstat' is the return status:
+
+		W_OK     - Ok
+		WE_NOTCR - The window has not been created yet.
+		WE_SPACE - Not enough space to hold the rectangles (i.e. VSIZE
+			   is too small).
+
+
+	6.15	Inverse Video
+		=============
+
+	The request:
+
+		Winivideo(fd)
+		int	fd;
+
+	changes the screen to inverse video. 'fd' must be the file descriptor
+	obtained when the window handler was activated.
+
+
+	6.16	Normal Video
+		============
+
+	The request:
+
+		Winnvideo(fd)
+		int	fd;
+
+	restores the screen to normal video. 'fd' must be the file descriptor
+	obtained when the window handler was activated.
+
+
+	6.17	Make the Cursor Visible in the Window
+		=====================================
+
+	To make the cursor visible in the window, use the request:
+
+		Wincurvis(fd)
+		int	fd;
+
+	If the whole cursor is not visible, the window is scrolled.
+
+
+	6.18	Change Mouse Pointer
+		====================
+
+	To change the layout of the mouse pointer, use the request:
+
+		Winchmpnt(fd, bp)
+		int		fd;
+		struct	npstruc	*bp;
+
+	If 'fd' is the file descriptor obtained when the window handler was
+	activated, the global mouse pointer is altered. Otherwise the mouse
+	pointer for the window indicated by the file descriptor is altered
+	(in this case, the ALTMPNT flag for the window must be set).
+	The npstruc structure looks like:
+
+		typedef		 short	pix_d;
+		typedef	unsigned long	dword;
+		typedef	unsigned char	byte;
+		typedef		 char	sint;
+
+		struct	npstruc
+		{
+			pix_d	np_xsize;
+			pix_d	np_ysize;
+			pix_d	np_xpnt;
+			pix_d	np_ypnt;
+			dword	np_and[MPSIZE];
+			dword	np_or[MPSIZE];
+			byte	np_flags;
+			sint	np_rstat;
+			union
+			{
+				long	np_xxx;
+			} np_pad;
+		};
+
+	'np_xsize' and 'np_ysize' are the width and height, respectively, of
+	the new mouse pointer. The maximal width is 32 pixels and the height
+	MPSIZE pixels.
+	'np_xpnt' and 'np_ypnt' are the pixel which is the pointing part of
+	the mouse pointer. It shall be specified relative the upper left
+	corner of the mouse pointer.
+	'np_and[]' and 'np_or[]' are masks used to construct the mouse
+	pointer.
+	Each pixel row of the mouse pointer is constructed by the operation:
+
+		(x & np_and[prow]) | np_or[prow]
+
+	where 'x' is the contents of the graphic memory. Note that the most
+	significant bit in a "dword" is displayed to the left on the screen.
+	'np_flags' is reserved for future use and should be zero to guarantee
+	compatibility with future versions.
+	'np_rstat' is the return status:
+
+		W_OK      - Ok.
+		WE_ILPARA - An illegal value was specified.
+		WE_NOTCR  - The window has not been created yet.
+		WE_NOMP   - The ALTMPNT flag for the window is not set, and
+			    therefore the mouse pointer can not be changed.
+
+
+	6.19	Get Number of Open Windows
+		==========================
+
+	To find out how many windows which are open and/or created, use the
+	request:
+
+		Wincnt(fd, bp)
+		int		fd;
+		struct	nwstruc	*bp;
+
+	'fd' is the file descriptor obtained when the window handler was
+	activated or the file descriptor for a window.
+	The nwstruc structure looks like:
+
+		struct	nwstruc
+		{
+			short	nw_open;
+			short	nw_created;
+			union
+			{
+				long	nw_xxx;
+			} nw_pad;
+		};
+
+	'nw_open' is the number of windows currently open and 'nw_created' is
+	the number of windows currently created (and opened).
+
+
+	6.20	Restore Screen
+		==============
+
+	To restore the screen, i.e. rewrite the whole screen, use the request:
+
+		Winrestor(fd)
+		int	fd;
+
+	'fd' must be the file descriptor obtained when the window handler was
+	activated.
+
+
+	6.21	Get Text Contents of Window
+		===========================
+
+	To get the text contents of a window, use the request:
+
+		Wingettxt(fd, bp, bc)
+		int		fd;
+		struct	buffer	*bp;
+		int		bc;
+
+	'fd' is the file descriptor for the window. The structure buffer
+	consists of a parameter structure followed by a buffer with space
+	to hold the desired text contents:
+
+		struct	buffer
+		{
+			struct	txtstruc s;
+			char		 b[BSIZE];
+		};
+
+	The txtstruc structure looks like:
+
+		typedef	short	cur_d;
+		typedef	char	sint;
+
+		struct	txtstruc
+		{
+			cur_d	tx_row;
+			cur_d	tx_col;
+			cur_d	tx_rcnt;
+			cur_d	tx_ccnt;
+			sint	tx_rstat;
+			union
+			{
+				long	tx_xxx;
+			} tx_pad;
+		};
+
+	'tx_row' is the row number of the first row to be read and 'tx_col'
+	the number of the first column. 'tx_rcnt' and 'tx_ccnt' is the number
+	of rows and columns, respectively, to be read. BSIZE must be at least
+	tx_rcnt * tx_ccnt.
+	'tx_rstat' is the return status:
+
+		W_OK      - Everything is ok.
+		WE_TSAVE  - The text contents of the window is not saved.
+		WE_ILPARA - Illegal parameters was given.
+
+
+	6.22	Test if Window Handler is Activated
+		===================================
+
+	To test if the window handler is activated, use the request:
+
+		Wintest(fd)
+		int	fd;
+
+	'fd' is the file descriptor for a window or the one obtained when
+	the handler was activated.
+	If a negative value is returned, the window handler is not present.
+
+
+	6.23	Set Initial Driver and Terminal Parameters
+		==========================================
+
+	This request is used to set the initial driver and terminal parameters
+	for windows. The request is:
+
+		Winsinit(fd, bp)
+		int		fd;
+		struct	wininit	*bp;
+
+	'fd' must be the file descriptor obtained when the window handler was
+	activated.
+	The wininit structure looks like:
+
+		typedef	unsigned long	t_stop;
+		typedef	unsigned short	word;
+
+		struct	wininit
+		{
+			t_stop	td_tbstop[TSTOPSIZE];
+			word	td_term;
+			struct
+			{
+				unsigned short	c_iflag;
+				unsigned short	c_oflag;
+				unsigned short	c_cflag;
+				unsigned short	c_lflag;
+				char		c_line;
+				unsigned char	c_ccs[8];
+			} td_driver;
+			union
+			{
+				long	td_xxx;
+			} td_pad;
+		};
+
+	'td_tbstop[]' contains the tab stops. A set bit indicates a tab stop.
+	The least significant bit of the first element corresponds to the
+	first character position of a row.
+	'td_term' contains initial VT-100 terminal flags:
+
+		TD_NL		linefeed newline mode.
+		TD_WRAP		auto wrap mode.
+		TD_ORIGIN	origin mode.
+		TD_USCORE	underscore character attribute.
+		TD_REVERSE	reverse character attribute.
+		TD_SCREEN	screen mode.
+		TD_CUNDER	underline cursor.
+		TD_NONBLNK	non-blinking cursor.
+		TD_PHASE	phased pattern mode.
+		TD_NOSCR	no scroll (page) mode.
+
+	The remaining bits in 'td_term' should be zero to guarantee
+	compatibility with future versions.
+	'td_driver' is a structure which contains the driver parameters. It is
+	the same structure as the termio structure (see the header file
+	<sys/termio.h> and the documentation for the ioctl() unix system
+	call).
+	The default tab stops are every eight position, of the terminal flags
+	the TD_WRAP flag is set by default, and the driver parameters are the
+	same as those of the console when the window handler was activated.
+
+
+	6.24	Get Initial Driver and Terminal Parameters
+		==========================================
+
+	To get the values of the initial driver and terminal parameters, use
+	the request:
+
+		Winginit(fd, bp)
+		int		fd;
+		struct	wininit	*bp;
+
+	'fd' must be the file descriptor obtained when the window handler was
+	activated.
+
+
+	6.25	Set Up a Zoom List for a Window
+		===============================
+
+	A zoom list is a list of fonts to change between when the mouse
+	pointer points to the zoom box and the left button of the mouse is
+	pressed. Every time this happens, the next font in the zoom list
+	becomes the default font for the window. When the end of the list
+	is reached, the next font will be the first one in the list.
+	When a zoom list is set up, the current default font will become
+	the first font in the list followed by the fonts specified in the
+	zoomlst structure.
+	To set up a zoom list, use the request:
+
+		Winzoom(fd, bp)
+		int		fd;
+		struct	zoomlst	*bp;
+
+	'fd' is the file descriptor for the window. The zoomlst structure
+	looks like:
+
+		typedef	unsigned char	byte;
+		typedef		 char	sint;
+
+		struct	zoomlst
+		{
+			char	zp_list[ZOOMSIZE];
+			char	zl_list[ZOOMSIZE];
+			byte	z_flags;
+			sint	z_rstat;
+			union
+			{
+				long	z_xxx;
+			} z_pad;
+		};
+
+	'zp_list[]' is the list of fonts to be used in portrait mode and
+	'zl_list[]' is used in landscape mode.
+	'z_flags' contains some flags:
+
+		Z_PMODE	- Portrait mode zoom list is given.
+		Z_LMODE	- Landscape mode zoom list is given.
+
+	The remaining bits should be zero to guarantee compatibility with
+	future versions.
+	The return status 'z_rstat' is:
+
+		W_OK	  - everything is ok.
+		WE_ILPARA - an illegal font was specified.
+		WE_ILMOD  - no list is given for the current screen mode.
+
+	Note that this request can be used before the window has been created.
+
+
+	6.26	Change the Default Font for a Window
+		====================================
+
+	To change the default font for a window, use the request:
+
+		Winndchr(fd, bp);
+		int		fd;
+		struct	dfltchr	*bp;
+
+	'fd' is the file descriptor for the window and the dfltchr structure
+	looks like:
+
+		typedef		 short	cur_d;
+		typedef	unsigned char	byte;
+
+		struct	dfltchr
+		{
+			char	dcp_font;
+			char	dcl_font;
+			cur_d	dcp_x;
+			cur_d	dcl_x;
+			cur_d	dcp_y;
+			cur_d	dcl_y;
+			byte	dc_rstat;
+			union
+			{
+				long	dc_xxx;
+			} dc_pad;
+		};
+
+	'dcp_font' and 'dcl_font' are the new default font in portrait and
+	landscape mode, respectively. If the specified font is zero, the next
+	font in the zoom list is used.
+	'dcp_x', 'dcp_y', 'dcl_x', and 'dcl_y' is the character coordinates in
+	portrait and landscape mode, respectively, for the middle character in
+	the window after the default font has been changed.
+	'dc_flags' contains some flags:
+
+		Z_PMODE - Data has been given for portrait mode.
+		Z_LMODE - Data has been given for landscape mode.
+
+	The remaining bits should be zero to guarantee compatibility with
+	future versions.
+	'dc_rstat' is the return status:
+
+		W_OK      - everything is ok.
+		WE_NOTCR  - the window has not been created yet.
+		WE_ILMOD  - no data is given for the current screen mode.
+		WE_ILPARA - an illegal font and/or illegal character
+			    coordinates were given.
+		WE_TSAVE  - the text contents of the virtual screen is not
+			    saved.
+		WE_ALLSCR - the ALLSCR flag for the window is set.
+		WE_NOMOVE - the NOMOVE flag for the window is set.
+		WE_NOFONT - the specified font does not exist.
+
+	This request does not (if possible) change the size of the window.
+	The size of the virtual screen is however adjusted so it contains the
+	same number of character rows and columns.
+
+
+	6.27	Turn the Screen
+		===============
+
+	To turn the screen from portrait to landscape mode or vice versa, use
+	the request:
+
+		Winturn(fd, bp)
+		int		 fd;
+		struct	modstruc *bp;
+
+	All channels, except the one obtained when the window handler was
+	activated, must be closed.
+	'fd' must be the file descriptor obtained when the window handler was
+	activated. The modstruc structure looks like:
+
+		typedef	char	sint;
+
+		struct	modstruc
+		{
+			sint	m_mode;
+			sint	m_rstat;
+			union
+			{
+				long	m_xxx;
+			} m_pad;
+		};
+
+	'm_mode' will on return be M_PORT if the new mode is portrait mode or
+	M_LAND if it is landscape.
+	'm_rstat' is the return status:
+
+		W_OK    - everything is ok.
+		WE_OPEN - there are windows open.
+
+
+	6.28	Get Screen Mode
+		===============
+
+	To get the current screen mode (portrait or landscape), use the
+	request:
+
+		Winmode(fd, bp)
+		int		 fd;
+		struct	modstruc *bp;
+
+	'fd' is the file descriptor obtained when the window handler was
+	activated or the file descriptor for a window. The modstruc structure
+	was described in section 6.27. The 'm_mode' member contains the
+	current mode (M_PORT or M_LAND) and 'm_rstat' is always W_OK.
+
+
+	6.29	Add a User Defined Box
+		======================
+
+	User defined boxes are 16x16 pixels boxes in the left side of the
+	window border. When the mouse pointer points to a user box and the
+	left mouse button is pressed, a signal is sent to the process(es)
+	running in the window.
+	When a window is created, the maximal number of user defined boxes
+	for the window must be specified (see the Wincreat() request).
+	To set up a user defined box, use the request:
+
+		Winubox(fd, bp)
+		int		fd;
+		struct	userbox	*bp;
+
+	'fd' is the file descriptor for the window. The userbox structure
+	looks like:
+
+		typedef	unsigned short	word;
+		typedef	unsigned char	byte;
+		typedef		 char	sint;
+
+		struct	userbox
+		{
+			word	bx_bmap[UBOXSIZE];
+			short	bx_sig;
+			byte	bx_flags;
+			sint	bx_rstat;
+			union
+			{
+				long	bx_xxx;
+			} bx_pad;
+		};
+
+	'bx_bmap[]' contains the bitmap for the box. Note that the most
+	significant bit in a "word" is displayed to the left on the screen.
+	'bx_sig' is the signal to be sent when the box is used.
+	'bx_flags' is reserved for future use and should be zero to guarantee
+	compatibility with future versions.
+	'bx_rstat' is the return status:
+
+		W_OK      - all is well.
+		WE_NOTCR  - the window has not been created yet.
+		WE_SPACE  - the maximal number of user defined boxes have
+			    already been set up.
+		WE_ILPARA - an illegal signal number was specified.
+
+
+	6.30	Alter Help Box Sequence
+		=======================
+
+	The help box is a box in the upper side of the border containing a
+	question mark which when used puts a character sequence on the key-
+	board input buffer. The intention is that all programs use this
+	facility so help can be requested in a similar manner in all programs.
+	When a window is opened, the help box sequence is initialized to a
+	single question mark (?). To alter this to another sequence, use the
+	request:
+
+		Winhelp(fd, bp)
+		int		fd;
+		struct	helpst	*bp;
+
+	'fd' is the file descriptor for the window. The helpst structure looks
+	like:
+
+		typedef	unsigned short	word;
+
+		struct	helpst
+		{
+			char	hlp_seq[HLPSIZE];
+			word	hlp_flags;
+			union
+			{
+				long	hlp_xxx;
+			} hlp_pad;
+		};
+
+	'hlp_seq[]' is the new help box sequence. 'hlp_flags' is reserved for
+	future use and should be zero to guarantee compatibility with future
+	versions of the window handler.
+	Note that the help box sequence can be altered before the window has
+	been created.
+
+
+	6.31	Keyboard Input Signal
+		=====================
+
+	To make it possible to know when there is something to read from the
+	keyboard buffer, a signal can be set up for this purpose. The signal
+	will be sent when there is no pending read request to the window and
+	reading the keyboard buffer will not lead to wait.
+	The request is:
+
+		Winkysig(fd, bp)
+		int		fd;
+		struct	kysigst	*bp;
+
+	'fd' is the file descriptor for the window and the kysigst structure
+	looks like:
+
+		struct	kysigst
+		{
+			sint	ks_sig;
+			byte	ks_flags;
+			sint	ks_rstat;
+			union
+			{
+				long	ks_xxx;
+			} ks_pad;
+		};
+
+	'ks_sig' is the signal to be sent. If zero, no signals are sent.
+	'ks_flags' is reserved for future use and should be zero to guarantee
+	compatibility with future version.
+	'ks_rstat' is the return status:
+
+		W_OK      - everything is well.
+		WE_ILPARA - an illegal signal was specifiead.
+
+
+	6.32	Read the Contents of the Picture Memory
+		=======================================
+
+	To read the contents of the picture memory for a window or the whole
+	screen, use the request:
+
+		Wpictrd(fd, bp, bc);
+		int		fd;
+		struct	buffer	*bp;
+		int		bc;
+
+	'fd' is the file descriptor for the window or, if the contents of the
+	whole screen is desired, the file descriptor obtained when the window
+	handler was activated. The buffer structure consists of a parameter
+	structure followed by a buffer big enough to hold the contents of the
+	specified picture memory area:
+
+		typedef	unsigned char	byte;
+
+		struct	buffer
+		{
+			struct	wpictblk p;
+			byte		 b[BSIZE];
+		};
+
+	The wpictblk structure looks like:
+
+		typedef	short	pix_d;
+
+		struct	wpictblk
+		{
+			pix_d	p_xaddr;
+			pix_d	p_yaddr;
+			pix_d	p_width;
+			pix_d	p_height;
+			union
+			{
+				long	p_xxx;
+			} p_pad;
+		};
+
+	'p_xaddr' and 'p_yaddr' are the x and y pixel coordinates,
+	respectively, of the lower left corner of the area to read. 'p_width'
+	is the pixel width of the area and 'p_height' the pixel height.
+	BSIZE must be at least p_height * (p_width + 7) / 8.
+	Data areas in buffer.b[] corresponding to non-visible areas of a
+	virtual screen will contain zeroes, i.e. cleared bits.
+	Note that the most significant bit in a byte is displayed to the left
+	on the screen.
+	WARNING: At the moment this request is extremely slow and the computer
+	seems to hang up while this request is served.
+
+
+	6.33	Alter the Spray Mask
+		====================
+
+	This request changes the 32 times 32 pixels pattern used by the spray
+	escape sequence (see wh_escapes.doc).
+	The request is:
+
+		Spraymask(fd, bp)
+		int		fd;
+		struct	sprayst	*bp;
+
+	'fd' is the file descriptor for the window and the sprayst structure
+	looks like:
+
+		typedef	unsigned long	dword;
+
+		struct	sprayst
+		{
+			dword	sp_mask[8*sizeof(dword)];
+		};
+
+	where 'sp_mask[]' contains the bit pattern for the spray mask.
+	Note that the most significant bit in a "dword" is displayed to the
+	left on the screen.
+
+
+	7.	Other I/O Control Commands
+		==========================
+
+	This is a list of I/O control requests which are identical or similar
+	to their counterparts in the tty device driver:
+
+		PFNKLD		Load ABC99 function keys. The file descriptor
+				can be both the one for a window and the one
+				obtained when the window handler was
+				activated.
+		PFNKRD		Read ABC99 function keys. The file descriptor
+				can be both the one for a window and the one
+				obtained when the window handler was
+				activated.
+		PTOKBD		Write data to the ABC99 keyboard. The file
+				descriptor must be the one obtained when the
+				window handler was activated.
+		TIOCGETP	Fetch the basic parameters for the terminal
+				(v7).
+		TIOCSETP	Flush and then set the basic parameters (v7).
+		TIOCSETN	Set the basic parameters (no flush) (v7).
+		TIOCEXCL	Set "exclusive-use" mode (v7).
+		TIOCNXCL	Turn off "exclusive-use" mode (v7).
+		TIOCFLUSH	Flush input and output queues (v7).
+		TIOCSETC	Set the special characters (v7).
+		TIOCGETC	Get the special characters (v7).
+		FIORDCHK	Check if any character on input (v7).
+		TCSETAF		Wait for output to drain, then flush the input
+				queues, and set the parameters for the
+				terminal.
+		TCSETAW		As above, but do not flush the input queues.
+		TCSETA		Set the parameters for the terminal.
+		TCGETA		Get the parameters for the terminal.
+		TCFLSH		Flush the input, output, or both the input and
+				output queues.
+
+	It should be noted that the set up of the ABC99 function keys is
+	common for all windows. Hence the PFNKLD and PFNKRD requests should
+	be used carefully.
+
+
+	8.	Window Groups
+		=============
+
+	All windows belonging to the same process group and with the WGROUP
+	flag set, belongs to a window group.
+	The parent window in a group is the first window in a process group
+	created with the WGROUP flag set.
+	A child window is a window which is not a parent and which has the
+	WGROUP flag set (i.e. the remaining windows in a group). If the
+	parent disappears (i.e. is closed), the children looses their group
+	connection.
+	It is guaranteed that all windows in one window group always are on
+	consecutive levels.
+
+
+	9.	Some Notes about the Storage of the Text Contents of a
+		======================================================
+		Virtual Screen
+		==============
+
+	If the SAVETEXT flag for a window is set, the window handler will
+	internally store the text contents of the virtual screen and
+	automatically update the window when necessary.
+	There are two cases when the window handler stops remembering the
+	text contents and regards text as graphics:
+
+	  i)   If the escape sequence ESC : <n> H is sent to the window or
+	  ii)  If the font is changed using the Select Character Set escape
+	       sequence.
+
+	There exists two possibilities to force the handler to start
+	remembering the text contents again:
+
+	  i)   Send the Reset to Initial State escape sequence (ESC c) to the
+	       window or
+	  ii)  Send the ESC : J escape sequence to the window when the current
+	       font is the same as the default font for the window.
+
+	Method i) has some side effects, so method ii) is to be prefered.
+
+
+	10.	Functions Automatically Supported by the Window Handler
+		=======================================================
+
+	The handler automatically moves a pointer around the screen when the
+	mouse is moved.
+
+	If the pointer points to a region marked by the Winicon() request, the
+	area is inverted if the I_INVERT flag is set and if the left button
+	on the mouse is pressed, the specified code sequence is sent to the
+	appropriate process.
+
+	If the pointer points to a marked area in the lower right corner of
+	a window border and the left button on the mouse is pressed, the size
+	of the window can be changed by moving the mouse around. The operation
+	is suspended when the left mouse button is released. If the window is
+	a parent of a window group, the children will also be moved if
+	appropriate.
+
+	To move a window (including the virtual screen) around, put the
+	pointer on the mark at the upper right corner of the border, press the
+	left button on the mouse and move the window by moving the mouse. To
+	stop the operation, just release the button. If the moved window is a
+	parent of a window group, the children will also be moved if
+	appropriate.
+
+	To change the part of the virtual screen which is visible in the
+	window put the pointer on one of the four scroll arrows and press the
+	left button on the mouse. This will cause the window to scroll one
+	row or column in the direction indicated by the arrow.
+	An alternative is to put the mouse pointer on the horizontal or the
+	vertical visible indicator, press the left button, and drag the
+	indicator to the desired location. The window is scrolled when the
+	left button is released.
+
+	If the pointer is put on the mark at the upper left corner of the
+	border and the left button on the mouse is pressed, a signal (if
+	specified) will be sent to all processes in the window.
+
+	To copy a region (a rectangle) of text from one window to another, put
+	the pointer at the upper left character of the rectangle, press the
+	middle button on the mouse and a rectangle can now be made by moving
+	the pointer to the lower right character and releasing the button. The
+	marked region is now indicated by four lines surrounding it. To
+	abort the operation, press any button, except the middle one,
+	otherwise move the pointer to the destination window and press the
+	middle button once more, causing the marked region to be copied. Note
+	that this operation will also work with programs not knowing about the
+	windows, since the text contents of all the windows are stored by the
+	window handler.
+
+	To make a window the top level window, put the mouse pointer on the
+	window and press the right mouse button. If the window already is the
+	top level window, the window is moved to the bottom instead.
+	If the pointer is pointing to the background or a special window, the
+	top level window is put at the bottom.
+	If the window to be moved to the top or the bottom belongs to a window
+	group, the whole group is moved without affecting the relative levels
+	inside the group.

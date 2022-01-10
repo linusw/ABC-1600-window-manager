@@ -1,0 +1,89 @@
+Suggestions and ideas for the window handler and related programs (and also
+known bugs):
+
+
+WHP and WHL
+===========
+
+1)	A common input/output buffer for characters entered from the keyboard.
+
+2)	Possible to move windows outside the screen.
+
+3)	Possibility to put icons in the background (something like the Xerox
+	Star).
+
+4)	Suspend write request when XOFF is received. Only CTRL-Q should mean
+	XON (if the flags says so).
+
+5)	Window stacks, i.e. the window handler automatically adds an offset to
+	the given location of a window when creating it. The stack formation
+	is kept when a window is moved to another level in the stack.
+	It should be possible to take a window from the stack and move it
+	to the top level (outside the stack). When the work in the window has
+	been finished, the window can be put back to its original place in the
+	stack.
+
+6)	Add a new type of text saving where every character is saved with a
+	corresponding attribute byte. The extra byte is used to save under-
+	line attribute and font. The contents of the virtual screen will be
+	remembered when font changes are made if all the fonts have the same
+	box size and the base line is the same.
+
+7)	As an alternative to inverting the window header, the whole upper side
+	of the window border can be inverted.
+
+8)	AND, OR, and XOR operations when graphics is used.
+
+9)	Possible to change the signals w_csig, w_rsig, w_tsig, and w_ntsig
+	for a window.
+
+10)	Possible to remove single or a whole group of icons from a window.
+
+11)	Removing and adding boxes in the window borders.
+
+12)	More escape sequences (taken from the Twist Terminal):
+	  Set margin bell position		ESC [ ?B
+	  Enable margin bell			ESC [ ?37 l
+	  Disable margin bell			ESC [ ?37 h
+	  Screen on				ESC [ ?36 l
+	  Screen off				ESC [ ?36 h
+	  Set left and right margins		ESC [ Pnl ; Pnr v
+	  End security field			ESC [ 0 s
+	  Start security field			ESC [ 1 s
+
+13)	When the default font is changed, no check is made if the virtual
+	screen becomes too big.
+
+14)	Possible to create and remove a window through the "super" channel.
+	One window shall always be reserved for this purpose and it can be
+	used, for example, to tell the user when something fails etc.
+
+15)	Escape sequence to draw lines with different thickness. This
+	escape sequence should be capable of drawing a line with a pattern.
+
+16)	Turn a rectangle. The escape sequence shall be
+	ESC : <x> ; <y> ; <op> t
+	where <x> and <y> is the upper right corner of the rectangle (the
+	lower left corner is the graphic cursor position).
+	<op> is 0 if turning 90 degrees clockwise, 1 if 180 degrees and
+	2 if 270 degrees.
+	The turned rectangle will have its lower left corner at the same
+	place as the old rectangles lower left corner.
+	The new graphic cursor position is <x>, <y>.
+
+17)	A flag which says that the screen shall not be turned on if a write
+	request to the window is received. (Is it possible?)
+
+18)	If the BX_AVIS flag is set for a window and the size of the window
+	changes from the whole virtual screen to a part of it because the
+	default font is changed, the scroll left, right, up, and down
+	boxes are not removed.
+
+19)	To save code the bitmap of the border boxes can be put in the
+	'ubuf' union.
+
+20)	The cnvsubst() function can be made more compact by using tables.
+
+21)	Add a flag (SIZSCROLL) which behaves similar to the KEYSCROLL and
+	WRITSCROLL flags, but the window is scrolled when the window size
+	changes.

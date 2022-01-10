@@ -1,0 +1,807 @@
+	1985-07-29
+	Peter Andersson
+	Luxor Datorer AB
+
+	THE WINDOW SHELL PREPROCESSOR - WSHPP
+
+
+	1.	Introduction
+		============
+
+	Wshpp is a preprocessor for the window shell - wsh. As input it takes
+	a text file describing the menu's and other things to be used to start
+	programs, open pull down menus, etc. when using the ABC1600 window
+	handler. The output is in a compact binary format which wsh can handle
+	efficiently.
+	Wshpp can also produce single data structures to be used by other
+	programs when creating windows, setting up icons, etc. By always using
+	wshpp when creating the data to be used to call the window handler,
+	future incompatibility problems can be avoided.
+	It should be pointed out that the format of the text input file is
+	of a fairly low level, instead it is possible to use most of the
+	facilities of the window handler. If higher level routines is desired
+	(for example the input is just a collection of independent icons), it
+	is recommended that a program is written which as output produces a
+	text file which can be processed by wshpp.
+
+
+	2.	Command Syntax
+		==============
+
+	The syntax of wshpp is:
+
+	  wshpp [-n] [<infile>] [-x <struc> <outfile> -x <struc> <outfile>...]
+		[-o <outfile>]
+
+	<infile> is the input text file. If it is not specified, the standard
+	input is used instead.
+	The '-o' option specifies the filename of the wsh data output file.
+	The '-x' option with its two following arguments specifies a single
+	structure to be output to a file (see part 4).
+	If no '-x' or '-o' options are given, the wsh data is written to the
+	file .window, which is the file wsh reads by default. No wsh data file
+	is generated if no '-o' and one or more '-x' options are specified.
+	All or some of the outfiles may be replaced by a dash (-), in which
+	case the corresponding data is written to the standard output (all
+	messages displayed by wshpp are written to the standard error output).
+	This is intended to be used together with pipes.
+	The '-n' option is used if no output file at all shall be generated.
+	All error messages displayed by wshpp are by default in english.
+	However if the environment variable LANGUAGE is set to 'swedish', all
+	error messages are displayed in swedish instead.
+
+
+	3.	The Format of the Input File
+		============================
+
+	The input file consists of descriptions of data items and action
+	items.
+	The data items is (the structures refered to are the ones
+	used to communicate with the window handler and can be found in
+	the documentation for the handler):
+
+	  window	Data for a window (the winstruc structure).
+	  icon		Data for an icon (the winicon structure).
+	  string	A string to be used in both landscape and portrait
+			mode.
+	  pstring	A string to be used in portrait mode only.
+	  lstring	A string to be used in landscape mode only.
+	  pointer	Data for the layout of a mouse pointer (the npstruc
+			structure).
+	  header	Data for a window header (the headstruc structure).
+	  environ	Environment strings used to modify the environment
+			in both portrait and landscape screen mode.
+	  penviron	Environment strings to be used in portrait mode only.
+	  lenviron	Environment strings to be used in landscape mode only.
+	  directory	A directory pathname.
+	  command	A command (the file name and the arguments).
+	  flags		Window flags data (the flgstruc structure).
+	  zoomlist	Zoom list data (the zoomlst structure).
+	  substitute	Mouse substitute keys (the substit structure).
+	  background	Data for a background pattern (the chbgstruc
+			structure).
+
+	The action items are:
+
+	  init		Describes what to do on initialization.
+	  menu		Describes a menu window.
+	  choice	Describes a choice which can be made from a menu
+			window.
+	  action	Describes the action when a certain choice has been
+			chosen.
+	  terminal	Describes a terminal window, i.e. a window running
+			a program.
+
+
+	3.1	Data Items
+		==========
+
+	The description of a data item consists of its name, which is the name
+	of the item, immediately followed by a number. A colon separates the
+	name from the data. The data either consists of
+
+	  (i)	one string (string, pstring, lstring, directory),
+	  (ii)	several strings separated by commas (environ, penviron,
+		lenviron, command), or
+	  (iii)	keywords (with corresponding values) and flags (window, icon,
+		pointer, header, flags, zoomlst, substitute, background).
+
+	The string in (i) is the rest of the line after the first colon. The
+	strings in (ii) are those between the first colon and a comma or a
+	newline, between two commas, or between a comma and a newline.
+	Data items in (iii) consists of 4-letter keywords, optionally followed
+	by a value, separated by colons. If it is a numerical value, the
+	keyword shall be followed by a '#' character and the numerical value.
+	The numerical value can be a decimal number, an octal number, or a
+	hexadecimal number. The syntax of the different numbers are the same
+	as in the C language: A number starting with a zero is interpreted as
+	an octal number, a number starting with '0x' or '0X' is interpreted
+	as a hexadecimal number, otherwise it is interpreted as a decimal
+	number.
+	If the value is a string, the keyword shall be followed by an '='
+	character and the string terminated by a colon or a newline.
+	A flag consists of just a keyword and if it is present the flag is
+	set, otherwise it is reset.
+	The backslash (\) can be used as an escape character in strings. This
+	works as in the C language (it has been augmented by '\e' which means
+	ESCAPE, 27 decimal).
+	Leading and trailing spaces and tabs are significant in all strings.
+	A line can be continued on the next line by ending the line with a
+	backslash.
+
+
+	3.1.1	Window
+		======
+
+	The window data item gives the data for a window. Every keyword has
+	a corresponding member or flag in the winstruc structure (see the
+	documentation for the window handler). In the following list the
+	corresponding structure member or flag is listed inside paranthesis
+	and a '#' character indicates that it is a numerical value, otherwise
+	it is a flag.
+
+	  Keyword	Description
+
+	  pxor#		(wp_xorig) The x coordinate in portrait mode of the
+			lower left corner of the virtual screen.
+	  lxor#		(wl_xorig) The x coordinate in landscape mode of the
+			lower left corner of the virtual screen.
+	  pyor#		(wp_yorig) The y coordinate in portrait mode of the
+			lower left corner of the virtual screen.
+	  lyor#		(wl_yorig) The y coordinate in landscape mode of the
+			lower left corner of the virtual screen.
+	  pxsi#		(wp_xsize) The horizontal size in portrait mode of the
+			virtual screen.
+	  lxsi#		(wl_xsize) The horizontal size in landscape mode of
+			the virtual screen.
+	  pysi#		(wp_ysize) The vertical size in portrait mode of the
+			virtual screen.
+	  lysi#		(wl_ysize) The vertical size in landscape mode of the
+			virtual screen.
+	  pvxo#		(wp_vxorig) The x coordinate in portrait mode of the
+			lower left corner of the window relative to the lower
+			left corner of the virtual screen.
+	  lvxo#		(wl_vxorig) The x coordinate in landscape mode of the
+			lower left corner of the window.
+	  pvyo#		(wp_vyorig) The y coordinate in portrait mode of the
+			lower left corner of the window.
+	  lvyo#		(wl_vyorig) The y coordinate in landscape mode of the
+			lower left corner of the window.
+	  pvxs#		(wp_vxsize) The horizontal size in portrait mode of
+			the window.
+	  lvxs#		(wl_vxsize) The horizontal size in landscape mode of
+			the window.
+	  pvys#		(wp_vysize) The vertical size in portrait mode of the
+			window.
+	  lvys#		(wl_vysize) The vertical size in landscape mode of the
+			window.
+	  colr#		(w_color) Background colour in the window.
+			0 = Black, 1 = White.
+	  bord#		(w_border) The type of the window border.
+			The different types are (N = No border, S = Single
+			line border, D = Double lines border):
+
+			Border	Left	Right	Upper	Lower
+			 type	side	side	side	side
+			=====================================
+			   0	 N	  N	  N	  N
+			   1	 S	  S	  S	  S
+			   2	 D	  D	  D	  D
+			   3	 D	  S	  S	  S
+			   4	 S	  D	  S	  S
+			   5	 S	  S	  D	  S
+			   6	 S	  S	  S	  D
+			   7	 D	  D	  S	  S
+			   8	 D	  S	  D	  S
+			   9	 D	  S	  S	  D
+			  10	 S	  D	  D	  S
+			  11	 S	  D	  S	  D
+			  12	 S	  S	  D	  D
+			  13	 D	  D	  D	  S
+			  14	 D	  D	  S	  D
+			  15	 D	  S	  D	  D
+			  16	 S	  D	  D	  D
+
+	  pfnt#		(wp_font) The initial font in portrait mode (ASCII
+			code, i.e. font A is 65).
+	  lfnt#		(wl_font) The initial font in landscape mode.
+	  usrb#		(w_uboxes) The maximal number of user defined boxes
+			that can be set up in the left side of the border.
+	  tsig#		(w_tsig) The signal used to signal that the window has
+			moved to the top level. The window shell always sets
+			this one to zero for menu windows.
+	  nsig#		(w_ntsig) The signal used to signal that the window
+			has moved from the top level. The window shell always
+			sets this one to zero for menu windows.
+	  rsig#		(w_rsig) The signal used to signal a window that it
+			has to redraw itself. The window shell sets this one
+			to zero for menu windows if the 'stxt' flag is
+			present. If the 'stxt' flag is not set, the window
+			shell sets this signal to an appropriate value.
+	  csig#		(w_csig) The signal to be sent to processes in a
+			window when the close box is used.
+	  hscr		(BX_HSCR) The scroll left and right boxes shall be
+			present in the border.
+	  vscr		(BX_VSCR) The scroll up and down boxes shall be
+			present in the border.
+	  cbox		(BX_CLOS) The close box shall be present in the
+			border. The window shell clears this flag for menu
+			windows.
+	  sbox		(BX_SIZE) The size box shall be present in the border.
+	  mbox		(BX_MOVE) The move box shall be present in the border.
+	  zbox		(BX_ZOOM) The zoom box shall be present in the border.
+	  avis		(BX_AVIS) Scroll left/right and up/down are only
+			visible if the whole virtual screen is not visible.
+	  bbox		(BX_BLOW) The blow up box shall be present in the
+			border.
+	  hbox		(BX_HELP) The help box shall be present in the border.
+	  pmod		(PMODE) Portrait mode coordinates given.
+	  lmod		(LMODE) Landscape mode coordinates given.
+	  stxt		(SAVETEXT) Save the text contents of the virtual
+			screen.
+	  sbmp		(SAVEBITMAP) Save the bitmap contents of the virtual
+			screen (future use).
+	  lock		(LOCK) Lock the window on the top level.
+	  novr		(NOOVER) The window must not be overlapped by another
+			window.
+	  ncur		(NOCURSOR) Text cursor not visible.
+	  nmov		(NOMOVE) The window must not be moved or change size.
+	  alls		(ALLSCR) The window must be the whole virtual screen.
+	  spec		(SPECIAL) Special window.
+	  kscr		(KEYSCROLL) Make sure that the text cursor is visible
+			in the window everytime a key is pressed.
+	  wscr		(WRITSCROLL) Make sure that the text cursor is visible
+			in the window everytime something has been written to
+			the window.
+	  amsp		(ALTMPNT) Allocate space to store a private mouse
+			pointer for the window.
+	  rltv		(RELATIVE) Add the window relative to the parent
+			window.
+	  ncpi		(NOCPIN) Prevents text from being copied into this
+			window.
+	  ncpo		(NOCPOUT) Prevents text from being copied from this
+			window.
+	  text		(TXTSIZE) The size of the virtual screen, the window,
+			and the origin of the window are supposed to be given
+			in term of characters instead of pixels.
+	  wgrp		(WGROUP) This window shall belong to a window group.
+	  rulc		(REL_ULC) This window shall follow its parent window
+			relative the upper left corner of the parent (not
+			meaningful if the window is not a child window).
+	  rurc		(REL_URC) This window shall follow its parent window
+			relative the upper right corner of the parent (not
+			meaningful if the window is not a child window).
+	  rllc		(REL_LLC) This window shall follow its parent window
+			relative the lower left corner of the parent (not
+			meaningful if the window is not a child window).
+	  rlrc		(REL_LRC) This window shall follow its parent window
+			relative the lower right corner of the parent (not
+			meaningful if the window is not a child window).
+
+	The following is an example of a small window put somewhere in the
+	middle of the screen (only portrait mode coordinates are given):
+
+	  window5:pxor#300:pyor#500:pxsi#100:pysi#100:pvxo#0:pvyo#0:pvxs#100:\
+		 :pvys#80:colr#1:bord#2:pfnt#0x41:\
+		 :pmode:stxt:cbox:sbox:mbox
+
+	Note that all values which are not specified are guaranteed to be
+	zero.
+
+
+	3.1.2	Icon
+		====
+
+	The icon data item gives the data for an icon. Every keyword has a
+	corresponding member or flag in the winicon structure (see the
+	documetation for the window handler). An '=' character after the
+	keywords means that the value is a string.
+
+	  Keyword	Description
+
+	  pxor#		(ip_xorig) The x coordinate in portrait mode of the
+			lower left corner of the icon.
+	  lxor#		(il_xorig) The x coordinate in landscape mode of the
+			lower left corner of the icon.
+	  pyor#		(ip_yorig) The y coordinate in portrait mode of the
+			lower left corner of the icon.
+	  lyor#		(il_yorig) The y coordinate in landscape mode of the
+			lower left corner of the icon.
+	  pxsi#		(ip_xsize) The horizontal size in portrait mode of the
+			icon.
+	  lxsi#		(il_xsize) The horizontal size in landscape mode of
+			the icon.
+	  pysi#		(ip_ysize) The vertical size in portrait mode of the
+			icon.
+	  lysi#		(il_ysize) The vertical size in landscape mode of the
+			icon.
+	  cseq=		(i_cmdseq[]) Character sequence to be sent by the
+			icon.
+	  pmod		(I_PMODE) Portrait mode coordinates given.
+	  lmod		(I_LMODE) Landscape mode coordinates given.
+	  pres		(I_PRESS) Send sequence when left button is pressed.
+	  rlse		(I_RELEASE) Send sequence when left button is
+			released.
+	  inve		(I_INVERT) Invert icon when we are pointing to it.
+	  entr		(I_ENTER) Send sequence when we are moving into the
+			icon area.
+	  leav		(I_LEAVE) Send sequence when we are leaving the icon
+			area.
+	  rmov		(I_REMOVE) Remove the icon when a sequence has been
+			sent.
+	  rqst		(I_RQST) Only send the sequence if there is a pending
+			read request to the window.
+	  schk		(I_SETCHK) Check if 'entr' or 'leav' is fulfilled when
+			setting up the icon.
+	  lzer		(I_LZERO) The sequence is sent only if the window is
+			at the top level.
+	  text		(I_TEXT) The icon coordinates are supposed to be in
+			character units.
+
+	The following example puts the icon in the lower left corner of a
+	virtual screen (only portrait mode coordinates are given):
+
+	  icon17:pxor#0:pyor#0:pxsi#80:pysi#50:cseq=\200:\
+		:pmod:pres:rlse:inve:rqst
+
+	Note that all values which are not specified are guaranteed to be
+	zero.
+
+
+	3.1.3	String, pstring, and lstring
+		============================
+
+	To set up the string
+
+	  I like
+	  WINDOWS!
+
+	using string, pstring, or lstring, looks like:
+
+	  string36:I like\nWINDOWS!
+	  pstring12:I like\nWINDOWS!
+	  lstring19:I like\nWINDOWS!
+
+
+	3.1.4	Pointer
+		=======
+
+	The pointer data item gives the data for a mouse pointer layout.
+	Every keyword has a corresponding member in the npstruc structure
+	(see the documentation for the window handler).
+
+	  Keyword	Description
+
+	  xsiz#		(np_xsize) The with of the mouse pointer.
+	  ysiz#		(np_ysize) The height of the mouse pointer.
+	  xpnt#		(np_xpnt) Pointing part of the mouse pointer, x
+			coordinate.
+	  ypnt#		(np_ypnt) Pointing part of the mouse pointer, y
+			coordinate.
+	  andm#		(np_and[]) A series of 16 AND masks used to construct
+			the mouse pointer. The different elements are
+			separated by commas.
+	  orma#		(np_or[]) A series of 16 OR masks used to construct
+			the mouse pointer. The different elements are
+			separated by commas.
+
+	The following is an example of a black hair cross mouse pointer:
+
+	  pointer7:xsiz#31:ysiz#31:xpnt#15:ypnt#15:\
+		  :andm#0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0x00000001,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xfffeffff,\
+			0xfffeffff,0xfffeffff,0xfffeffff,0xffffffff\
+		  :orma#0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+
+	Note that all values which are not specified are guaranteed to be
+	zero.
+
+
+	3.1.5	Header
+		======
+
+	The header data item gives the data for a window header. Every
+	keyword has a corresponding member or flag in the headstruc structure
+	(see the documentation for the window handler).
+
+	  Keyword	Description
+
+	  head=		(h_hdr[]) The header string.
+	  invh		(H_INVHD) Invert the window header.
+	  invt		(H_INVT) Invert the top window header.
+
+	The following is an example of the header ' MY PROGRAM ':
+
+	  header17:head= MY PROGRAM :invt
+
+
+	3.1.6	Directory
+		=========
+
+	To specify the directory pathname /usr/sven/bin, use the line:
+
+	  directory4:/usr/sven/bin
+
+
+	3.1.7	Environ, penviron, and lenviron
+		===============================
+
+	These data items specifies how the environment for the program
+	shall be modified before it is executed by wsh. If the specified
+	environment variable already exist, the old one is replaced. Otherwise
+	the environment variable is added to the environment list.
+	To specify PATH to be '/usr/mydir/bin' and TERM to be 'vt100', use
+	the line:
+
+	  environ3:PATH=/usr/mydir/bin,TERM=vt100
+
+	By modifying the environment it is possible to tell programs, which
+	uses termcap, the size of the virtual screen. If the size of the
+	virtual screen is 132 columns times 33 lines, use:
+
+	  environ7:TERM=win,TERMCAP=w0|win|w:co#132:li#33:tc=abc1600w:
+
+	'abc1600w' is an entry in the termcap file which should be used for
+	this purpose only.
+
+	The syntax for penviron and lenviron is equivalent.
+
+
+	3.1.8	Command
+		=======
+
+	To specify the 'ls -l' command, use the line:
+
+	  command1:/bin/ls,ls,-l
+
+	'/bin/ls' is the file name, 'ls' is argument 0, '-l' is argument 1.
+
+
+	3.1.9	Flags
+		=====
+
+	The flags data item gives the data for new window flags. Every
+	keyword has a corresponding flag in the flgstruc structure (see the
+	window handler documentation).
+
+	  Keyword	Description
+
+	  lock		(LOCK) See the description of the window data item.
+	  novr		(NOOVER)
+	  ncur		(NOCURSOR)
+	  nmov		(NOMOVE)
+	  alls		(ALLSCR)
+	  kscr		(KEYSCROLL)
+	  wscr		(WRITSCROLL)
+	  ncpi		(NOCPIN)
+	  ncpo		(NOCPOUT)
+	  rulc		(REL_ULC)
+	  rurc		(REL_URC)
+	  rllc		(REL_LLC)
+	  rlrc		(REL_LRC)
+
+	The following example can be used to set the LOCK flag for the window
+	in the example in section 3.1.1:
+
+	  flags56:lock
+
+
+	3.1.10	Zoomlist
+		========
+
+	The zoomlist data item gives the data for a zoom list. Every keyword
+	has a corresponding member or flag in the zoomlst structure (see the
+	documentation for the window handler).
+
+	  Keyword	Description
+
+	  plst=		(zp_list[]) The set of fonts to be used in portrait
+			mode.
+	  llst=		(zl_list[]) The set of fonts to be used in landscape
+			mode.
+	  pmod		(Z_PMODE) Portrait mode list given.
+	  lmod		(Z_LMODE) Landscape mode list given.
+
+	The following is an example of a zoom list (only data for portrait
+	mode is given) which will make it possible to toggle between the
+	window's default font and the font F:
+
+		zoomlist7:plst=F:pmod
+
+
+	3.1.11	Substitute
+		==========
+
+	The substitute data item gives the data for a set of mouse substitute
+	keys. Every keyword has a corresponding member in the substit
+	structure (see the window handler documentation).
+
+	  Keyword	Description
+
+	  init#		(c_initflg) Flag indicating if the substitute keys are
+			enabled or not after the set up (1 if enabled, 0 if
+			not).
+	  onof#		(c_keys[S_ONOFF]) Key used to toggle the substitute
+			keys on or off.
+	  mpup#		(c_keys[S_MPU]) Move mouse pointer up.
+	  mpdo#		(c_keys[S_MPD]) Move mouse pointer down.
+	  mple#		(c_keys[S_MPL]) Move mouse pointer left.
+	  mpri#		(c_keys[S_MPR]) Move mouse pointer right.
+	  mpul#		(c_keys[S_MPUL]) Move mouse pointer up - left.
+	  mpur#		(c_keys[S_MPUR]) Move mouse pointer up - right.
+	  mpdl#		(c_keys[S_MPDL]) Move mouse pointer down - left.
+	  mpdr#		(c_keys[S_MPDR]) Move mouse pointer down - right.
+	  lpup#		(c_keys[S_LMPU]) Move mouse pointer up a long step.
+	  lpdo#		(c_keys[S_LMPD]) Move mouse pointer down a long step.
+	  lple#		(c_keys[S_LMPL]) Move mouse pointer left a long step.
+	  lpri#		(c_keys[S_LMPR]) Move mouse pointer right a long step.
+	  lpul#		(c_keys[S_LMPUL]) Move mouse pointer up - left a long
+			step.
+	  lpur#		(c_keys[S_LMPUR]) Move mouse pointer up - right a long
+			step.
+	  lpdl#		(c_keys[S_LMPDL]) Move mouse pointer down - left a
+			long step.
+	  lpdr#		(c_keys[S_LMPDR]) Move mouse pointer down - right a
+			long step.
+	  pcmd#		(c_keys[S_PCMD]) Replacement for the left mouse
+			button.
+	  cwin#		(c_keys[S_CHWIN]) Replacemet for the right mouse
+			button.
+	  mtxt#		(c_keys[S_MCA]) Replacement for the middle mouse
+			button.
+	  step#		(c_step) Step length for a normal move of the mouse
+			pointer.
+	  lstp#		(c_lstep) Step length for a long move of the mouse
+			pointer.
+
+	The following is an exemple of the set up of the mouse substitute
+	keys:
+
+	  substitute1:init#0:onof#0xfe:mpup#0xa1:mpdo#0xa3:mple#0xac:\
+		     :mpri#0xa4:mpul#0xad:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:
+		     :lpup#0xb1:lpdo#0xb3:lple#0xbc:lpri#0xb4:lpul#0xbd:\
+		     :lpur#0xb5:lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:\
+		     :mtxt#0xcd:step#4:lstp#10
+
+
+	3.1.12	Background
+		==========
+
+	The background data item gives the data for a background pattern.
+	The keyword has a corresponding member in the chbgstruc structure
+	(see the documentation for the window handler).
+
+	  Keyword	Description
+
+	  bmap#		(cb_bitmap) The bit pattern of a 16 x 16 pixels area
+			representing the pattern. The 16 elements shall be
+			separated by commas.
+
+	The following is an example of a white background pattern:
+
+	  background2:bmap#0xffff,0xffff,0xffff,0xffff,\
+			   0xffff,0xffff,0xffff,0xffff,\
+			   0xffff,0xffff,0xffff,0xffff,\
+			   0xffff,0xffff,0xffff,0xffff
+
+	Note that all values which are not specified are guaranteed to be
+	zero.
+
+
+	3.2	Action Items
+		============
+
+	The description of an action item consists of its name, which is the
+	name of the item in most cases followed by a number. A colon separates
+	the name from the description part, which consists of data items,
+	action items, or in some cases some special actions.
+
+
+	3.2.1	Init
+		====
+
+	The init action consists of a list of actions to be performed upon
+	initialization. They are executed in the specified order. The
+	following things can be specified to be performed on initialization:
+
+	  Item		Description
+
+	  substitute	The keys used as substitute for the mouse. No keys
+			will be set up if substitute is not present.
+	  background	A new background pattern. The default pattern is used
+			if no background is present.
+	  pointer	The layout of the global mouse pointer. If no pointer
+			is specified, the default mouse pointer is used.
+	  terminal	Open a terminal window with a program running in it.
+	  menu		The starting menu window. This must be specified.
+	  inverse	Set the screen to inverse video. This is a special
+			action and no number shall be given.
+	  normal	Set the screen to normal video. This is a special
+			action and no number shall be given.
+
+	Only one init action can be specified and therefore no init number
+	shall be given.
+	An example:
+
+	  init:substitute1:menu3
+
+
+	3.2.2	Menu
+		====
+
+	The menu action describes a menu window, a pull down menu, etc.
+	The following things can be specified:
+
+	  Item		Description
+
+	  window	Data for the window to be used as menu. If the window
+			already is open, wsh checks if the window already
+			contains the desired strings and icons, and if so
+			these are not set up once more. However if the
+			contents is new, the new icons are set up and the new
+			strings are displayed. One and only one window must
+			be specified.
+	  header	The header of the menu window. The header is optional.
+	  choice	Describes the choices which it is possible to make
+			from this menu. If no action is specified, at least
+			one choice must be specified.
+	  action	The specified action will be executed directly without
+			waiting for a choice from the mouse. If any choices
+			have been given, they are ignored.
+	  string	Text and graphic contents of the menu window.
+	  pstring	Text and graphic contents of the menu window.
+	  lstring	Text and graphic contents of the menu window.
+	  pointer	The layout of the mouse pointer when it points into
+			this menu. If no pointer is specified, the global
+			mouse pointer is used. The 'amsp' flag for the menu
+			window must be set to make it possible to set up a
+			private mouse pointer.
+
+	An example:
+
+	  menu5:window11:choice20:choice21:choice22:pstring13:lstring13
+
+	If both an action and choices are given, a warning message is issued.
+
+
+	3.2.3	Choice
+		======
+
+	The choice action connects an icon with the actions to be performed
+	when that icon is chosen. The following two things must be specified
+	in a choice:
+
+	  Item		Description
+
+	  icon		The icon.
+	  action	The actions to be performed when the above icon is
+			chosen.
+
+	An example:
+
+	  choice9:icon7:action17
+
+
+	3.2.4	Action
+		======
+
+	The action consists of a list of actions to be performed. The actions
+	will be executed in the same order as they are specified. The
+	following items may be specified in the list:
+
+	  Item		Description
+
+	  flags		New window flags for the current menu window.
+	  substitute	Set new mouse substitute keys.
+	  background	Set up a new background pattern.
+	  pointer	Set up a new global mouse pointer.
+	  terminal	Open a terminal window with a program running in it.
+	  menu		Go to the specified menu.
+
+	The following special actions may be specified in an action list
+	(no number shall be specified after these special actions):
+
+	  Special action	Description
+
+	  close			Close the current menu window.
+	  restore		Restore the screen.
+	  inverse		Set the screen to inverse video.
+	  normal		Set the screen to normal video.
+	  top			Move the current menu window to the top level.
+	  turn			Turn the screen.
+	  logout		Log out. This will only work if there are not
+				any open terminal windows. Wsh takes care of
+				checking this.
+
+	At least one 'menu' must be given. If several are given, a warning is
+	issued. A warning also appears if a 'menu' does not end the list (in
+	this case the actions after the 'menu' will never be executed).
+	An example:
+
+	  action18:flags5:terminal10:close:menu7
+
+
+	3.2.5	Terminal
+		========
+
+	The terminal action describes a window to be used to run a program.
+	The following can be specified in a terminal description:
+
+	  window	Data for the window to be used as terminal. At most
+			one may be specified. If no window is specified, the
+			command will be executed with '/dev/null' as standard
+			input, output, and error output.
+	  header	Optional header for the terminal window.
+	  zoomlist	Optional zoom list for the terminal window.
+	  pointer	Layout of the mouse pointer to be used when pointing
+			into the terminal window. If no pointer is specified,
+			the global mouse pointer is used instead. The 'amsp'
+			flag for the terminal window must be set to make it
+			possible to set up a private mouse pointer.
+	  icon		Optional icons to be set up before the execution
+			of the program starts.
+	  string	Optional strings to be written to the terminal window
+			before the execution of the program starts.
+	  pstring	As above.
+	  lstring	As above.
+	  directory	An optional directory to move to before the execution
+			of the program starts. If no directory is specified,
+			the current directory for the program when it starts
+			will be the same as the one where wsh were started
+			from.
+	  super		If present, the "super" channel will be open as file
+			descriptor 3 in the program. This is a special action
+			and no number shall be given.
+	  wait		Causes wsh to wait for the command to finish. This is
+			a special action and no number shall be given.
+	  environ	Optional modification of the environment.
+	  penviron	As above, but only for portrait mode.
+	  lenviron	As above, but only for landscape mode.
+	  command	Specifies the program to be executed in the terminal
+			window.
+
+	An example:
+
+	  terminal15:window7:header7:pstring5:pstring6:lstring5:lstring6:\
+		    :directory11:environ3:environ4:penviron3:lenviron5:\
+		    :command23
+
+
+	3.3	More about the Format
+		=====================
+
+	The number of all the numbered items must be an integer greater than
+	or equal to one.
+	All lines starting with a '#' character are supposed to be comments
+	and ignored.
+	All the data and action items may be given in any order.
+
+
+	4.	Writing Single Structures to File
+		=================================
+
+	To output, for example, a single window structure (winstruc) to a
+	file, the '-x' option is used.
+	Suppose we have a text file - menu.wd - which contains a description
+	of a window named window3. The command
+
+	  wshpp menu.wd -x window3 win3
+
+	will write the window data structure described by window3 to the file
+	win3. All the remaining data in the input file is ignored.
+	The following data items can be extracted and written to a file in
+	this way:
+
+	  window
+	  header
+	  icon
+	  pointer
+	  flags
+	  zoomlist
+	  substitute
+	  background

@@ -1,0 +1,65 @@
+:
+: This script constructs the necessary directories, copies the window header
+: files to them and makes sure that the files have the right owner and
+: privilegies.
+:
+if uid
+then :
+else echo "makeheader: you must be super user to do this" ; exit 1
+fi
+:
+: Create the necessary directories.
+:
+if test -d usr
+then :
+else
+echo "Creating the ./usr directory."
+mkdir usr
+chown root usr
+chgrp 50 usr
+chmod 0755 usr
+fi
+if test -d usr/include
+then :
+else
+echo "Creating the ./usr/include directory."
+mkdir usr/include
+chown bin usr/include
+chgrp bin usr/include
+chmod 0755 usr/include
+fi
+if test -d usr/include/win
+then :
+else
+echo "Creating the ./usr/include/win directory."
+mkdir usr/include/win
+chown bin usr/include/win
+chgrp bin usr/include/win
+chmod 0755 usr/include/win
+fi
+:
+: Move the files to their appropriate places.
+:
+echo "Copying the file w_const.h."
+copy -m ../wincl/win/w_const.h usr/include/win
+chown bin usr/include/win/w_const.h
+chgrp bin usr/include/win/w_const.h
+chmod 0644 usr/include/win/w_const.h
+:
+echo "Copying the file w_types.h."
+copy -m ../wincl/win/w_types.h usr/include/win
+chown bin usr/include/win/w_types.h
+chgrp bin usr/include/win/w_types.h
+chmod 0644 usr/include/win/w_types.h
+:
+echo "Copying the file w_structs.h."
+copy -m ../wincl/win/w_structs.h usr/include/win
+chown bin usr/include/win/w_structs.h
+chgrp bin usr/include/win/w_structs.h
+chmod 0644 usr/include/win/w_structs.h
+:
+echo "Copying the file w_macros.h."
+copy -m ../wincl/win/w_macros.h usr/include/win
+chown bin usr/include/win/w_macros.h
+chgrp bin usr/include/win/w_macros.h
+chmod 0644 usr/include/win/w_macros.h

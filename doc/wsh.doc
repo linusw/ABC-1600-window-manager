@@ -1,0 +1,105 @@
+	1985-07-07
+	Peter Andersson
+	Luxor Datorer AB
+
+	THE WINDOW SHELL - WSH
+
+
+	1.	Introduction
+		============
+
+	The window shell - wsh - is an interface between the user and the
+	ABC1600 window handler. To know what to do, wsh starts by reading a
+	data file. This file is created by the window shell preprocessor -
+	wshpp. The documentation for wshpp covers most of the things
+	concerning wsh, so this documentation just describes the syntax of
+	wsh and gives some notes of how wsh behaves in different situations.
+
+
+	2.	Command Syntax and Start Up
+		===========================
+
+	The syntax of wsh is:
+
+		wsh [-n] [<file>]
+
+	<file> is the input data file. If it is not specified, wsh tries to
+	read the file '.window' in the current directory, and if this fails
+	it finally tries to read the file '/etc/.window'.
+	Normally wsh (after reading the data file) activates the window
+	handler. The '-n' option tells wsh not to do this. In this case wsh
+	assumes that the window handler already has been activated and that
+	the file descriptor for the window handler "super channel" is 3.
+	This can be used together with the 'wait' and 'super' special actions
+	(see the documentation for wshpp) to start "sub-window shells".
+	If wsh is started from another terminal than the console or from a
+	window, the ordinary shell - sh - is executed instead.
+	Error messages from wsh are by default in english. However if the
+	environment variable LANGUAGE is set to 'swedish', all error messages
+	are displayed in swedish instead.
+
+
+	3.	Some Notes of the Behaviour of Wsh
+		==================================
+
+	-  When wsh are going to get a command from a menu window it first
+	   checks if the window is already open (if not wsh opens it). Then
+	   it is checked that the contents (header, strings, and icons) is
+	   the desired and if not the old header and icons are removed and
+	   the new header and icons are set up and the specified strings are
+	   written to the menu window.
+
+	-  Wsh automatically sets up a redraw signal ('rsig') for all menu
+	   windows which have not the 'stxt' flag set and takes care of
+	   redrawing them when necessary. If the 'stxt' flag is set, wsh sets
+	   'rsig' to 0 and supposes the window handler to take care of the
+	   redrawing of the window. Note that because wsh manipulates 'rsig'
+	   for menu windows, the same window data description should not be
+	   used both for menu and terminal windows.
+
+	-  There is no need to specify the character sequence ('cseq') to be
+	   sent by the icon for icons used in menu windows as wsh uses its own
+	   sequences. As for window data, the same icon data description
+	   should not be used both for menu and terminal icons.
+
+	-  'tsig' and 'nsig' are always set to 0 and the 'cbox' flag is
+	   cleared for menu windows. The reason is that wsh can not handle
+	   these things.
+
+	-  The cursors are not moved to their home positions and the window
+	   is not cleared before the specified strings are displayed in a
+	   window. These things must, if necessary, be included in the
+	   strings. Be especially careful with strings which must be rewritten
+	   by wsh to update menu windows.
+
+	-  Strings are always written in the specified order.
+
+	-  All terminal windows are set up as controlling terminals, i.e.
+	   '/dev/tty' refers to the window.
+
+	-  The processes running in different terminal windows belongs to
+	   different process groups.
+
+	-  Only file descriptors 0, 1, and 2 (standard input, output, and
+	   error output) and sometimes 3 (the "super channel") are open when
+	   the command specified in a terminal description is executed.
+
+	-  When the command in a terminal description is executed, all signals
+	   are set to default except those signals specified by 'tsig',
+	   'nsig', 'rsig', and 'csig' which are ignored.
+
+	-  The current directory for wsh is always the directory where it was
+	   started from. Terminals will initially have the same current
+	   directory if no 'directory' is specified.
+
+	-  The command specified in terminals can be shell scripts and wsh
+	   automatically searches for the command in all the directories
+	   specified by the PATH environment variable.
+
+	-  When handling the 'turn' special action, wsh checks that there
+	   are no windows open, except for menu windows. If not, all menu
+	   windows are closed and the window shell executes the 'init' action
+	   in the new screen mode.
+
+	-  When handling the 'logout' special action, wsh ignores it if there
+	   are any windows open, except for menu windows.

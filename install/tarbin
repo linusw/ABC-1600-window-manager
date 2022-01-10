@@ -1,0 +1,19 @@
+:
+: This script makes a tar diskette containing the binary files of the
+: window handler.
+:
+if test $# != 1
+then echo "usage: tarbin device" ; exit 1
+fi
+if test $1 != /dev/sf0
+then if test $1 != /dev/mf2
+then echo "usage: tarbin device" ; exit 1
+fi
+fi
+:
+makebinary
+:
+: Write everything to a tar diskette.
+:
+echo "Writing to tar diskette."
+tar cvf $1 ./usr ./etc

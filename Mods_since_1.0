@@ -1,0 +1,252 @@
+Found and corrected bugs and made changes since ABCwindow Ver. 1.0:
+
+
+	WHGO
+	====
+
+1)	Before activating the window handler, whgo now changes the mode
+	of /dev/console so that no other than the owner can write to it.
+	When the handler is disactivated, whgo restores the mode.
+	(1985-07-25)
+
+
+	WHP and WHL
+	===========
+
+1)	If the graphic origin was not 0,0, the graphic cursor position was
+	not correct after an arc has been drawn. (Corrected 85-05-29)
+
+2)	The number of arguments was not checked for the escape sequence to
+	set the graphic origin. If 2 arguments were not given, the position
+	of the graphic origin was random. (Corrected 85-05-31)
+
+3)	The maximal total number of icons limit has been removed. (85-05-31)
+
+4)	Text cursor blink implemented. (85-06-04)
+
+5)	The BX_AVIS flag has been added to the w_boxes member of the
+	winstruc structure. The effect of this flag is that the horizontal
+	and visible indicators and scroll boxes only are visible if the
+	whole virtual screen is not visible. (85-06-04)
+
+6)	The effect when using the close box has been changed somewhat.
+	When no signal has been given (i.e. zero) the effect is as before.
+	However when a signal is given, only the signal is sent to the
+	process group. (85-06-05)
+
+7)	If it failed to allocate memory when creating a window, the window
+	was nevertheless marked as created. (Corrected 85-06-10)
+
+8)	The paint escape sequence implemented. (85-06-11)
+
+9)	The signals SIGILL, SIGBUS, and SIGSEGV are trapped. The window
+	handler tries to clean up before terminating if an internal bug
+	is encountered. (85-06-12)
+
+10)	The appearance of the move window icon in the window border has
+	been changed. (85-06-13)
+
+11)	A new <op> (10) has been added to the draw point escape sequence
+	which makes it possible to read the color of a pixel. (85-06-13)
+
+12)	An escape sequence has been added to control the LED's on the INS
+	and ALT keys. The (preliminary) sequence is  ESC : <n> q  where
+	<n> is zero if both the LED's shall be turned off, 1 if the INS
+	key LED shall be turned on, and 2 if the ALT key LED shall be turned
+	on. (1985-06-14)
+
+13)	An escape sequence has been added to draw filled circles. The
+	escape sequence is
+	  ESC : <x> ; <y> ; <rad> ; <pattnr> ; <colnr> c
+	where <x> and <y> is the center of the circle and <rad> is the
+	radius of it. (1985-06-17)
+
+14)	ABC1600 private set and reset mode escape sequences has been added.
+	The sequences are
+	  ESC : <sel> h  and  ESC : <sel> l
+	At the moment only <sel> = 2 is supported. This stand for phased
+	pattern mode. If set, patterns obtained when filling a rectangle,
+	filling a circle, painting, or spraying will be phased.
+
+15)	Spray escape sequence added. The sequence is
+	  ESC : <x> ; <y> ; <pattnr> ; <op> s
+	<x> and <y> specifies the lower left corner of a 32 x 32 pixels area.
+	If <op> is 0 the spray pattern replaces the contents of the specified
+	area, if 1 all the set bits in the spray pattern are set, if 2 all the
+	set bits in the spray pattern are cleared, and if 3 all the set bits
+	in the spray pattern are complemented. (1985-06-19)
+
+16)	When creating a window: If the size of a window was given in terms of
+	font boxes and the whole virtual screen was not visible, the visible
+	area became incorrect. (Corrected 1985-06-19)
+
+17)	A request has been added to alter the spray mask. (1985-06-19)
+
+18)	New border types added. Now it is possible to use any combination of
+	single and double lines borders on the different sides of the
+	window. (1985-06-24)
+
+19)	A request to the window handler has been added to set up a signal which
+	is sent when there is anything to read from the keyboard buffer and
+	there are no pending read requests to the window. (1985-06-25)
+
+20)	The save/restore cursor escape sequences has been augmented to save
+	the graphic origin and character font. (1985-06-27)
+
+21)	Changing the format of the mouse pointer did not work in landscape
+	mode if the size of the pointer was less than 32 pixels in any
+	direction. (Corrected 1985-06-27)
+
+22)	The appearance of the close, change size, scroll left, scroll right,
+	scroll up, and scroll down boxes has been changed. (1985-06-28)
+
+23)	The Blow-Up box (in the border) has been added. (1985-07-01)
+
+24)	The Help box (in the border) has been added. (1985-07-01)
+
+25)	Window groups has been implemented in a more complete way.
+	Now all windows belonging to a window group are kept together when
+	changing levels of windows. Child windows are also moved when the
+	father is moved or changes size (this is optional). (1985-07-05)
+
+26)	If a non-zero level window was removed the top level window received
+	the signal telling that it has been moved to level zero. (Corrected
+	1985-07-15)
+
+27)	The WGROUP flag cannot be manipulated by the Winflags() command. This
+	cannot be allowed because then all windows in a group are not
+	guaranteed to be on consecutive levels. (Corrected 1985-07-15)
+
+28)	A minor bug existed which could show up when the KEYSCROLL and/or
+	WRITSCROLL flags were set in landscape mode. (Corrected 1985-07-15)
+
+29)	Request added to alter a window without affecting possible children.
+	(1985-07-15)
+
+30)	When the default font is changed the locations of icons in the window
+	are adjusted if the icons have the I_TEXT flag set. (1985-07-17)
+
+31)	It is now allowed to specify an empty report sequence for an icon.
+	I am not sure if this can be used for anything. (1985-07-17)
+
+32)	An icon worked when it was hidden under the border of the window.
+	(Corrected 1985-07-18)
+
+33)	If the TXTSIZE flag is set when using the I/O control requests
+	WINALTER and WIN1ALTER, the coordinates given will be interpreted
+	in font box units. The size of the current default font box is used.
+	(1985-07-18)
+
+34)	Request added to set up the default size and location of a window.
+	(1985-07-18)
+
+35)	Page/Scroll mode implemented (see the Facit Twist manual).
+	  ESC [ ?32 h		Set page (no scroll) mode.
+	  ESC [ ?32 l		Reset page (scroll) mode.
+	(1985-07-24)
+
+36)	Back-tab implemeted. The escape sequence is ESC B. Taken from the
+	Facit Twist terminal. (1985-07-24)
+
+37)	Request to move a window the top of the window group. (1985-07-24)
+
+38)	Request added to set up user defined boxes. The boxes are located
+	in the left side of the border and generates a signal when used.
+	(1985-07-24)
+
+39)	Request added to alter the sequence sent by the help box. (1985-07-24)
+
+40)	The request to get the screen mode can now be issued from a window.
+	(1985-07-25)
+
+41)	The request to get the number of open and created windows can now
+	be issued from a window. (1985-07-25)
+
+42)	The function keys can now be loaded and read through the "super"
+	channel. (1985-07-25)
+
+
+	WSHPP
+	=====
+
+1)	Support for the keywords 'avis', 'bbox', and 'hbox' (corresponding to
+	the flags BX_AVIS, BX_BLOW, and BX_HELP, respectively) has been added.
+	(1985-07-01)
+
+2)	The support for the 'wgrp' flag in the 'flags' data item has been
+	removed. (1985-07-15)
+
+3)	Support for the keyword 'usrb' (corresponding to the w_uboxes member
+	of the winstruc structure) added for the 'window' data item.
+	(1985-07-26)
+
+4)	Support for the keywords 'rulc', 'rurc', 'rllc', and 'rlrc'
+	(corresponding to the flags REL_ULC, REL_URC, REL_LLC, and REL_LRC)
+	added for the 'window' and 'flags' data items. (1985-07-26)
+
+
+	WSHDIS
+	======
+
+1)	Support for the keywords 'avis', 'bbox', and 'hbox' (corresponding to
+	the flags BX_AVIS, BX_BLOW, and BX_HELP, respectively) has been added.
+	(1985-07-01)
+
+2)	The support for the 'wgrp' flag in the 'flags' data item has been
+	removed. (1985-07-15)
+
+3)	Support for the keyword 'usrb' (corresponding to the w_uboxes member
+	of the winstruc structure) added for the 'window' data item.
+	(1985-07-26)
+
+4)	Support for the keywords 'rulc', 'rurc', 'rllc', and 'rlrc'
+	(corresponding to the flags REL_ULC, REL_URC, REL_LLC, and REL_LRC)
+	added for the 'window' and 'flags' data items. (1985-07-26)
+
+
+	WPICTRD
+	=======
+
+1)	A parameter header is written to the standard output before the
+	data. (85-06-05)
+
+2)	The '-o' option has been added to make it possible to specify an
+	output file. (85-06-05)
+
+3)	The '-p' option has been added to make it possible to get a
+	parameter header in front of the data. (85-06-14)
+
+
+	WOPEN
+	=====
+
+1)	Negative arguments to the x and y options were not allowed. (Corrected
+	1985-07-24)
+
+
+	WBG
+	===
+
+1)	If no input file is specified, the data is read from the standard
+	input instead. (85-06-05)
+
+
+	WMSK
+	====
+
+1)	If no input file is specified, the data is read from the standard
+	input instead. (85-06-05)
+
+
+	WMP
+	===
+
+1)	If no input file is specified, the data is read from the standard
+	input instead. (85-06-05)
+
+
+	WIDTP
+	=====
+
+1)	If no input file is specified, the data is read from the standard
+	input instead. (85-06-05)

@@ -1,0 +1,261 @@
+	This file contains descriptions of the window utility commands.
+
+
+	1.	Wopen
+		=====
+
+	This command creates a new window with the status of a terminal and
+	executes the command given as argument in it (if no command is
+	specified, a shell is executed).
+	The syntax is:
+
+		wopen [-notbwz] [-c <n>] [-r <n>] [-h <n>] [-w <n>] [-x <n>]
+		      [-y <n>] [-f <c>] [-s <n>] [-e <n>] [<command>]
+
+	Explanation of the options:
+	  b - Black window.
+	  w - White window (this is the default).
+	  n - No window border.
+	  o - Single (one) line window border.
+	  t - Double (two) lines window border (this is the default).
+	  z - Zoom box shall be present in the border.
+	  c - Number of character columns in the window (default 80).
+	  r - Number of character rows in the window (default 24).
+	  h - height of window in pixels.
+	  w - width of window in pixels.
+	  x - x coordinate of the lower left corner of the window (default 24
+	      in portrait mode and 152 in landscape mode).
+	  y - y coordinate of the lower left corner of the window (default 344
+	      in portrait mode and 216 in landscape mode).
+	  f - The default font to be used (default 'A').
+	  s - Signal to be used to signal that the window has moved, etc.
+	      (default 0).
+	  e - Signal to be sent when the close box is used. If not zero, a
+	      close (exit) box will be present in the border (default 0).
+
+
+	2.	Whead
+		=====
+
+	This command inserts a header in a window.
+	The syntax is:
+
+		whead [-i] [-t] [<header>]
+
+	Explanation of the options:
+	  i - Invert the header.
+	  t - Invert the top header.
+
+	If no header is given, the present header will be removed.
+
+
+	3.	Wicon
+		=====
+
+	This command sets up an icon in a window.
+	The syntax is:
+
+		wicon [-prielmqszt] [-x <n>] [-y <n>] [-w <n>] [-h <n>]
+		      [<sequence>]
+
+	Explanation of the options:
+	  b - Send icon sequence when left mouse button is pressed (default).
+	  r - Send icon sequence when left mouse button is released.
+	  i - Invert the icon when the mouse pointer points to it.
+	  e - Send the icon sequence when we enter the icon area.
+	  l - Send the icon sequence when we leave the icon area.
+	  m - Remove the icon after the icon sequence has been sent.
+	  q - Only send the icon sequence if there is a pending read request
+	      on the window.
+	  s - Check if option e or l is fulfilled upon set up.
+	  z - Only send the icon sequence if it is the level zero window.
+	  t - The coordinates and sizes are supposed to be given in character
+	      box units.
+	  x - The x coordinate of the lower left corner of the icon
+	      (default 0).
+	  y - The y coordinate of the lower left corner of the icon
+	      (default 0).
+	  w - The width of the icon (default 100).
+	  h - The height of the icon (default 100).
+
+	<sequence> is the icon sequence to be sent when the icon is chosen.
+
+
+	4.	Rmicons
+		=======
+
+	This command removes all icons in a window.
+	The syntax is:
+
+		rmicons
+
+
+	5.	Wzoom
+		=====
+
+	This command sets up a zoom list for a window.
+	The syntax is:
+
+		wzoom [<zoomlist>]
+
+	<zoomlist> is a string of capital letters indicating the fonts which
+	the zoom list shall consist of. If no <zoomlist> is specified, any
+	existing zoomlist is removed.
+
+
+	6.	Wfont
+		=====
+
+	This command changes the default font for a window.
+	The syntax is:
+
+		wfont [-x <n>] [-y <n>] [<font>]
+
+	Explanation of the options:
+	  x - The x coordinate for the middle visible character (default 1).
+	  y - The y coordinate for the middle visible character (default 1).
+	<font> is a single capital letter specifying the new font.
+	If no <font> is specified, the next font in the zoom list for the
+	window is used instead.
+
+
+	7.	Wtop
+		====
+
+	This command moves a window to the top level.
+	The syntax is:
+
+		wtop
+
+
+	8.	Wbg
+		===
+
+	This command reads the file specified as argument and uses the data to
+	set up a new background pattern for the window handler. It supposes
+	file descriptor 3 to be the window handler "super" channel.
+	The syntax is:
+
+		wbg [-n] [<file>]
+
+	where the '-n' option shall be used if no error messages shall be
+	displayed.
+	If 'file' is not specified, the standard input is read instead.
+
+
+	9.	Wmsk
+		====
+
+	This command reads the file specified as argument and uses the data to
+	set up new mouse substitute keys for the window handler. It supposes
+	file descriptor 3 to be the window handler "super" channel.
+	The syntax is:
+
+		wmsk [-n] [<file>]
+
+	where the '-n' option shall be used if no error messages shall be
+	displayed.
+	If 'file' is not specified, the standard input is read instead.
+
+
+	10.	Wmp
+		===
+
+	This command reads the file specified as argument and uses the data to
+	set up a new global mouse pointer for the window handler. It supposes
+	file descriptor 3 to be the window handler "super" channel.
+	The syntax is:
+
+		wmp [-n] [<file>]
+
+	where the '-n' option shall be used if no error messages shall be
+	displayed.
+	If 'file' is not specified, the standard input is read instead.
+
+
+	11.	Widtp
+		=====
+
+	This command reads the file specified as argument and uses the data to
+	set up new initial driver and terminal parameters for the window
+	handler. It supposes file descriptor 3 to be the window handler
+	"super" channel.
+	The syntax is:
+
+		widtp [-n] [<file>]
+
+	where the '-n' option shall be used if no error messages shall be
+	displayed.
+	If 'file' is not specified, the standard input is read instead.
+
+
+	12.	Wshdis
+		======
+
+	This command is the reverse of the window shell preprocessor. It
+	produces a text file from a file produced by wshpp which can be
+	modified and then processed by wshpp again.
+	The syntax is:
+
+		wshdis [<infile>] [-o <outfile>]
+
+	Where 'infile' is the input file (default '.window') and 'outfile' is
+	the output file (default standard output).
+
+
+	13.	Wpictrd
+		=======
+
+	This command reads a rectangle of the picture memory for a virtual
+	screen or the whole screen and writes an optional parameter header
+	followed by the binary data to the standard output. The parameter
+	header is the wpictblk structure (see the w_structs.h header file).
+	The syntax is:
+
+		wpictrd [-p] [-x <n>] [-y <n>] [-w <n>] [-h <n>] [-c <n>]
+			[-o <file>]
+
+	Explanation of the options:
+	  p - first output a header parameter.
+	  x - x pixel coordinate of the lower left corner of the rectangle to
+	      read (default 0).
+	  y - y pixel coordinate of the lower left corner of the rectangle to
+	      read (default 0).
+	  w - Width in pixels of the rectangle (default 100).
+	  h - Height in pixels of the rectangle (default 100).
+	  c - The file descriptor (channel) to read the data through
+	      (default 0, i.e. standard input).
+	  o - The name of the output file. If not specified, the output is
+	      written to the standard output.
+
+
+	14.	Wdsize
+		======
+
+	This command sets up a new default size and location for a window. If
+	no arguments are specified, the current size and location of the
+	window will become the default one.
+	The syntax is:
+
+		wdsize [-t] [-x <n>] [-y <n>] [-u <n>] [-v <n>] [-w <n>]
+		       [-h <n>]
+
+	Explanation of the options:
+	  t - The parameters are given in units of font boxes.
+	  x - The lower left corner of the virtual screen (x coordinate).
+	  y - The lower left corner of the virtual screen (y coordinate).
+	  u - The lower left corner of the window (x coordinate).
+	  v - The lower left corner of the window (y coordinate).
+	  w - Width of the window.
+	  h - Height of the window. 
+
+
+	15.	Whelp
+		=====
+
+	This command changes the sequence sent when the help box is used.
+	The syntax is:
+
+		whelp [<sequence>]
+
+	No sequence will be sent if <sequence> is not given.

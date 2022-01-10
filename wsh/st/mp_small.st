@@ -1,0 +1,19 @@
+#
+# A small mouse pointer.
+# This can be used as input to wmp, but first it must be processed by the
+# command:
+#
+#	wshpp mp_small.st -x pointer1 .pointer
+#
+# which creates the data file '.pointer'.
+#
+pointer1:xsiz#5:ysiz#5:xpnt#2:ypnt#2:\
+	:andm#0xffffffff,0xdfffffff,0x8fffffff,0xdfffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+	:orma#0x20000000,0x50000000,0x88000000,0x50000000,0x20000000

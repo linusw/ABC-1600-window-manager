@@ -1,0 +1,733 @@
+	1985-07-29
+
+	ABC1600 WINDOW HANDLER ESCAPE SEQUENCES
+	=======================================
+
+	This documentation briefly describes all the escape sequences
+	implemented in the window handler. There are two types: VT100
+	and/or Facit Twist compatible sequences and sequences private
+	to the ABC1600.
+	The sequences are, if possible, compatible with the ones used
+	in the ABC1600 terminal emulator (the console).
+
+
+	1.	VT100 and Facit Twist Compatible Escape Sequences
+		=================================================
+
+	1.1	Cursor Up
+		=========
+
+	ESC[<Pn>A
+
+	Moves the text cursor <Pn> lines up. The cursor stops at the top
+	margin. If <Pn> is zero or not present, the cursor is moved one line
+	upwards.
+
+
+	1.2	Cursor Down
+		===========
+
+	ESC[<Pn>B
+
+	Moves the text cursor <Pn> lines down. The cursor stops at the
+	bottom margin. If <Pn> is zero or not present, the cursor is moved
+	one line down.
+
+
+	1.3	Cursor Forward
+		==============
+
+	ESC[<Pn>C
+
+	Moves the text cursor <Pn> positions to the right. The cursor stops
+	at the right margin. If <Pn> is zero or not present, the cursor is
+	moved one position to the right.
+
+
+	1.4	Cursor Backward
+		===============
+
+	ESC[<Pn>D
+
+	Moves the text cursor <Pn> positions to the left. The cursor stops
+	at the left margin. If <Pn> is zero or not present, the cursor is
+	moved one position to the left.
+
+
+	1.5	Cursor Position
+		===============
+
+	ESC[<Pn>;<Pn>H    or    ESC[<Pn>;<Pn>f
+
+	Moves the text cursor to the position specified by the parameters.
+	The first parameter specifies the line position and the second the
+	column position. If a parameter is 0 or not specified, the cursor
+	is moved to the first line or column.
+
+
+	1.6	Set Top and Bottom Margins
+		==========================
+
+	ESC[<Pn>;<Pn>r
+
+	Sets the top and bottom margins for the scrolling region. The first
+	parameter is the line number of the first line in the scrolling
+	region and the second the line number of the bottom line. If no
+	parameters are specified, the scrolling region is set to the entire
+	virtual screen. The minimum size of the scrolling region is two
+	lines. The cursor is placed in the home position.
+
+
+	1.7	Erase in Display
+		================
+
+	ESC[<Ps>J
+
+	Erase some part of or the entire virtual screen according to the
+	parameter.
+
+	  Parameter	Meaning
+
+	      0		Erase from and including the current text cursor
+			position to the end of the scrolling region (default).
+	      1		Erase from the start of the scrolling region to
+			and including the current text cursor position.
+	      2		Erase the whole scrolling region.
+
+	This escape sequence does not change the current text cursor position.
+
+
+	1.8	Erase in Line
+		=============
+
+	ESC[<Ps>K
+
+	Erases some part of or the entire line where the text cursor is
+	positioned according to the parameter.
+
+	  Parameter	Meaning
+
+	      0		Erase from and including the current text cursor
+			position to the end of the line (default).
+	      1		Erase from the start of the line to and including
+			the current text cursor position.
+	      2		Erase the entire line.
+
+	This escape sequence does not change the current text cursor position.
+
+
+	1.9	Index
+		=====
+
+	ESC D
+
+	Moves the text cursor one line downward without changing the column
+	position. If the cursor is at the bottom margin, a scroll up is
+	performed.
+
+
+	1.10	Next Line
+		=========
+
+	ESC E
+
+	Moves the text cursor to the first position on the next line downward.
+	If the cursor is at the bottom margin, a scroll up is performed.
+
+
+	1.11	Reverse Index
+		=============
+
+	ESC M
+
+	Moves the text cursor one line upward without changing the column
+	position. If the cursor is at the top margin, a scroll down is
+	performed.
+
+
+	1.12	Save Cursor
+		===========
+
+	ESC 7
+
+	Saves the current text cursor position, graphic cursor position,
+	graphic origin, character attributes, and character font.
+
+
+	1.13	Restore Cursor
+		==============
+
+	ESC 8
+
+	Restores all things saved by the Save Cursor sequence to the state
+	when the Save Cursor sequence was last used. If no Save Cursor
+	sequence has been sent to the window the text cursor, graphic cursor,
+	and graphic origin are set to their home positions.
+
+
+	1.14	Reset to Initial State
+		======================
+
+	ESC c
+
+	On a VT100 terminal this sequence resets it to its initial state.
+	To simulate this in a window, the following things are performed
+	when this sequence is received:
+	  -  The text cursor is put at its home position.
+	  -  The graphic cursor is put at its home position.
+	  -  The text cursor apperance is set to the default.
+	  -  The Set Mode - Reset Mode flags are set to their default values.
+	  -  The character attributes are set to their default values.
+	  -  The top and bottom margin of the scrolling region are set to the
+	     the top and bottom line of the virtual screen.
+	  -  The graphic origin is set to the lower left corner of the virtual
+	     screen.
+	  -  Tab stops are set to the default.
+	  -  The graphic pattern tables are set to their default values.
+	  -  The current font is set to the default font for the window.
+	  -  The whole virtual screen is cleared.
+	  -  All the LED's on the keyboard are turned off.
+
+
+	1.15	Tabulation Backward
+		===================
+
+	ESC[Z
+
+	Moves the text cursor left to the next tab stop. The cursor stops at
+	the left margin.
+
+
+	1.16	Horizontal Tabulation Set
+		=========================
+
+	ESC H
+
+	Set a horizontal tabulation stop at the current text cursor position.
+
+
+	1.17	Tabulation Clear
+		================
+
+	ESC[<Ps>g
+
+	If <Ps> is 0 the horizontal tab stop at the current text cursor
+	position is cleared (default).
+	If <Ps> is 3 all horizontal tab stops are cleared.
+
+
+	1.18	Character Attributes
+		====================
+
+	ESC[<Ps>;<Ps>;....;<Ps>m
+
+	Set or reset character attributes according to the parameter(s):
+
+	  Parameter	Meaning
+
+	      0		Attributes off.
+	      1		Bold or increased intensity. On the ABC1600 this has
+			the same effect as the reverse character attribute.
+	      4		Underscore.
+	      5		Blink. On the ABC1600 this has the same effect as the
+			reverse character attribute.
+	      7		Reverse.
+
+
+	1.19	Device Status Report
+		====================
+
+	ESC[<Ps>;<Ps>;...;<Ps>n
+
+	Request to get a report of the specified status. The status is
+	determined by the parameter(s).
+
+	  Parameter	Meaning
+
+	      6		Report the text cursor position. The report sequence
+			is  ESC[<Pn>;<Pn>R  where the first parameter
+			specifies the line and the second the column.
+	      ?1	Report Portrait/Landscape screen mode. This is
+			compatible with the Facit Twist terminal. The report
+			sequence is  ESC[?Pn  for portrait mode and ESC[?Ln
+			for landscape mode.
+
+
+	1.20	Load LEDs
+		=========
+
+	ESC[<Ps>;<Ps>;...;<Ps>q
+
+	Loads the eight programmable LEDs on the keyboard according to the
+	parameter(s).
+
+	  Parameter	Meaning
+
+	      0		Clear LEDs 1 through 8.
+	      1		Light LED 1.
+	      2		Light LED 2.
+	      3		Light LED 3.
+	      4		Light LED 4.
+	      5		Light LED 5.
+	      6		Light LED 6.
+	      7		Light LED 7.
+	      8		Light LED 8.
+
+	The default value of the parameter is 0.
+	Note that the status of the keyboard LEDs always reflects the LED
+	status for the top level window.
+
+
+	1.21	Set Mode
+		========
+
+	ESC[<Ps>;<Ps>;...;<Ps>h
+
+	Sets the modes specified by the parameter(s). The different modes
+	are:
+
+	  Parameter	Meaning
+
+	      20	Line feed new line mode. When set causes the LF key
+			to imply movement to the first position of the
+			following line and causes the RETURN key to send both
+			CR and LF.
+	      ?5	Screen mode. When set the window is inverted.
+	      ?6	Origin mode. When set the home position for the
+			text cursor is at the upper-left position of the
+			scrolling region.
+	      ?7	Auto wrap mode. When set, the text cursor will advance
+			to the next line when it reaches the right margin.
+	      ?32	Page mode, i.e. the window does not scroll. This is
+			compatible with the Facit Twist terminal.
+	      ?33	Underline cursor. This is compatible with the Facit
+			Twist terminal.
+	      ?34	Blinking cursor. This is compatible with the Facit
+			Twist terminal.
+	      ?35	Cursor off. This is compatible with the Facit Twist
+			terminal.
+
+
+	1.22	Reset Mode
+		==========
+
+	ESC[<Ps>;<Ps>;...;<Ps>l
+
+	Resets the modes specified by the parameter(s). The different modes
+	are:
+
+	  Parameter	Meaning
+
+	      20	Line feed new line mode. When reset causes the LF key
+			to imply only vertical movement of the text cursor and
+			the RETURN key to send the single code CR.
+	      ?5	Screen mode. When reset the window is not inverted.
+	      ?6	Origin mode. When reset the text cursor home position
+			is at the upper-left position of the virtual screen.
+	      ?7	Auto wrap mode. When reset, the text cursor will
+			not advance to the next line when it reaches the right
+			margin.
+	      ?32	Scroll mode. This is compatible with the Facit Twist
+			terminal.
+	      ?33	Reverse block cursor. This is compatible with the
+			Facit Twist terminal.
+	      ?34	Non-blinking cursor. This is compatible with the Facit
+			Twist terminal.
+	      ?35	Cursor on. This is compatible with the Facit Twist
+			terminal.
+
+
+	1.23	Select Character Set
+		====================
+
+	ESC(A     or     ESC)A
+	ESC(B     or     ESC)B
+		.
+		.
+		.
+	ESC(Z     or     ESC)Z
+
+	Selects the desired font. When changing between fonts of different
+	sizes, the fonts will be aligned so that the base lines of the fonts
+	will be the same.
+	Note that when the font is changed for a window, the saving of the
+	text contents of the window will be lost.
+
+
+	2.	ABC1600 Private Escape Sequences
+		================================
+
+
+	2.1	Draw Line
+		=========
+
+	ESC:<x>;<y>;<pno>;<cno>d
+
+	Draws a line from the current graphic cursor position to <x>,<y>,
+	using the pattern specified by <pno>. If the colour number <cno> is
+	'1' a normal line is drawn and if it is '0' or not specified the line
+	is the inverse of that obtained with the colour number '1'. If <pno>
+	is not specified, a continous line is drawn.
+	The graphic cursor position is updated to <x>,<y>.
+
+
+	2.2	Draw Inverted Line
+		==================
+
+	ESC:<x>;<y>i
+
+	Draws a line from the current graphic cursor position to <x>,<y> by
+	inverting the corresponding pixels. The line can be removed by drawing
+	an inverted line a second time.
+	The graphic cursor position is updated to <x>,<y>.
+
+
+	2.3	Move Graphic Cursor
+		===================
+
+	ESC:<x>;<y>m
+
+	Positions the graphic cursor at <x>,<y>.
+
+
+	2.4	Draw Point
+		==========
+
+	ESC:<x>;<y>;<op>;<cno>p
+
+	Changes or reads the pixel at <x>,<y>. <op> determines the operation:
+
+	  If <op> is 0 or not specified, set the pixel.
+	  If <op> is 1, clear the pixel.
+	  If <op> is 2, complement the pixel.
+	  If <op> is 10, the colour of the pixel at <x>,<y> is reported:
+
+		ESC:<x>;<y>;11;<cno>p		<cno> is '1' if the pixel is
+						set, otherwise '0'.
+		ESC:<x>;<y>;11p			The specified pixel is outside
+						the virtual screen.
+
+	The graphic cursor position is updated to <x>,<y> if <op> is 0, 1, or
+	2.
+	Note that <cno> is not used for <op> equal to 0, 1, 2, or 10 and may
+	be left out.
+
+
+	2.5	Draw Arc
+		========
+
+	ESC:<x>;<y>;<len>;<pno>;<cno>a
+
+	Draws a circle arc with the origin at <x>,<y> from the current graphic
+	cursor position counter-clockwise with length <len> using the pattern
+	<pno>. If <pno> is not specified, a continous arc is drawn.
+	The length <len> is the number of vertical and horizontal pixel steps,
+	i.e. a full circle is drawn when <len> is 8 * circle radius.
+	If the colour number <cno> is '1', a normal arc is drawn and if it is
+	'0' or not specified the arc is the inverse of that obtained with the
+	colour number '1'.
+	The graphic cursor position is updated to the last drawn pixel in the
+	arc.
+
+
+	2.6	Draw Inverted Arc
+		=================
+
+	ESC:<x>;<y>;<len>I
+
+	Draws a circle arc, with the origin at <x>,<y>, from the current
+	graphic cursor position counter-clockwise with length <len> by
+	inverting the corresponding pixels.
+	The length <len> is the number of vertical and horizontal pixel steps,
+	i.e. a full circle is drawn when <len> is 8 * circle radius.
+	The graphic cursor position is updated to the last drawn pixel in the
+	arc.
+
+
+	2.7	Fill Area
+		=========
+
+	ESC:<x>;<y>;<pno>;<cno>f
+
+	Fills a rectangle with the pattern <pno>. If <pno> is not specified,
+	all pixels in the rectangle are set.
+	The rectangle has one of its corners at <x>,<y> and the opposite
+	corner at the current graphic cursor position.
+	If the colour number <cno> is '1', a normal fill is done and if it is
+	'0' or not specified, the rectangle is the inverse of that obtained
+	with colour number '1'.
+	The graphic cursor position is updated to <x>,<y>.
+
+
+	2.8	Draw Filled Circle
+		==================
+
+	ESC:<x>;<y>;<rad>;<pno>;<cno>c
+
+	Draws a filled circle with origin at <x>,<y> and with radius <rad>
+	using the pattern <pno>. If <pno> is not specified, all pixels in the
+	circle are set.
+	If the colour number <cno> is '1', a normal fill is done and if it is
+	'0' or not specified, the circle is the inverse of that obtained with
+	colour number '1'.
+	The graphic cursor position is updated to <x>,<y>.
+
+
+	2.9	Paint Area
+		==========
+
+	ESC:<x>;<y>;<pno>;<cno>F
+
+	Paints an area with the pattern <pno>. The area to be painted should
+	be limited by continous lines (curves) generated by previous line,
+	dot, circle, fill, paint, etc. operations.
+	<x>,<y> specifies the starting point for the paint and should be
+	within the area. If the pixel at <x>,<y> is cleared, the limits of
+	the area are supposed to consist of set pixels and vice versa.
+	If <pno> is '0' or not specified, the area is painted completely and
+	"goes around corners". If <pno> is not zero the paint does not "go
+	around corners".
+	If the colour number <cno> is '1' a normal paint is done and if it is
+	'0' or not specified, the paint is the inverse of that obtained with
+	colour number '1'.
+	The graphic cursor position is updated to <x>,<y>.
+	Note that since paint works directly with the graphic memory,
+	different results may be obtained if the window being painted is
+	overlapped by another window or not.
+
+
+	2.10	Move Area
+		=========
+
+	ESC:<xsrc>;<ysrc>;<xdest>;<ydest>;<width>;<height>;<op>r
+
+	Moves (actually copies) the rectangular area with lower left corner
+	at <xsrc>,<ysrc> to <xdest>,<ydest>. The area has width <width> and
+	height <height>.
+	If the operation <op> is '0' or not specified the area is moved
+	(copied) as it is, and if it is '1' the area is complemented.
+	The graphic cursor position is not updated.
+	Note that only those areas where both the source and destination areas
+	are visible are moved.
+
+
+	2.11	Define Pattern
+		==============
+
+	ESC:<pno>;<hmask>;<vmask>;<shift>;<op>R
+
+	Redefines the pattern <pno> as specified. The pattern is defined for
+	portrait mode and will be tilted 90 degrees when used in landscape
+	mode.
+	<hmask> defines a 16 bit horizontal mask used repeatedly on a scan
+	line during fill or when drawing lines or arcs.
+	<vmask> defines a 16 bit vertical mask where each bit determines the
+	operation on the corresponding scan line. If a bit is set <hmask> is
+	used to fill the scan line, otherwise <op> determines the operation:
+
+	  <op> = 0	Clear the line, rotate <hmask> the number of bits
+			given by <shift>.
+	  <op> = 1	Set the line, rotate <hmask> the number of bits
+			given by <shift>.
+	  <op> = 2	Use <hmask> but complemented, rotate <hmask> the
+			number of bits given by <shift>.
+	  <op> = 3	Leave line as it is, rotate <hmask> the number of bits
+			given by <shift>.
+	  <op> = 4	Clear the line, no rotate.
+	  <op> = 5	Set the line, no rotate.
+	  <op> = 6	Use <hmask> but complemented, no rotate.
+	  <op> = 7	Leave line as it is, no rotate.
+
+	<pno> can be in the range 1 - 15. Pattern number zero can not be
+	redefined.
+	<shift> can be in the range 0 - 15.
+	Only <hmask> is used by the draw line and draw arc escape sequences.
+
+
+	2.12	Set Text Cursor
+		===============
+
+	ESC:<sel>H
+
+	The text cursor is positioned at the position of the graphic cursor
+	according to <sel>:
+
+	  <sel> = 0	The upper left corner of the font box is placed at the
+			graphic cursor.
+	  <sel> = 1	The lower left corner of the font box is placed at the
+			graphic cursor.
+	  <sel> = 2	The left edge of the base line for the font box is
+			placed at the graphic cursor.
+
+	Note that when this escape sequence is sent to a window, the saving of
+	the text contents of the window will be lost.
+
+
+	2.13	Mouse Report
+		============
+
+	ESC:<sel>M
+
+	This escape sequence is used to get a report of the current mouse
+	pointer position. The report is, depending on <sel>, only sent when
+	the mouse pointer or the mouse buttons have changed.
+
+	  <sel> = 7	The report is sent immediately if the mouse has
+			changed since the last report. Otherwise the report
+			is sent as soon as the mouse changes. A change is
+			either a mouse movement or a status change of a mouse
+			button.
+			The report sequence is:
+
+			  ESC:<x>;<y>;<buttons>P
+
+			where <x> and <y> is the position of the mouse
+			pointer. If the mouse pointer is outside the virtual
+			screen, the reported position will be at the virtual
+			screen border.
+			<buttons> is '1' if the left button is pressed, '2' if
+			the middle button is pressed, '3' if both the left and 
+			middle buttons are pressed, and '0' if no button is
+			pressed.
+	  <sel> = 8	Identical to <sel> = 7, except that reports are only
+			sent when the left or middle buttons changes.
+
+	Note that mouse reports are only sent to the top level window.
+
+
+	2.14	Device Status Report
+		====================
+
+	ESC:<sel>n
+
+	Reports the status of different devices, determined by <sel>:
+
+	  <sel> = 1	Reports the graphic cursor position. The report
+			sequence is:
+
+			  ESC:<x>;<y>R
+
+			where <x>,<y> is the current graphic cursor position.
+	  <sel> = 2	Reports the mouse position and button status. This is
+			identical to the Mouse Report escape sequence with
+			<sel> = 7 (ESC:7M), except that the report is sent
+			immediately.
+			Note that reports are only sent to the top level
+			window.
+	  <sel> = 3	Reports the size of the virtual screen and the current
+			font. The report sequence is:
+
+			  ESC:<vsx>;<vsy>;<fsx>;<fsy>;<bl>;<fno>W
+
+			<vsx> and <vsy> are the x and y pixel sizes,
+			respectively, of the virtual screen, <fsx> and <fsy>
+			are the x and y pixel sizes of the current font box,
+			<bl> is the base line for the font box, and <fno> is
+			the ASCII code for the name of the current font.
+
+
+	2.15	Set Graphic Origin
+		==================
+
+	ESC:<x>;<y>O
+
+	Sets the graphic origin to <x>,<y>. The graphic cursor position is
+	set to 0,0.
+	All coordinates given by the graphic escape sequences are relative
+	to the graphic origin.
+	Note that the mouse position is always reported relative to the lower
+	left corner of the virtual screen.
+
+
+	2.16	Clear All
+		=========
+
+	ESC:J
+
+	Clear window and home cursors, etc. as follows:
+
+	  -  The text cursor is set to 1,1.
+	  -  The graphic cursor is set to 0,0.
+	  -  The graphic origin is set to 0,0.
+	  -  The scroll region is reset to the whole virtual screen.
+	  -  If the current character font is the same as the default font for
+	     the window, the text contents of the window will be started to be
+	     remembered again.
+	  -  The whole virtual screen is cleared.
+
+
+	2.17	Load Key LEDs
+		=============
+
+	ESC:<sel>;<sel>;...;<sel>q
+
+	Loads the LEDs on the INS and ALT keys according to the parameter(s).
+
+	  <sel> = 0	Clear both the LEDs.
+	  <sel> = 1	Light the INS key LED.
+	  <sel> = 2	Light the ALT key LED.
+
+	If no parameter is specified, the LEDs are cleared.
+	Note that the status of the keyboard LEDs always reflects the LED
+	status for the top level window.
+
+
+	2.18	Private Set Mode
+		================
+
+	ESC:<sel>;<sel>;...;<sel>h
+
+	Sets the ABC1600 private modes specified by the parameter(s). The
+	different modes are:
+
+	  <sel> = 2	Phased pattern mode. When set, the patterns obtained
+			when using the fill area, draw filled circle, paint
+			area, and spray escape sequences will be phased.
+
+
+	2.19	Private Reset Mode
+		==================
+
+	ESC:<sel>;<sel>;...;<sel>l
+
+	Resets the ABC1600 private modes specified by the parameter(s). The
+	different modes are:
+
+	  <sel> = 2	Non-phased pattern mode. When reset, the patterns
+			obtained when using the fill area, draw circle, paint
+			area, and spray escape sequences will not be phased.
+
+
+	2.20	Spray
+		=====
+
+	ESC:<x>;<y>;<pno>;<op>s
+
+	This escape sequence manipulates the pixels which are set both in the
+	spray mask and in the pattern specified by <pno>, according to the
+	operation <op>.
+	<x>,<y> is the lower left corner of where to put the 32x32 pixels
+	spray mask.
+	If <pno> is not specified, '0' is used and if <op> is not specified,
+	'0' is used.
+	The following operations can be performed:
+
+	  <op> = 0	All pixels which are set both in the spray mask and in
+			the pattern are set and the remaining pixels are
+			cleared (replace).
+	  <op> = 1	All pixels which are set both in the spray mask and in
+			the pattern are set. The remaining pixels are left
+			unaffected (set).
+	  <op> = 2	All pixels which are set both in the spray mask and in
+			the pattern are cleared. The remaining pixels are left
+			unaffected (reset).
+	  <op> = 3	All pixels which are set both in the spray mask and in
+			the pattern are complemented. The remaining pixels are
+			left unaffected (complement).
+
+	The spray mask for a window can be altered by a request to the window
+	handler.
+	For most applications of this escape sequence, the window must
+	probably be set to phased pattern mode in order to give a meaningful
+	result.
+	The current graphic cursor position is updated to <x>,<y>.

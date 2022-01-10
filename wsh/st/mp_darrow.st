@@ -1,0 +1,21 @@
+#
+# A horizontal double arrow pointer.
+# This can be used as input to wmp, but first it must be processed by the
+# command:
+#
+#	wshpp mp_darrow.st -x pointer1 .pointer
+#
+# which creates the data file '.pointer'.
+#
+pointer1:xsiz#28:ysiz#11:xpnt#14:ypnt#5:\
+	:andm#0xff9f9fff,0xfe6f67ff,0xf9dfb9ff,0xe7801e7f,\
+	      0x9fffff9f,0x7fffffef,0x9fffff9f,0xe7801e7f,\
+	      0xf9dfb9ff,0xfe6f67ff,0xff9f9fff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+	:orma#0x00000000,0x00606000,0x01c03800,0x07801e00,\
+	      0x1fffff80,0x7fffffe0,0x1fffff80,0x07801e00,\
+	      0x01c03800,0x00606000

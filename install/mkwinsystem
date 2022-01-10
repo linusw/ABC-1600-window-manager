@@ -1,0 +1,16 @@
+:
+: This script creates the necessary things when the window handler is
+: installed for the first time on an ABC1600 computer.
+:
+if test -f /win
+then rm /win
+fi
+if test -d /win
+then :
+else mkdir /win
+fi
+if test -f /dev/windev
+then rm /dev/windev
+fi
+/etc/mknod /dev/windev c 3 2
+/usr/window/bin/wshpp /usr/window/etc/stdsh.wd -o /etc/.window

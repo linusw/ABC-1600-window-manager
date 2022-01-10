@@ -1,0 +1,282 @@
+###################################################
+##                                               ##
+## Window-shell a'la MacIntosh by Peter Printzen ##
+##                                               ##
+###################################################
+#
+init:pointer1:terminal1:substitute1:menu1
+#
+pointer1:xsiz#10:ysiz#16:xpnt#1:ypnt#1:\
+         andm#0xffffffff,0xbfffffff,0x9fffffff,0x8fffffff,\
+              0x87ffffff,0x83ffffff,0x81ffffff,0x80ffffff,\
+              0x807fffff,0x83ffffff,0x93ffffff,0xb9ffffff,\
+              0xf9ffffff,0xfcffffff,0xfcffffff,0xffffffff:\
+         orma#0xc0000000,0xa0000000,0x90000000,0x88000000,\
+              0x84000000,0x82000000,0x81000000,0x80800000,\
+              0x80400000,0x83800000,0x92000000,0xa9000000,\
+              0xc9000000,0x04800000,0x04800000,0x03000000
+#
+substitute1:init#0:onof#0xfe:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:\
+            mpul#0xad:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:lpdo#0xb3:\
+            lple#0xbc:lpri#0xb4:lpul#0xbd:lpur#0xb5:lpdl#0xbf:lpdr#0xb7:\
+            pcmd#0xcc:cwin#0xce:mtxt#0xcd:step#4:lstp#16
+#
+terminal1:super:command1
+command1:/usr/bryte/bin/ncur,ncur
+#
+menu1:window1:lstring1:pstring1:\
+      choice1:choice2:choice3:choice4:choice9
+menu10:window10:string10:choice10:choice11:choice12:choice13:choice14:choice15
+menu20:window20:string20:choice20:choice21:choice22:choice23
+menu30:window30:string30:choice30:choice31:choice32:choice33
+menu40:window40:string40:choice40:choice41:choice42:choice43
+#
+window1:pxor#0:pyor#982:pxsi#768:pysi#42:pvxo#0:pvyo#14:pvxs#768:pvys#28:\
+        lxor#0:lyor#726:lxsi#1024:lysi#42:lvxo#0:lvyo#14:lvxs#1024:lvys#28:\
+        bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+        pmod:lmod:ncur:novr:spec
+window10:pxor#9:pyor#924:pxsi#101:pysi#72:pvxo#0:pvyo#0:pvxs#101:pvys#72:\
+         lxor#9:lyor#668:lxsi#101:lysi#72:lvxo#0:lvyo#0:lvxs#101:lvys#72:\
+         bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+         pmod:lmod:ncur:lock
+window20:pxor#99:pyor#952:pxsi#137:pysi#44:pvxo#0:pvyo#0:pvxs#137:pvys#44:\
+         lxor#99:lyor#696:lxsi#137:lysi#44:lvxo#0:lvyo#0:lvxs#137:lvys#44:\
+         bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+         pmod:lmod:ncur:lock
+window30:pxor#180:pyor#952:pxsi#65:pysi#44:pvxo#0:pvyo#0:pvxs#65:pvys#44:\
+         lxor#180:lyor#696:lxsi#65:lysi#44:lvxo#0:lvyo#0:lvxs#65:lvys#44:\
+         bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+         pmod:lmod:ncur:lock
+window40:pxor#270:pyor#952:pxsi#65:pysi#44:pvxo#0:pvyo#0:pvxs#65:pvys#44:\
+         lxor#270:lyor#696:lxsi#65:lysi#44:lvxo#0:lvyo#0:lvxs#65:lvys#44:\
+         bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+         pmod:lmod:ncur:lock
+#
+lstring1:\e:0;14m\e:1023;14;;1d\e:0;20m\e:1H\
+  SYSTEM    SHELL    EDITOR    MISCELLANOUS\
+\e:939;20m\e:1HPANIC\
+\e:1000;22m\e:1011;22;;1d\e:1011;33;;1d\e:1000;33;;1d\e:1000;22;;1d\
+\e:988;26m\e:992;26;;1d\e:992;24;;1d\e:995;27;;1d\e:992;30;;1d\
+\e:992;28;;1d\e:988;28;;1d\e:988;26;;1d
+pstring1:\e:0;14m\e:767;14;;1d\e:0;20m\e:1H\
+  SYSTEM    SHELL    EDITOR    MISCELLANOUS
+string10: TURN\n\r RESTORE\n\r NORMAL\n\r INVERSE\n\r LOGOUT\
+\e:0;71m\e:0;0;;1d\e:100;0;;1d\e:100;71;;1d\e:99;71m\e:99;1;;1d\e:1;1;;1d
+string20: CSHELL, small\n\r CSHELL, large\n\r SHELL\
+\e:0;43m\e:0;0;;1d\e:136;0;;1d\e:136;43;;1d\e:135;43m\e:135;1;;1d\e:1;1;;1d
+string30: EMACS\n\r SIV\n\r VI\
+\e:0;43m\e:0;0;;1d\e:64;0;;1d\e:64;43;;1d\e:63;43m\e:63;1;;1d\e:1;1;;1d
+string40: FSADM\n\r FE\n\r CLOCK\
+\e:0;43m\e:0;0;;1d\e:64;0;;1d\e:64;43;;1d\e:63;43m\e:63;1;;1d\e:1;1;;1d
+#
+choice1:icon1:action1
+choice2:icon2:action2
+choice3:icon3:action3
+choice4:icon4:action4
+choice9:icon9:action9
+choice10:icon10:action10
+choice11:icon11:action11
+choice12:icon12:action12
+choice13:icon13:action13
+choice14:icon14:action14
+choice15:icon15:action15
+choice20:icon20:action20
+choice21:icon21:action21
+choice22:icon22:action22
+choice23:icon23:action23
+choice30:icon30:action30
+choice31:icon31:action31
+choice32:icon32:action32
+choice33:icon33:action33
+choice40:icon40:action40
+choice41:icon41:action41
+choice42:icon42:action42
+choice43:icon43:action43
+#
+action1:menu10
+action2:menu20
+action3:menu30
+action4:menu40
+action9:logout:menu1
+action10:close:menu1
+action11:turn:close:menu1
+action12:close:restore:menu1
+action13:close:normal:menu1
+action14:close:inverse:menu1
+action15:logout:close:menu1
+action20:close:menu1
+action21:terminal21:close:menu1
+action22:terminal22:close:menu1
+action23:terminal23:close:menu1
+action30:close:menu1
+action31:terminal31:close:menu1
+action32:terminal32:close:menu1
+action33:terminal33:close:menu1
+action40:close:menu1
+action41:terminal41:close:menu1
+action42:terminal42:close:menu1
+action43:terminal43:close:menu1
+#
+icon1:pxor#0:pyor#15:pxsi#90:pysi#27:\
+      lxor#0:lyor#15:lxsi#90:lysi#27:\
+      pmod:lmod:rqst
+icon2:pxor#90:pyor#15:pxsi#81:pysi#27:\
+      lxor#90:lyor#15:lxsi#81:lysi#27:\
+      pmod:lmod:rqst
+icon3:pxor#171:pyor#15:pxsi#90:pysi#27:\
+      lxor#171:lyor#15:lxsi#90:lysi#27:\
+      pmod:lmod:rqst
+icon4:pxor#261:pyor#15:pxsi#144:pysi#27:\
+      lxor#261:lyor#15:lxsi#144:lysi#27:\
+      pmod:lmod:rqst
+icon9:pxor#750:pyor#23:pxsi#10:pysi#10:\
+      lxor#1001:lyor#23:lxsi#10:lysi#10:\
+      pmod:lmod:rqst:inve
+icon10:pxor#0:pyor#0:pxsi#101:pysi#72:\
+       lxor#0:lyor#0:lxsi#101:lysi#72:\
+       pmod:lmod:rqst:leav
+icon11:pxor#1:pyor#58:pxsi#98:pysi#14:\
+       lxor#1:lyor#58:lxsi#98:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon12:pxor#1:pyor#44:pxsi#98:pysi#14:\
+       lxor#1:lyor#44:lxsi#98:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon13:pxor#1:pyor#30:pxsi#98:pysi#14:\
+       lxor#1:lyor#30:lxsi#98:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon14:pxor#1:pyor#16:pxsi#98:pysi#14:\
+       lxor#1:lyor#16:lxsi#98:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon15:pxor#1:pyor#2:pxsi#98:pysi#14:\
+       lxor#1:lyor#2:lxsi#98:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon20:pxor#0:pyor#0:pxsi#137:pysi#44:\
+       lxor#0:lyor#0:lxsi#137:lysi#44:\
+       pmod:lmod:rqst:leav
+icon21:pxor#1:pyor#30:pxsi#134:pysi#14:\
+       lxor#1:lyor#30:lxsi#134:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon22:pxor#1:pyor#16:pxsi#134:pysi#14:\
+       lxor#1:lyor#16:lxsi#134:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon23:pxor#1:pyor#2:pxsi#134:pysi#14:\
+       lxor#1:lyor#2:lxsi#134:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon30:pxor#0:pyor#0:pxsi#65:pysi#44:\
+       lxor#0:lyor#0:lxsi#65:lysi#44:\
+       pmod:lmod:rqst:leav
+icon31:pxor#1:pyor#30:pxsi#62:pysi#14:\
+       lxor#1:lyor#30:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon32:pxor#1:pyor#16:pxsi#62:pysi#14:\
+       lxor#1:lyor#16:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon33:pxor#1:pyor#2:pxsi#62:pysi#14:\
+       lxor#1:lyor#2:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon40:pxor#0:pyor#0:pxsi#65:pysi#44:\
+       lxor#0:lyor#0:lxsi#65:lysi#44:\
+       pmod:lmod:rqst:leav
+icon41:pxor#1:pyor#30:pxsi#62:pysi#14:\
+       lxor#1:lyor#30:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon42:pxor#1:pyor#16:pxsi#62:pysi#14:\
+       lxor#1:lyor#16:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+icon43:pxor#1:pyor#2:pxsi#62:pysi#14:\
+       lxor#1:lyor#2:lxsi#62:lysi#14:\
+       pmod:lmod:rqst:inve:rlse
+
+## cshell 24x80 ##
+
+terminal21:window21:header21:environ21:command21
+window21:pxor#23:pyor#600:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         lxor#123:lyor#300:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+header21:head= CSHELL :invt
+environ21:TERM=vt100
+command21:/bin/csh,csh
+
+## cshell 132x64 ##
+
+terminal22:window22:header21:environ22:command21
+window22:pxor#23:pyor#23:pxsi#132:pysi#64:pvxo#1:pvyo#1:pvxs#132:pvys#64:\
+         lxor#23:lyor#23:lxsi#132:lysi#64:lvxo#1:lvyo#1:lvxs#132:lvys#64:\
+         colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:kscr
+environ22:TERM=vt100
+
+## shell 24x80 ##
+
+terminal23:window23:header23:environ23:command23
+window23:pxor#23:pyor#600:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         lxor#123:lyor#300:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+header23:head= SHELL :invt
+environ23:TERM=vt100
+command23:/bin/sh,sh
+
+## emacs ##
+
+terminal31:window31:header31:environ31:command31
+window31:pxor#23:pyor#100:pxsi#80:pysi#40:pvxo#1:pvyo#1:pvxs#80:pvys#40:\
+         lxor#100:lyor#100:lxsi#80:lysi#40:lvxo#1:lvyo#1:lvxs#80:lvys#40:\
+         colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+header31:head= EMACS :invt
+environ31:TERM=win,TERMCAP=w0|win|w:co#80:li#40:tc=abc1600w:
+command31:/usr/bin/emacs,emacs
+
+## siv ##
+
+terminal32:window32:header32:environ32:command32
+window32:pxor#23:pyor#176:pxsi#80:pysi#40:pvxo#1:pvyo#1:pvxs#80:pvys#40:\
+         lxor#23:lyor#216:lxsi#80:lysi#30:lvxo#1:lvyo#1:lvxs#80:lvys#30:\
+         colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+header32:head= SIV :invt
+environ32:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#30:tc=abc1600w:
+command32:/usr/bin/siv,siv
+
+## vi ##
+
+terminal33:window33:header33:environ33:command33
+window33:pxor#24:pyor#500:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         lxor#30:lyor#300:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+header33:head= VI :invt
+environ33:TERM=vt100
+command33:/bin/vi,vi
+
+## fsadm  ##
+
+terminal41:window41:header41:command41
+window41:pxor#64:pyor#256:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         lxor#64:lyor#256:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#16:csig#2:\
+         pmod:lmod:ncur:cbox:mbox:text
+header41:head= FSADM :invt
+command41:/usr/bryte/a,fsadm
+
+## fe ##
+
+terminal42:window42:header42:command42
+window42:pxor#23:pyor#23:pxsi#700:pysi#700:pvxo#0:pvyo#0:pvxs#700:pvys#700:\
+         lxor#23:lyor#23:lxsi#700:lysi#694:lvxo#0:lvyo#0:lvxs#700:lvys#694:\
+         colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#2:csig#0:\
+         pmod:lmod:stxt:sbox:mbox:hscr:vscr:ncpi
+header42:head= FONT EDITOR :invt
+command42:/usr/bin/fe,fe
+
+## clock ##
+
+terminal43:window43:header43:command43
+window43:pxor#600:pyor#800:pxsi#100:pysi#100:pvxo#0:pvyo#0:pvxs#100:pvys#100:\
+         lxor#850:lyor#600:lxsi#100:lysi#100:lvxo#0:lvyo#0:lvxs#100:lvys#100:\
+         bord#2:colr#1:pfnt#0x48:lfnt#0x48:rsig#16:csig#17:\
+         pmod:lmod:ncur:cbox:mbox:ncpi
+header43:head= Motala :invt
+command43:/usr/window/demo/clock,clock,-n

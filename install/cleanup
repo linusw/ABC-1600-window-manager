@@ -1,0 +1,19 @@
+:
+: This script removes everything created by the makebinary and makeheader
+: scripts.
+:
+if uid
+then :
+else echo "cleanup: you must be super user to do this" ; exit 1
+fi
+:
+if test -d usr
+then
+echo "Removing the ./usr directory:"
+rm -rv ./usr
+fi
+if test -d etc
+then
+echo "Removing the ./etc directory:"
+rm -rv ./etc
+fi

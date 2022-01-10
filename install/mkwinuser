@@ -1,0 +1,5 @@
+:
+: This script copies a .profile file to the users home directory, which will
+: activate the window handler when the user logs in.
+:
+cp /usr/window/etc/.profile $HOME/.profile

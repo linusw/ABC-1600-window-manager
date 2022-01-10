@@ -1,0 +1,487 @@
+#######################################################################
+#                                                                     #
+# This file contains the swedish version of window handler demo menu. #
+#                                                                     #
+# 1985-04-02, Peter Andersson, Luxor Datorer AB                       #
+#                                                                     #
+#######################################################################
+
+
+#
+# What to do on initialization.
+#
+init:substitute1:menu1
+
+substitute1:init#0:onof#0xee:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:mpul#0xad:\
+:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:lpdo#0xb3:lple#0xbc:lpri#0xb4:\
+:lpul#0xbd:lpur#0xb5:lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:mtxt#0xcd:\
+:step#4:lstp#16
+
+#
+# The main menu.
+#
+menu1:window1:string1:choice1:choice2:choice3:choice4:choice5
+
+#
+# The program development pull down menu.
+#
+menu30:window30:string30:choice30:choice31:choice32:choice33:choice34:choice35
+
+#
+# The demo pull down menu.
+#
+menu40:window40:string40:choice40:choice41:choice42
+
+#
+# The system pull down menu.
+#
+menu50:window50:string50:choice50:choice51:choice52:choice53:choice54:choice55
+
+#
+# The five choices in the main menu.
+#
+choice1:icon1:action1
+choice2:icon2:action2
+choice3:icon3:action3
+choice4:icon4:action4
+choice5:icon5:action5
+
+#
+# The six choices in the program development pull down menu.
+#
+choice30:icon30:action30
+choice31:icon31:action31
+choice32:icon32:action32
+choice33:icon33:action33
+choice34:icon34:action34
+choice35:icon35:action35
+
+#
+# The three choices in the demo pull down menu.
+#
+choice40:icon40:action40
+choice41:icon41:action41
+choice42:icon42:action42
+
+#
+# The six choices in the system pull down menu.
+#
+choice50:icon50:action50
+choice51:icon51:action51
+choice52:icon52:action52
+choice53:icon53:action53
+choice54:icon54:action54
+choice55:icon55:action55
+
+#
+# The action when starting Qcalc.
+#
+action1:terminal10:menu1
+
+#
+# The action when starting Lex68.
+#
+action2:terminal20:menu1
+
+#
+# The action when choosing the program development option.
+#
+action3:menu30
+
+#
+# The action when choosing the demo option.
+#
+action4:menu40
+
+#
+# The action when choosing the system option.
+#
+action5:menu50
+
+#
+# The action when choosing Shell in the program development pull down menu.
+#
+action30:flags1:terminal300:close:menu1
+
+#
+# The action when choosing the Big Shell option.
+#
+action31:flags1:terminal310:close:menu1
+
+#
+# The action when choosing the Basic option.
+#
+action32:flags1:terminal320:close:menu1
+
+#
+# The action when choosing the Siv editor option.
+#
+action33:flags1:terminal330:close:menu1
+
+#
+# The action when choosing the Emacs option.
+#
+action34:flags1:terminal340:close:menu1
+
+#
+# The action when leaving the program development pull down menu.
+#
+action35:close:menu1
+
+#
+# The action when choosing the Stars choice in the demo pull down menu.
+#
+action40:flags1:terminal400:close:menu1
+
+#
+# The action when choosing the Draw option.
+#
+action41:flags1:terminal410:close:menu1
+
+#
+# The action when leaving the demo pull down menu.
+#
+action42:close:menu1
+
+#
+# The action when choosing the Change Background option in the system pull
+# down menu.
+#
+action50:flags1:terminal500:close:menu1
+
+#
+# The action when choosing the Normal Video option.
+#
+action51:flags1:normal:menu50
+
+#
+# The action when choosing the Inverse Video option.
+#
+action52:flags1:inverse:menu50
+
+#
+# The action when choosing the Restore Screen option.
+#
+action53:close:restore:menu1
+
+#
+# The action when choosing the Logout option.
+#
+action54:logout:close:menu1
+
+#
+# The action when leaving the system pull down menu.
+#
+action55:close:menu1
+
+
+#
+# Data for the main menu window.
+#
+window1:pxor#0:pyor#963:pxsi#768:pysi#61:pvxo#0:pvyo#0:pvxs#768:pvys#61:\
+       :lxor#0:lyor#707:lxsi#768:lysi#61:lvxo#0:lvyo#0:lvxs#768:lvys#61:\
+       :bord#0:colr#0:pfnt#0x41:lfnt#0x41:\
+       :pmod:lmod:ncur:nmov:alls:spec
+
+#
+# The text and graphic contents of the main menu window.
+#
+string1:\e:;m\e:767;60;1;0f\e:15;0m\e:140;55f\e:166;0m\e:293;55f\
+\e:319;0m\e:446;55f\e:472;0m\e:599;55f\e:625;0m\e:752;55f\
+\e[2;7HKALKYL\
+\e:178;15m\e:208;50;0;1f\e:183;45m\e:203;45d\
+\e:183;40m\e:203;40d\e:183;35m\e:203;35d\
+\e:183;30m\e:203;30d\e:183;25m\e:203;25d\
+\e:183;20m\e:203;20d\e:197;15m\e:197;41d\e:208;41d\
+\e:198;5m\e:228;40;0;1f\e:203;35m\e:223;35d\
+\e:203;30m\e:223;30d\e:203;25m\e:223;25d\
+\e:203;20m\e:223;20d\e:203;15m\e:223;15d\e:203;10m\e:223;10d\
+\e[3;29HORD\
+\e[2;39HPROGRAM-\e[3;38HUTVECKLING\
+\e[2;58HDEMO\
+\e[2;74HSYSTEM
+
+#
+# Icons in the main menu window.
+#
+icon1:pxor#15:pyor#0:pxsi#126:pysi#56:\
+     :lxor#15:lyor#0:lxsi#126:lysi#56:\
+     :pmod:lmod:inve:rqst
+
+icon2:pxor#166:pyor#0:pxsi#128:pysi#56:\
+     :lxor#166:lyor#0:lxsi#128:lysi#56:\
+     :pmod:lmod:inve:rqst
+
+icon3:pxor#319:pyor#0:pxsi#128:pysi#56:\
+     :lxor#319:lyor#0:lxsi#128:lysi#56:\
+     :pmod:lmod:inve:rqst
+
+icon4:pxor#472:pyor#0:pxsi#128:pysi#56:\
+     :lxor#472:lyor#0:lxsi#128:lysi#56:\
+     :pmod:lmod:inve:rqst
+
+icon5:pxor#625:pyor#0:pxsi#128:pysi#56:\
+     :lxor#625:lyor#0:lxsi#128:lysi#56:\
+     :pmod:lmod:inve:rqst
+
+
+#
+# Data for the program development menu window.
+#
+window30:pxor#309:pyor#818:pxsi#148:pysi#203:pvxs#148:pvys#140:\
+	:lxor#309:lyor#562:lxsi#148:lysi#203:lvxs#148:lvys#140:\
+        :bord#1:colr#1:pfnt#0x41:lfnt#0x41:\
+        :pmod:lmod:lock:ncur:nmov
+
+#
+# Text in the program development menu window.
+#
+string30:\n  Shell\n\n\r  Stor Shell\n\n\r  Basic\n\n\r  Siv\n\n\r  Emacs
+
+#
+# Icons in the program development menu window.
+#
+icon30:pxor#0:pyor#112:pxsi#148:pysi#28:\
+      :lxor#0:lyor#112:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon31:pxor#0:pyor#84:pxsi#148:pysi#28:\
+      :lxor#0:lyor#84:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon32:pxor#0:pyor#56:pxsi#148:pysi#28:\
+      :lxor#0:lyor#56:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon33:pxor#0:pyor#28:pxsi#148:pysi#28:\
+      :lxor#0:lyor#28:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon34:pxor#0:pyor#0:pxsi#148:pysi#28:\
+      :lxor#0:lyor#0:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon35:pxor#0:pyor#0:pxsi#148:pysi#198:\
+      :lxor#0:lyor#0:lxsi#148:lysi#198:\
+      :pmod:lmod:leav:schk
+
+
+#
+# Data for the demo pull down menu window.
+#
+window40:pxor#462:pyor#902:pxsi#148:pysi#119:pvxs#148:pvys#56:\
+	:lxor#462:lyor#646:lxsi#148:lysi#119:lvxs#148:lvys#56:\
+        :bord#1:colr#1:pfnt#0x41:lfnt#0x41:\
+        :pmod:lmod:lock:ncur:nmov
+
+#
+# Text contents of the demo pull down menu.
+#
+string40:\n Stars\n\n\r Rita
+
+#
+# The icons in the demo pull down menu.
+#
+icon40:pxor#0:pyor#28:pxsi#148:pysi#28:\
+      :lxor#0:lyor#28:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon41:pxor#0:pyor#0:pxsi#148:pysi#28:\
+      :lxor#0:lyor#0:lxsi#148:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon42:pxor#0:pyor#0:pxsi#148:pysi#114:\
+      :lxor#0:lyor#0:lxsi#148:lysi#114:\
+      :pmod:lmod:leav:schk
+
+
+#
+# Data for the system pull down menu window.
+#
+window50:pxor#615:pyor#818:pxsi#150:pysi#203:pvxs#150:pvys#140:\
+	:lxor#615:lyor#562:lxsi#150:lysi#203:lvxs#150:lvys#140:\
+        :bord#1:colr#1:pfnt#0x41:lfnt#0x41:\
+        :pmod:lmod:lock:ncur:nmov
+
+#
+# The text contents of the system pull down menu.
+#
+string50:\n [ndra backgrund\n\n\r Normal video\n\n\r Invers video\n\n\r \
+Skriv om sk{rm\n\n\r Logga ut
+
+#
+# The icons in the system pull down menu.
+#
+icon50:pxor#0:pyor#112:pxsi#150:pysi#28:\
+      :lxor#0:lyor#112:lxsi#150:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon51:pxor#0:pyor#84:pxsi#150:pysi#28:\
+      :lxor#0:lyor#84:lxsi#150:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon52:pxor#0:pyor#56:pxsi#150:pysi#28:\
+      :lxor#0:lyor#56:lxsi#150:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon53:pxor#0:pyor#28:pxsi#150:pysi#28:\
+      :lxor#0:lyor#28:lxsi#150:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon54:pxor#0:pyor#0:pxsi#150:pysi#28:\
+      :lxor#0:lyor#0:lxsi#150:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon55:pxor#0:pyor#0:pxsi#150:pysi#198:\
+      :lxor#0:lyor#0:lxsi#150:lysi#198:\
+      :pmod:lmod:leav:schk
+
+
+#
+# The Qcalc terminal.
+#
+terminal10:window10:header10:command10
+
+window10:pxor#24:pyor#538:pxsi#720:pysi#336:pvxo#0:pvyo#0:pvxs#720:pvys#336:\
+	:lxor#24:lyor#24:lxsi#720:lysi#336:lvxo#0:lvyo#0:lvxs#720:lvys#336:\
+        :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+        :pmod:lmod:stxt:sbox:mbox:hscr:vscr
+
+header10:head= KALKYL :invt
+
+command10:/usr/bin/qcalc,qcalc
+
+
+#
+# The Lex68 terminal.
+#
+terminal20:window20:header20:command20
+
+window20:pxor#24:pyor#40:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+	:lxor#200:lyor#40:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+        :bord#2:colr#1:pfnt#0x41:lfnt#0x42:rsig#0:csig#0:\
+        :pmod:lmod:stxt:sbox:mbox:hscr:vscr:kscr:text
+
+header20:head= ORDBEHANDLING :invt
+
+command20:/bin/lex68,lex68
+
+
+#
+# The Shell terminal.
+#
+terminal300:window300:header300:command300
+
+window300:pxor#24:pyor#588:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+	 :lxor#100:lyor#100:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+	 :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+header300:head= SHELL :invt
+
+command300:/bin/sh,sh
+
+
+#
+# The Big Shell terminal.
+#
+terminal310:window310:header300:command300
+
+window310:pxor#121:pyor#169:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+	 :lxor#250:lyor#50:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x42:lfnt#0x42:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+
+#
+# The BASIC-III terminal.
+#
+terminal320:window320:header320:command320
+
+window320:pxor#24:pyor#488:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+	 :lxor#200:lyor#175:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+header320:head= BASIC-III :invt
+
+command320:/bin/basic,basic
+
+
+#
+# The Siv editor terminal.
+#
+terminal330:window330:header330:command330
+
+window330:pxor#24:pyor#388:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+	 :lxor#150:lyor#320:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+header330:head= SIV :invt
+
+command330:/usr/bin/siv,siv
+
+
+#
+# The Emacs terminal.
+#
+terminal340:window340:header340:command340
+
+window340:pxor#24:pyor#288:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+	 :lxor#125:lyor#55:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text
+
+header340:head= EMACS :invt
+
+command340:/usr/bin/emacs,emacs
+
+
+#
+# The Stars terminal.
+#
+terminal400:window400:command400
+
+window400:pxor#24:pyor#24:pxsi#720:pysi#450:pvxo#0:pvyo#0:pvxs#720:pvys#450:\
+	 :lxor#270:lyor#90:lxsi#720:lysi#450:lvxo#0:lvyo#0:lvxs#720:lvys#450:\
+         :colr#0:bord#1:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+         :pmod:lmod:ncur:novr:alls
+
+command400:/usr/window/demo/stars,stars
+
+
+#
+# The Draw program terminal.
+#
+terminal410:window410:header410:command410
+
+window410:pxor#24:pyor#155:pxsi#720:pysi#490:pvxo#0:pvyo#0:pvxs#720:pvys#490:\
+	 :lxor#50:lyor#100:lxsi#720:lysi#490:lvxo#0:lvyo#0:lvxs#720:lvys#490:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#14:csig#15:\
+         :pmod:lmod:ncur:sbox:mbox:cbox:hscr:vscr:amsp
+
+header410:head= ---  RITA  --- :invt
+
+command410:/usr/window/demo/draw,draw
+
+
+#
+# The Change Background program terminal.
+#
+terminal500:window500:header500:super:command500
+
+window500:pxor#100:pyor#450:pxsi#500:pysi#300:pvxo#0:pvyo#0:pvxs#500:pvys#300:\
+	 :lxor#100:lyor#150:lxsi#500:lysi#300:lvxo#0:lvyo#0:lvxs#500:lvys#300:\
+         :colr#1:bord#2:pfnt#0x41:lfnt#0x41:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:cbox
+
+header500:head= [NDRA BAKGRUND :invt
+
+command500:/usr/window/demo/chbg,chbg
+
+
+#
+# New flags used when creating a terminal from a pull down menu.
+#
+flags1:ncur:nmov

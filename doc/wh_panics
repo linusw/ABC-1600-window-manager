@@ -1,0 +1,39 @@
+	WINDOW HANDLER PANIC CODES
+	==========================
+
+	When a fatal error occurs, the window handler will display an error
+	message on the console and then terminate. The message looks like
+
+	  <name>: error code = <n1>, status = <n2>
+
+	<name> is the name of the window handler module where the error
+	occured (whgo, whwait, whp, or whl). The error code - <n1> - indicates
+	the type of the error and in some cases the status - <n2> - gives
+	additional information.
+	The error code and status are explained below:
+
+	  Error Code	Explanation
+
+	       1	The '/win' directory is missing.
+	       2	The window handler failed to mount itself on the
+			'/win' directory.
+	       3	The window handler cannot execute because an old
+			version of the operating system is used or it is not
+			started by the super user.
+	       4	See error code 3.
+	       5	See error code 3.
+	       6	See error code 3.
+	       7	See error code 3.
+	       8	See error code 3.
+	       9	The 'windev' device is missing, i.e. the character
+			special file '/win/windev'.
+	      10	The window handler failed to open the console.
+	      11	The window handler failed to initialize the keyboard.
+	      12	The file '/usr/window/whp' is missing or cannot be
+			executed.
+	      13	The file '/usr/window/whl' is missing or cannot be
+			executed.
+	      14	The file '/usr/window/whgo' is missing or cannot be
+			executed.
+	      15	An internal bug in the window handler was detected.
+			Status indicates which signal was generated.
