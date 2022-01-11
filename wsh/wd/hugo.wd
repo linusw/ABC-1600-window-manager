@@ -1,0 +1,525 @@
+######################
+#                     #
+# Hugo customized menu #
+#                     #
+#######################
+
+
+#
+# Detta skall g|ras vid initieringen.
+#
+
+init:background1:terminal305:substitute1:menu100
+#
+substitute1:init#0:onof#0xfe:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:mpul#0xad:\
+:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:lpdo#0xb3:lple#0xbc:lpri#0xb4:\
+:lpul#0xbd:lpur#0xb5:lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:mtxt#0xcd:\
+:step#4:lstp#16
+
+#
+# This is a net-like background.
+#
+background1:bmap#0x8e8e,0xdddd,0xe8e8,0x7070,0xb8b8,0xdddd,0x8b8b,0x0707,\
+                 0x8e8e,0xdddd,0xe8e8,0x7070,0xb8b8,0xdddd,0x8b8b,0x0707
+#
+# This is super shell-background.
+#
+background2:bmap#0x0000,0x7000,0x4000,0x7570,0x1556,0x7776,0x0040,0x0445,\
+		 0x0405,0x7775,0x4555,0x7575,0x1545,0x7575,0x0000,0x0000
+
+#
+# A horizontal double arrow pointer.
+#
+pointer1:xsiz#28:ysiz#11:xpnt#14:ypnt#5:\
+	:andm#0xff9f9fff,0xfe6f67ff,0xf9dfb9ff,0xe7801e7f,\
+	      0x9fffff9f,0x7fffffef,0x9fffff9f,0xe7801e7f,\
+	      0xf9dfb9ff,0xfe6f67ff,0xff9f9fff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+	:orma#0x00000000,0x00606000,0x01c03800,0x07801e00,\
+	      0x1fffff80,0x7fffffe0,0x1fffff80,0x07801e00,\
+	      0x01c03800,0x00606000
+
+#
+# A variation of a hair-cross mouse pointer.
+#
+pointer2:xsiz#31:ysiz#31:xpnt#15:ypnt#16:\
+	:andm#0xffffffff,0xfff01fff,0xff8003ff,0xfe0fe0ff,\
+	      0xfc7ffc7f,0xf9ffff3f,0xf0fffe1f,0xe47ffc4f,\
+	      0xe63ff8cf,0xcf1ff1e7,0xcf8fe3e7,0xcfc7c7e7,\
+	      0x9fe7cff3,0x9ffbbff3,0x9ffffff3,0x9ffffff3,\
+	      0x9ffffff3,0x9ffbbff3,0x9fe7cff3,0xcfc7c7e7,\
+	      0xcf8fe3e7,0xcf1ff1e7,0xe63ff8cf,0xe47ffc4f,\
+	      0xf0fffe1f,0xf9ffff3f,0xfc7ffc7f,0xfe0fe0ff,\
+	      0xff8003ff,0xfff01fff,0xffffffff,0xffffffff\
+	:orma#0x000fe000,0x00701c00,0x00800200,0x020fe080,\
+	      0x04701c40,0x09000120,0x10800210,0x24400448,\
+	      0x262008c8,0x49101124,0x48882224,0x48444424,\
+	      0x90244812,0x901ab012,0x90044012,0x90000012,\
+	      0x90044012,0x901ab012,0x90244812,0x48444424,\
+	      0x48882224,0x49101124,0x262008c8,0x24400448,\
+	      0x10800210,0x09000120,0x04701c40,0x020fe080,\
+	      0x00800200,0x00701c00,0x000fe000,0x00000000
+#
+# A small mouse pointer.
+#
+pointer3:xsiz#5:ysiz#5:xpnt#2:ypnt#2:\
+	:andm#0xffffffff,0xdfffffff,0x8fffffff,0xdfffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+	      0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+	:orma#0x20000000,0x50000000,0x88000000,0x50000000,0x20000000
+
+
+#
+# Gemensamma deklarationer f|r alla menyer
+#
+
+window1:pxor#0:pyor#903:pxsi#768:pysi#121:pvxo#0:pvyo#0:pvxs#768:pvys#121:\
+       :lxor#896:lyor#47:lxsi#128:lysi#721:lvxo#0:lvyo#0:lvxs#128:lvys#721:\
+       :bord#0:colr#0:pfnt#0x48:lfnt#0x48:\
+       :pmod:lmod:ncur:spec:amsp
+
+icon1:pxor#1:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#661:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon2:pxor#129:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#601:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon3:pxor#257:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#541:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon4:pxor#385:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#481:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon5:pxor#513:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#421:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon6:pxor#641:pyor#61:pxsi#126:pysi#59:\
+     :lxor#1:lyor#361:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon7:pxor#1:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#301:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon8:pxor#129:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#241:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon9:pxor#257:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#181:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon10:pxor#385:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#121:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon11:pxor#513:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#61:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+icon12:pxor#641:pyor#1:pxsi#126:pysi#59:\
+     :lxor#1:lyor#1:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+
+#
+# Huvudmeny (menu100).
+#
+
+menu100:window1:pointer1:lstring100:pstring100:choice100:choice101:choice102:\
+       :choice103:choice104:choice105:choice106:choice107:choice108:\
+       :choice109:choice110:choice111
+#
+pstring100:\
+\e:0;0m\e:767;0;;1d\
+\e:0;60m\e:767;60;;1d\
+\e:0;120m\e:767;120;;1d\
+\e:0;0m\e:0;120;;1d\
+\e:128;0m\e:128;120;;1d\
+\e:256;0m\e:256;120;;1d\
+\e:384;0m\e:384;120;;1d\
+\e:512;0m\e:512;120;;1d\
+\e:640;0m\e:640;120;;1d\
+\e:767;0m\e:767;120;;1d\
+\e:41;83m\e:1HSHELL\
+\e:173;90m\e:1HSTOR\e:169;76m\e:1HSHELL\
+\e:306;83m\e:1HSIV\
+\e:425;90m\e:1HSUPER\e:425;76m\e:1HSHELL\
+\e:32;30m\e:1HPROGRAM\e:18;16m\e:1HUTVECKLING\
+\e:548;23m\e:1H\\VRIGT\
+\e:658;23m\e:1HUTLOGGNING
+#
+lstring100:\
+\e:0;0m\e:0;720;;1d\
+\e:127;0m\e:127;720;;1d\
+\e:0;720m\e:126;720;;1d\
+\e:0;660m\e:126;660;;1d\
+\e:0;600m\e:126;600;;1d\
+\e:0;540m\e:126;540;;1d\
+\e:0;480m\e:126;480;;1d\
+\e:0;420m\e:126;420;;1d\
+\e:0;360m\e:126;360;;1d\
+\e:0;300m\e:126;300;;1d\
+\e:0;240m\e:126;240;;1d\
+\e:0;180m\e:126;180;;1d\
+\e:0;120m\e:126;120;;1d\
+\e:0;60m\e:126;60;;1d\
+\e:0;0m\e:126;0;;1d\
+\e:41;683m\e:1HSHELL\
+\e:45;630m\e:1HSTOR\e:41;616m\e:1HSHELL\
+\e:50;563m\e:1HSIV\
+\e:41;510m\e:1HSUPER\e:41;496m\e:1HSHELL\
+\e:32;330m\e:1HPROGRAM\e:18;316m\e:1HUTVECKLING\
+\e:36;83m\e:1H\\VRIGT\
+\e:18;23m\e:1HUTLOGGNING
+#
+choice100:icon1:action100
+choice101:icon2:action101
+choice102:icon3:action102
+choice103:icon4:action103
+choice104:icon5:action104
+choice105:icon6:action105
+choice106:icon7:action106
+choice107:icon8:action107
+choice108:icon9:action108
+choice109:icon10:action109   
+choice110:icon11:action110
+choice111:icon12:action111
+#
+action100:background1:terminal300:menu100
+action101:background1:terminal310:menu100
+action102:background1:terminal330:menu100
+action103:background2:terminal305:menu100
+action104:menu100
+action105:menu100
+action106:close:menu200
+action107:menu100
+action108:menu100
+action109:menu100
+action110:menu300
+action111:logout:menu100
+
+#
+# Programutvecklingsmeny (menu200).
+#
+
+menu200:window1:pointer1:pstring200:lstring200:choice200:choice201:choice202:\
+        choice203:choice204:choice205:choice206:choice207:choice208:\
+        choice209:choice210:choice211
+#
+pstring200:\
+\e:0;0m\e:767;0;;1d\
+\e:0;60m\e:767;60;;1d\
+\e:0;120m\e:767;120;;1d\
+\e:0;0m\e:0;120;;1d\
+\e:128;0m\e:128;120;;1d\
+\e:256;0m\e:256;120;;1d\
+\e:384;0m\e:384;120;;1d\
+\e:512;0m\e:512;120;;1d\
+\e:640;0m\e:640;120;;1d\
+\e:767;0m\e:767;120;;1d\
+\e:41;83m\e:1HSHELL\
+\e:173;90m\e:1HSTOR\e:169;76m\e:1HSHELL\
+\e:306;83m\e:1HSIV\
+\e:425;83m\e:1HBASIC\
+\e:553;90m\e:1HMIMER\e:553;76m\e:1HBASIC\
+\e:681;30m\e:1HHUVUD\e:685;16m\e:1HMENY
+#
+lstring200:\
+\e:0;0m\e:0;720;;1d\
+\e:127;0m\e:127;720;;1d\
+\e:0;720m\e:126;720;;1d\
+\e:0;660m\e:126;660;;1d\
+\e:0;600m\e:126;600;;1d\
+\e:0;540m\e:126;540;;1d\
+\e:0;480m\e:126;480;;1d\
+\e:0;420m\e:126;420;;1d\
+\e:0;360m\e:126;360;;1d\
+\e:0;300m\e:126;300;;1d\
+\e:0;240m\e:126;240;;1d\
+\e:0;180m\e:126;180;;1d\
+\e:0;120m\e:126;120;;1d\
+\e:0;60m\e:126;60;;1d\
+\e:0;0m\e:126;0;;1d\
+\e:41;683m\e:1HSHELL\
+\e:45;630m\e:1HSTOR\
+\e:41;616m\e:1HSHELL\
+\e:50;563m\e:1HSIV\
+\e:41;503m\e:1HBASIC\
+\e:41;450m\e:1HMIMER\
+\e:41;436m\e:1HBASIC\
+\e:41;30m\e:1HHUVUD\
+\e:45;16m\e:1HMENY
+#
+choice200:icon1:action200
+choice201:icon2:action201
+choice202:icon3:action202
+choice203:icon4:action203
+choice204:icon5:action204
+choice205:icon6:action205
+choice206:icon7:action206
+choice207:icon8:action207
+choice208:icon9:action208
+choice209:icon10:action209
+choice210:icon11:action210
+choice211:icon12:action211
+#
+action200:background1:terminal300:menu200
+action201:background1:terminal310:menu200
+action202:background1:terminal330:menu200
+action203:background1:terminal320:menu200
+action204:background1:terminal550:menu200
+action205:menu200
+action206:menu200
+action207:menu200
+action208:menu200
+action209:menu200
+action210:menu200
+action211:close:menu100
+
+
+#
+# '\vrigt' - meny  (menu300).
+#
+
+menu300:window10000:pointer1:lstring10000:pstring10000:choice10000:choice10001:choice10002:\
+       :choice10003:choice10004:choice10005:choice10006:choice10007:choice10008:
+#
+window10000:pxor#515:pyor#676:pxsi#123:pysi#287:pvxs#123:pvys#224:\
+        :lxor#615:lyor#478:lxsi#123:lysi#287:lvxs#123:lvys#224:\
+        :bord#1:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+
+#
+# The text contents of the 'Others' pull down menu.
+#
+pstring10000:\n Shell\n\n\r Siv\n\n\r Font editor\n\n\r Klocka\n\n\r \
+Demo\n\n\r GH\n\n\r Landskap\n\n\r Huvud Meny
+
+lstring10000:\n Shell\n\n\r Siv\n\n\r Font editor\n\n\r Klocka\n\n\r \
+Demo\n\n\r GH\n\n\r Portr{tt\n\n\r Huvud Meny
+
+icon10000:pxor#0:pyor#196:pxsi#123:pysi#28:\
+      :lxor#0:lyor#196:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10001:pxor#0:pyor#168:pxsi#123:pysi#28:\
+      :lxor#0:lyor#168:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10002:pxor#0:pyor#140:pxsi#123:pysi#28:\
+      :lxor#0:lyor#140:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10003:pxor#0:pyor#112:pxsi#123:pysi#28:\
+      :lxor#0:lyor#112:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10004:pxor#0:pyor#84:pxsi#123:pysi#28:\
+      :lxor#0:lyor#84:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10005:pxor#0:pyor#56:pxsi#123:pysi#28:\
+      :lxor#0:lyor#56:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10006:pxor#0:pyor#28:pxsi#123:pysi#28:\
+      :lxor#0:lyor#28:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10007:pxor#0:pyor#0:pxsi#123:pysi#28:\
+      :lxor#0:lyor#0:lxsi#123:lysi#28:\
+      :pmod:lmod:inve:rlse:pres
+
+icon10008:pxor#0:pyor#0:pxsi#123:pysi#282:\
+      :lxor#0:lyor#0:lxsi#123:lysi#282:\
+      :pmod:lmod:leav:schk
+
+
+#
+choice10000:icon10000:action10000
+choice10001:icon10001:action10001
+choice10002:icon10002:action10002
+choice10003:icon10003:action10003
+choice10004:icon10004:action10004
+choice10005:icon10005:action10005
+choice10006:icon10006:action10006
+choice10007:icon10007:action10007
+choice10008:icon10008:action10008
+#
+action10000:background1:terminal300:close:menu100
+action10001:background1:terminal330:close:menu100
+action10002:background1:terminal500:close:menu100
+action10003:background1:close:terminal510:menu100
+action10004:background1:terminal520:close:menu100
+action10005:terminal530:close:menu100
+action10006:turn:menu100
+action10007:close:menu100
+action10008:close:menu100
+#
+# Terminaldefinitioner
+#
+
+
+#
+# Shell terminal.
+#
+terminal300:window300:header300:zoomlist300:environ300:command300
+
+window300:pxor#24:pyor#500:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#30:lyor#390:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis:hbox
+
+header300:head= SHELL :invt
+
+zoomlist300:plst=Q:llst=Q:pmod:lmod
+
+environ300:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+
+command300:/bin/sh,sh
+
+#
+# Stor Shell terminal.
+#
+terminal310:window310:header300:zoomlist310:environ310:command300
+
+window310:pxor#144:pyor#100:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+         :lxor#160:lyor#64:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x42:lfnt#0x42:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr:bbox:avis
+
+environ310:TERM=win,TERMCAP=w0|win|w:co#80:li#64:tc=abc1600w:
+
+zoomlist310:plst=HQ:llst=HQ:pmod:lmod
+
+#
+# Super Shell terminal
+#
+terminal305:window305:pointer2:super:header305:zoomlist310:environ310:command300
+
+header305:head= SUPER SHELL :invt
+
+window305:pxor#144:pyor#100:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+         :lxor#160:lyor#64:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x42:lfnt#0x42:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr:bbox:avis:amsp
+
+#
+# BASIC-III terminal.
+#
+
+terminal320:window320:header320:zoomlist320:environ320:command320
+
+window320:pxor#24:pyor#300:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#90:lyor#200:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis
+
+header320:head= BASIC-III :invt
+
+zoomlist320:plst=Q:llst=Q:pmod:lmod
+
+environ320:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command320:/bin/basic,basic
+
+
+#
+# Siv editor terminal.
+#
+terminal330:window330:header330:zoomlist330:penviron330:lenviron330:command330
+
+window330:pxor#24:pyor#176:pxsi#80:pysi#40:pvxo#1:pvyo#1:pvxs#80:pvys#40:\
+         :lxor#60:lyor#216:lxsi#80:lysi#30:lvxo#1:lvyo#1:lvxs#80:lvys#30:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:zbox:hscr:vscr:text:bbox:avis
+
+header330:head= SIV :invt
+
+zoomlist330:plst=Q:llst=Q:pmod:lmod
+
+penviron330:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#40:tc=abc1600w:
+
+lenviron330:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#30:tc=abc1600w:
+
+command330:/usr/bin/siv,siv
+
+#
+# Font Editor terminal.
+#
+terminal500:window500:pointer2:header500:command500
+
+window500:pxor#34:pyor#150:pxsi#700:pysi#700:pvxo#0:pvyo#0:pvxs#700:pvys#700:\
+         :lxor#45:lyor#34:lxsi#700:lysi#700:lvxo#0:lvyo#0:lvxs#700:lvys#700:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#2:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:ncpi:amsp:avis
+
+header500:head= FONT EDITOR :invt
+
+command500:/usr/bin/fe,fe
+
+#
+# Klockans terminal.
+#
+terminal510:window510:pointer3:header510:command510
+
+window510:pxor#600:pyor#750:pxsi#100:pysi#100:pvxo#0:pvyo#0:pvxs#100:pvys#100:\
+	 :lxor#50:lyor#50:lxsi#100:lysi#100:lvxo#0:lvyo#0:lvxs#100:lvys#100:\
+	 :bord#2:colr#1:pfnt#0x48:lfnt#0x48:rsig#16:csig#17:\
+	 :pmod:lmod:ncur:cbox:mbox:ncpi:amsp
+
+header510:head= Stockholm :invt
+
+command510:/usr/window/demo/clock,clock,-n
+
+#
+# Demo terminal
+#
+terminal520:directory520:command520
+
+directory520:/usr/window/demo
+
+command520:demo,demo
+
+#
+# GH wsh
+#
+terminal530:wait:super:directory530:command530
+
+directory530:subdir
+
+command530:/usr/window/wsh,wsh,-n
+
+
+#
+# MIMER-BASIC terminal
+#
+terminal550:window550:header550:zoomlist550:environ550:command550
+
+window550:pxor#24:pyor#200:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#120:lyor#170:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis
+
+header550:head= MIMER BASIC :invt
+
+zoomlist550:plst=Q:llst=Q:pmod:lmod
+
+environ550:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command550:/bin/mbasic,mbasic

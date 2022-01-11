@@ -1,0 +1,676 @@
+# luxor.wd
+# (c) Luxor Datorer AB 1985-12-19
+# Sten Dahlgren
+#
+# Definition av menyer f|r Luxor Datorer AB's interna datorn{t
+#
+#
+#
+# What to do on initialization.
+#
+init:background1:substitute0:menu0:
+#
+substitute0:init#0:onof#0xfe:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:\
+                  :mpul#0xad:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:\
+                  :lpdo#0xb3:lple#0xbc:lpri#0xb4:lpul#0xbd:lpur#0xb5:\
+                  :lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:mtxt#0xcd:\
+                  :step#4:lstp#16
+#
+# This is a net-like background.
+#
+background1:bmap#0x8e8e,0xdddd,0xe8e8,0x7070,0xb8b8,0xdddd,0x8b8b,0x0707,\
+                 0x8e8e,0xdddd,0xe8e8,0x7070,0xb8b8,0xdddd,0x8b8b,0x0707
+#
+# This is super shell-background.
+#
+background2:bmap#0x0000,0x7000,0x4000,0x7570,0x1556,0x7776,0x0040,0x0445,\
+                 0x0405,0x7775,0x4555,0x7575,0x1545,0x7575,0x0000,0x0000
+#
+# A horizontal double arrow pointer.
+#
+pointer1:xsiz#28:ysiz#11:xpnt#14:ypnt#5:\
+        :andm#0xff9f9fff,0xfe6f67ff,0xf9dfb9ff,0xe7801e7f,\
+              0x9fffff9f,0x7fffffef,0x9fffff9f,0xe7801e7f,\
+              0xf9dfb9ff,0xfe6f67ff,0xff9f9fff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+        :orma#0x00000000,0x00606000,0x01c03800,0x07801e00,\
+              0x1fffff80,0x7fffffe0,0x1fffff80,0x07801e00,\
+              0x01c03800,0x00606000
+#
+# A variation of a hair-cross mouse pointer.
+#
+pointer2:xsiz#31:ysiz#31:xpnt#15:ypnt#16:\
+        :andm#0xffffffff,0xfff01fff,0xff8003ff,0xfe0fe0ff,\
+              0xfc7ffc7f,0xf9ffff3f,0xf0fffe1f,0xe47ffc4f,\
+              0xe63ff8cf,0xcf1ff1e7,0xcf8fe3e7,0xcfc7c7e7,\
+              0x9fe7cff3,0x9ffbbff3,0x9ffffff3,0x9ffffff3,\
+              0x9ffffff3,0x9ffbbff3,0x9fe7cff3,0xcfc7c7e7,\
+              0xcf8fe3e7,0xcf1ff1e7,0xe63ff8cf,0xe47ffc4f,\
+              0xf0fffe1f,0xf9ffff3f,0xfc7ffc7f,0xfe0fe0ff,\
+              0xff8003ff,0xfff01fff,0xffffffff,0xffffffff\
+        :orma#0x000fe000,0x00701c00,0x00800200,0x020fe080,\
+              0x04701c40,0x09000120,0x10800210,0x24400448,\
+              0x262008c8,0x49101124,0x48882224,0x48444424,\
+              0x90244812,0x901ab012,0x90044012,0x90000012,\
+              0x90044012,0x901ab012,0x90244812,0x48444424,\
+              0x48882224,0x49101124,0x262008c8,0x24400448,\
+              0x10800210,0x09000120,0x04701c40,0x020fe080,\
+              0x00800200,0x00701c00,0x000fe000,0x00000000
+#
+# A small mouse pointer.
+#
+pointer3:xsiz#5:ysiz#5:xpnt#2:ypnt#2:\
+        :andm#0xffffffff,0xdfffffff,0x8fffffff,0xdfffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff,\
+              0xffffffff,0xffffffff,0xffffffff,0xffffffff\
+        :orma#0x20000000,0x50000000,0x88000000,0x50000000,0x20000000
+#
+# The main menu.
+#
+menu0:window0:pstring0:lstring0:choice1:choice2:choice3:choice4:choice5:\
+                               :choice6:choice7:choice8:choice9:choice10:\
+                               :choice11:choice12:
+#
+pstring0:\
+\e:0;0m\e:767;0;;1d\
+\e:0;60m\e:767;60;;1d\
+\e:0;120m\e:767;120;;1d\
+\e:0;0m\e:0;120;;1d\
+\e:128;0m\e:128;120;;1d\
+\e:256;0m\e:256;120;;1d\
+\e:384;0m\e:384;120;;1d\
+\e:512;0m\e:512;120;;1d\
+\e:640;0m\e:640;120;;1d\
+\e:767;0m\e:767;120;;1d\
+\e:41;83m\e:1HSHELL\
+\e:173;90m\e:1HSTOR\e:169;76m\e:1HSHELL\
+\e:306;83m\e:1HSIV\
+\e:425;90m\e:1HSUPER\e:425;76m\e:1HSHELL\
+\e:32;30m\e:1HPROGRAM\e:18;16m\e:1HUTVECKLING\
+\e:548;23m\e:1H\\VRIGT\
+\e:658;23m\e:1HUTLOGGNING
+#
+lstring0:\
+\e:0;0m\e:0;720;;1d\
+\e:127;0m\e:127;720;;1d\
+\e:0;720m\e:126;720;;1d\
+\e:0;660m\e:126;660;;1d\
+\e:0;600m\e:126;600;;1d\
+\e:0;540m\e:126;540;;1d\
+\e:0;480m\e:126;480;;1d\
+\e:0;420m\e:126;420;;1d\
+\e:0;360m\e:126;360;;1d\
+\e:0;300m\e:126;300;;1d\
+\e:0;240m\e:126;240;;1d\
+\e:0;180m\e:126;180;;1d\
+\e:0;120m\e:126;120;;1d\
+\e:0;60m\e:126;60;;1d\
+\e:0;0m\e:126;0;;1d\
+\e:41;683m\e:1HSHELL\
+\e:45;630m\e:1HSTOR\e:41;616m\e:1HSHELL\
+\e:50;563m\e:1HSIV\
+\e:41;510m\e:1HSUPER\e:41;496m\e:1HSHELL\
+\e:32;330m\e:1HPROGRAM\e:18;316m\e:1HUTVECKLING\
+\e:36;83m\e:1H\\VRIGT\
+\e:18;23m\e:1HUTLOGGNING
+#
+window0:pxor#0:pyor#903:pxsi#768:pysi#121:pvxo#0:pvyo#0:pvxs#768:pvys#121:\
+       :lxor#896:lyor#47:lxsi#128:lysi#721:lvxo#0:lvyo#0:lvxs#128:lvys#721:\
+       :bord#0:colr#0:pfnt#0x48:lfnt#0x48:\
+       :pmod:lmod:ncur:spec:amsp
+#
+choice1:icon1:action1:
+icon1:pxor#1:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#661:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice2:icon2:action2:
+icon2:pxor#129:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#601:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice3:icon3:action3:
+icon3:pxor#257:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#541:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice4:icon4:action4:
+icon4:pxor#385:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#481:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice5:icon5:action5:
+icon5:pxor#513:pyor#61:pxsi#127:pysi#59:\
+     :lxor#1:lyor#421:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice6:icon6:action6:
+icon6:pxor#641:pyor#61:pxsi#126:pysi#59:\
+     :lxor#1:lyor#361:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice7:icon7:action7:
+icon7:pxor#1:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#301:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice8:icon8:action8:
+icon8:pxor#129:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#241:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice9:icon9:action9:
+icon9:pxor#257:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#181:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice10:icon10:action10:
+icon10:pxor#385:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#121:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+choice11:icon11:action11:
+icon11:pxor#513:pyor#1:pxsi#127:pysi#59:\
+     :lxor#1:lyor#61:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+action11:meny11:
+#
+choice12:icon12:action12:
+icon12:pxor#641:pyor#1:pxsi#126:pysi#59:\
+     :lxor#1:lyor#1:lxsi#126:lysi#59:\
+     :pmod:lmod:inve:rqst
+#
+# The no 1 pull down menu.
+#
+menu1:window1:string1:choice1_1:choice1_2:choice1_3:choice1_4:\
+                     :choice1_5:choice1_6:choice1_7:choice1_8:\
+                     :choice1_9:choice1_10:choice1_11:choice1_12:
+#
+# The no 2 pull down menu.
+#
+menu2:window2:string2:choice2_1:choice2_2:choice2_3:choice2_4:\
+                     :choice2_5:choice2_6:choice2_7:choice2_8:\
+                     :choice2_9:choice2_10:choice2_11:choice2_12:
+#
+# The no 3 pull down menu.
+#
+menu3:window3:string3:choice3_1:choice3_2:choice3_3:choice3_4:\
+                     :choice3_5:choice3_6:choice3_7:choice3_8:\
+                     :choice3_9:choice3_10:choice3_11:choice3_12:
+#
+# The no 4 pull down menu.
+#
+menu4:window4:string4:choice4_1:choice4_2:choice4_3:choice4_4:\
+                     :choice4_5:choice4_6:choice4_7:choice4_8:\
+                     :choice4_9:choice4_10:choice4_11:choice4_12:
+#
+# The no 5 pull down menu.
+#
+menu5:window5:string5:choice5_1:choice5_2:choice5_3:choice5_4:\
+                     :choice5_5:choice5_6:choice5_7:choice5_8:\
+                     :choice5_9:choice5_10:choice5_11:choice5_12:
+#
+# The no 6 pull down menu.
+#
+menu6:window6:string6:choice6_1:choice6_2:choice6_3:choice6_4:\
+                     :choice6_5:choice6_6:choice6_7:choice6_8:\
+                     :choice6_9:choice6_10:choice6_11:choice6_12:
+#
+# The no 7 pull down menu.
+#
+menu7:window7:string7:choice7_1:choice7_2:choice7_3:choice7_4:\
+                     :choice7_5:choice7_6:choice7_7:choice7_8:\
+                     :choice7_9:choice7_10:choice7_11:choice7_12:
+#
+# The no 8 pull down menu.
+#
+menu8:window8:string8:choice8_1:choice8_2:choice8_3:choice8_4:\
+                     :choice8_5:choice8_6:choice8_7:choice8_8:\
+                     :choice8_9:choice8_10:choice8_11:choice8_12:
+#
+# The no 9 pull down menu.
+#
+menu9:window9:string9:choice9_1:choice9_2:choice9_3:choice9_4:\
+                     :choice9_5:choice9_6:choice9_7:choice9_8:\
+                     :choice9_9:choice9_10:choice9_11:choice9_12:
+#
+# The no 10 pull down menu.
+#
+menu10:window10:string10:choice10_1:choice10_2:choice10_3:choice10_4:\
+                     :choice10_5:choice10_6:choice10_7:choice10_8:\
+                     :choice10_9:choice10_10:choice10_11:choice10_12:
+#
+# The no 11 pull down menu.
+#
+menu11:window11:pstring11:lstring11:\
+                     :choice11_1:choice11_2:choice11_3:choice11_4:\
+                     :choice11_5:choice11_6:choice11_7:choice11_8:\
+                     :choice11_9:choice11_10:choice11_11:choice11_12:
+#
+window11:pxor#515:pyor#564:pxsi#123:pysi#399:pvxs#123:pvys#336:\
+        :lxor#615:lyor#366:lxsi#123:lysi#399:lvxs#123:lvys#336:\
+        :bord#1:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+#
+# The text contents of the no 11 pull down menu.
+#
+pstring11:\n Shell\n\n\r Siv\n\n\r Font editor\n\n\r Klocka\n\n\r \
+Demo\n\n\r GH\n\n\r Landskap\n\n\r Huvud Meny
+#
+lstring11:\n Shell\n\n\r Siv\n\n\r Font editor\n\n\r Klocka\n\n\r \
+Demo\n\n\r GH\n\n\r Portr{tt\n\n\r Huvud Meny
+#
+choice11_1:icon11_1:action11_1
+icon11_1:pxor#0:pyor#336:pxsi#123:pysi#28:\
+        :lxor#0:lyor#336:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_1:background1:terminal100:close:menu0
+#
+choice11_2:icon11_2:action11_2
+icon11_2:pxor#0:pyor#280:pxsi#123:pysi#28:\
+        :lxor#0:lyor#280:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_2:background1:terminal104:close:menu0
+#
+choice11_3:icon11_3:action11_3
+icon11_3:pxor#0:pyor#252:pxsi#123:pysi#28:\
+        :lxor#0:lyor#252:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_3:background1:terminal200:close:menu0
+#
+choice11_4:icon11_4:action11_4
+icon11_4:pxor#0:pyor#224:pxsi#123:pysi#28:\
+        :lxor#0:lyor#224:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_4:background1:close:terminal201:menu0
+#
+choice11_5:icon11_5:action11_5
+icon11_5:pxor#0:pyor#196:pxsi#123:pysi#28:\
+        :lxor#0:lyor#196:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_5:background1:terminal202:close:menu0
+#
+choice11_6:icon11_6:action11_6
+icon11_6:pxor#0:pyor#168:pxsi#123:pysi#28:\
+        :lxor#0:lyor#168:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_6:terminal203:close:menu0
+#
+choice11_7:icon11_7:action11_7
+icon11_7:pxor#0:pyor#140:pxsi#123:pysi#28:\
+        :lxor#0:lyor#140:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_7:turn:menu0
+#
+choice11_8:icon11_8:action11_8
+icon11_8:pxor#0:pyor#112:pxsi#123:pysi#28:\
+        :lxor#0:lyor#112:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_8:close:menu0
+#
+choice11_9:icon11_9:action11_9
+icon11_9:pxor#0:pyor#84:pxsi#123:pysi#28:\
+        :lxor#0:lyor#84:lxsi#123:lysi#28:\
+        :pmod:lmod:inve:rlse:pres
+action11_9:close:menu0
+#
+choice11_10:icon11_10:action11_10
+icon11_10:pxor#0:pyor#56:pxsi#123:pysi#28:\
+         :lxor#0:lyor#56:lxsi#123:lysi#28:\
+         :pmod:lmod:inve:rlse:pres
+action11_10:close:menu0
+#
+choice11_11:icon11_11:action11_11
+icon11_11:pxor#0:pyor#28:pxsi#123:pysi#28:\
+         :lxor#0:lyor#28:lxsi#123:lysi#28:\
+         :pmod:lmod:inve:rlse:pres
+action11_11:close:menu0
+#
+choice11_12:icon11_12:action11_12
+icon11_12:pxor#0:pyor#28:pxsi#123:pysi#28:\
+         :lxor#0:lyor#28:lxsi#123:lysi#28:\
+         :pmod:lmod:inve:rlse:pres
+action11_12:close:menu0
+#
+choice11_13:icon11_13:action11_13
+icon11_13:pxor#0:pyor#0:pxsi#123:pysi#394:\
+         :lxor#0:lyor#0:lxsi#123:lysi#394:\
+         :pmod:lmod:leave:schk
+action11_13:close:menu0
+#
+#
+# The no 12 pull down menu.
+#
+menu12:window12:string12:choice12_1:choice12_2:choice12_3:choice12_4:\
+                     :choice12_5:choice12_6:choice12_7:choice12_8:\
+                     :choice12_9:choice12_10:choice12_11:choice12_12:
+#
+#
+# The choices in the no 1 pull down menu.
+#
+choice1_1:icon1_1:action1_1:
+choice1_2:icon1_2:action1_2:
+choice1_3:icon1_3:action1_3:
+choice1_4:icon1_4:action1_4:
+choice1_5:icon1_5:action1_5:
+choice1_6:icon1_6:action1_6:
+choice1_7:icon1_7:action1_7:
+choice1_8:icon1_8:action1_8:
+choice1_9:icon1_9:action1_9:
+choice1_10:icon1_10:action1_10:
+choice1_11:icon1_11:action1_11:
+choice1_12:icon1_12:action1_12:
+#
+# The choices in the no 2 pull down menu.
+#
+choice2_1:icon2_1:action2_1:
+choice2_2:icon2_2:action2_2:
+choice2_3:icon2_3:action2_3:
+choice2_4:icon2_4:action2_4:
+choice2_5:icon2_5:action2_5:
+choice2_6:icon2_6:action2_6:
+choice2_7:icon2_7:action2_7:
+choice2_8:icon2_8:action2_8:
+choice2_9:icon2_9:action2_9:
+choice2_10:icon2_10:action2_10:
+choice2_11:icon2_11:action2_11:
+choice2_12:icon2_12:action2_12:
+#
+# The choices in the no 3 pull down menu.
+#
+choice3_1:icon3_1:action3_1:
+choice3_2:icon3_2:action3_2:
+choice3_3:icon3_3:action3_3:
+choice3_4:icon3_4:action3_4:
+choice3_5:icon3_5:action3_5:
+choice3_6:icon3_6:action3_6:
+choice3_7:icon3_7:action3_7:
+choice3_8:icon3_8:action3_8:
+choice3_9:icon3_9:action3_9:
+choice3_10:icon3_10:action3_10:
+choice3_11:icon3_11:action3_11:
+choice3_12:icon3_12:action3_12:
+#
+# The choices in the no 4 pull down menu.
+#
+choice4_1:icon4_1:action4_1:
+choice4_2:icon4_2:action4_2:
+choice4_3:icon4_3:action4_3:
+choice4_4:icon4_4:action4_4:
+choice4_5:icon4_5:action4_5:
+choice4_6:icon4_6:action4_6:
+choice4_7:icon4_7:action4_7:
+choice4_8:icon4_8:action4_8:
+choice4_9:icon4_9:action4_9:
+choice4_10:icon4_10:action4_10:
+choice4_11:icon4_11:action4_11:
+choice4_12:icon4_12:action4_12:
+#
+# The choices in the no 5 pull down menu.
+#
+choice5_1:icon5_1:action5_1:
+choice5_2:icon5_2:action5_2:
+choice5_3:icon5_3:action5_3:
+choice5_5:icon5_5:action5_5:
+choice5_5:icon5_5:action5_5:
+choice5_6:icon5_6:action5_6:
+choice5_7:icon5_7:action5_7:
+choice5_8:icon5_8:action5_8:
+choice5_9:icon5_9:action5_9:
+choice5_10:icon5_10:action5_10:
+choice5_11:icon5_11:action5_11:
+choice5_12:icon5_12:action5_12:
+#
+# The choices in the no 6 pull down menu.
+#
+choice6_1:icon6_1:action6_1:
+choice6_2:icon6_2:action6_2:
+choice6_3:icon6_3:action6_3:
+choice6_4:icon6_4:action6_4:
+choice6_5:icon6_5:action6_5:
+choice6_6:icon6_6:action6_6:
+choice6_7:icon6_7:action6_7:
+choice6_8:icon6_8:action6_8:
+choice6_9:icon6_9:action6_9:
+choice6_10:icon6_10:action6_10:
+choice6_11:icon6_11:action6_11:
+choice6_12:icon6_12:action6_12:
+#
+# The choices in the no 7 pull down menu.
+#
+choice7_1:icon7_1:action7_1:
+choice7_2:icon7_2:action7_2:
+choice7_3:icon7_3:action7_3:
+choice7_4:icon7_4:action7_4:
+choice7_5:icon7_5:action7_5:
+choice7_6:icon7_6:action7_6:
+choice7_7:icon7_7:action7_7:
+choice7_8:icon7_8:action7_8:
+choice7_9:icon7_9:action7_9:
+choice7_10:icon7_10:action7_10:
+choice7_11:icon7_11:action7_11:
+choice7_12:icon7_12:action7_12:
+#
+# The choices in the no 8 pull down menu.
+#
+choice8_1:icon8_1:action8_1:
+choice8_2:icon8_2:action8_2:
+choice8_3:icon8_3:action8_3:
+choice8_4:icon8_4:action8_4:
+choice8_5:icon8_5:action8_5:
+choice8_6:icon8_6:action8_6:
+choice8_7:icon8_7:action8_7:
+choice8_8:icon8_8:action8_8:
+choice8_9:icon8_9:action8_9:
+choice8_10:icon8_10:action8_10:
+choice8_11:icon8_11:action8_11:
+choice8_12:icon8_12:action8_12:
+#
+# The choices in the no 9 pull down menu.
+#
+choice9_1:icon9_1:action9_1:
+choice9_2:icon9_2:action9_2:
+choice9_3:icon9_3:action9_3:
+choice9_4:icon9_4:action9_4:
+choice9_5:icon9_5:action9_5:
+choice9_6:icon9_6:action9_6:
+choice9_7:icon9_7:action9_7:
+choice9_8:icon9_8:action9_8:
+choice9_9:icon9_9:action9_9:
+choice9_10:icon9_10:action9_10:
+choice9_11:icon9_11:action9_11:
+choice9_12:icon9_12:action9_12:
+#
+# The choices in the no 10 pull down menu.
+#
+choice10_1:icon10_1:action10_1:
+choice10_2:icon10_2:action10_2:
+choice10_3:icon10_3:action10_3:
+choice10_4:icon10_4:action10_4:
+choice10_5:icon10_5:action10_5:
+choice10_6:icon10_6:action10_6:
+choice10_7:icon10_7:action10_7:
+choice10_8:icon10_8:action10_8:
+choice10_9:icon10_9:action10_9:
+choice10_10:icon10_10:action10_10:
+choice10_11:icon10_11:action10_11:
+choice10_12:icon10_12:action10_12:
+#
+# The choices in the no 12 pull down menu.
+#
+choice12_1:icon12_1:action12_1:
+choice12_2:icon12_2:action12_2:
+choice12_3:icon12_3:action12_3:
+choice12_4:icon12_4:action12_4:
+choice12_5:icon12_5:action12_5:
+choice12_6:icon12_6:action12_6:
+choice12_7:icon12_7:action12_7:
+choice12_8:icon12_8:action12_8:
+choice12_9:icon12_9:action12_9:
+choice12_10:icon12_10:action12_10:
+choice12_11:icon12_11:action12_11:
+choice12_12:icon12_12:action12_12:
+#
+# Terminaldefinitioner
+#
+
+
+#
+# Shell terminal.
+#
+terminal100:window100:header100:zoomlist100:environ100:command100
+
+window100:pxor#24:pyor#500:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#30:lyor#390:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis:hbox
+
+header100:head= SHELL :invt
+
+zoomlist100:plst=Q:llst=Q:pmod:lmod
+
+environ100:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+
+command100:/bin/sh,sh
+
+#
+# Stor Shell terminal.
+#
+terminal101:window101:header100:zoomlist101:environ101:command100
+
+window101:pxor#144:pyor#100:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+         :lxor#160:lyor#64:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x42:lfnt#0x42:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr:bbox:avis
+
+environ101:TERM=win,TERMCAP=w0|win|w:co#80:li#64:tc=abc1600w:
+
+zoomlist101:plst=HQ:llst=HQ:pmod:lmod
+
+#
+# Super Shell terminal
+#
+terminal102:window102:pointer2:super:header102:zoomlist101:environ101:command30\
+0
+
+header102:head= SUPER SHELL :invt
+
+window102:pxor#144:pyor#100:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+         :lxor#160:lyor#64:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x42:lfnt#0x42:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr:bbox:avis:amsp
+
+#
+# BASIC-III terminal.
+#
+
+terminal103:window103:header103:zoomlist103:environ103:command103
+
+window103:pxor#24:pyor#300:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#90:lyor#200:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis
+
+header103:head= BASIC-III :invt
+
+zoomlist103:plst=Q:llst=Q:pmod:lmod
+
+environ103:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command103:/bin/basic,basic
+
+
+#
+# Siv editor terminal.
+#
+terminal104:window104:header104:zoomlist104:penviron104:lenviron104:command104
+
+window104:pxor#24:pyor#176:pxsi#80:pysi#40:pvxo#1:pvyo#1:pvxs#80:pvys#40:\
+         :lxor#60:lyor#216:lxsi#80:lysi#30:lvxo#1:lvyo#1:lvxs#80:lvys#30:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:zbox:hscr:vscr:text:bbox:avis
+
+header104:head= SIV :invt
+
+zoomlist104:plst=Q:llst=Q:pmod:lmod
+
+penviron104:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#40:tc=abc1600w:
+
+lenviron104:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#30:tc=abc1600w:
+
+command104:/usr/bin/siv,siv
+
+#
+# Font Editor terminal.
+#
+terminal200:window200:pointer2:header200:command200
+
+window200:pxor#34:pyor#150:pxsi#700:pysi#700:pvxo#0:pvyo#0:pvxs#700:pvys#700:\
+         :lxor#45:lyor#34:lxsi#700:lysi#700:lvxo#0:lvyo#0:lvxs#700:lvys#700:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#2:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:ncpi:amsp:avis
+
+header200:head= FONT EDITOR :invt
+
+command200:/usr/bin/fe,fe
+
+#
+# Klockans terminal.
+#
+terminal201:window201:pointer3:header201:command201
+
+window201:pxor#600:pyor#750:pxsi#100:pysi#100:pvxo#0:pvyo#0:pvxs#100:pvys#100:\
+         :lxor#50:lyor#50:lxsi#100:lysi#100:lvxo#0:lvyo#0:lvxs#100:lvys#100:\
+         :bord#2:colr#1:pfnt#0x48:lfnt#0x48:rsig#16:csig#17:\
+         :pmod:lmod:ncur:cbox:mbox:ncpi:amsp
+
+header201:head= Stockholm :invt
+
+command201:/usr/window/demo/clock,clock,-n
+
+#
+# Demo terminal
+#
+terminal202:directory202:command202
+
+directory202:/usr/window/demo
+
+command202:demo,demo
+
+#
+# GH wsh
+#
+terminal203:wait:super:directory203:command203
+
+directory203:subdir
+
+command203:/usr/window/wsh,wsh,-n
+
+
+#
+# MIMER-BASIC terminal
+#
+terminal105:window105:header105:zoomlist105:environ105:command105
+
+window105:pxor#24:pyor#200:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#80:pvys#24:\
+         :lxor#120:lyor#170:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox:bbox:avis
+
+header105:head= MIMER BASIC :invt
+
+zoomlist105:plst=Q:llst=Q:pmod:lmod
+
+environ105:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command105:/bin/mbasic,mbasic

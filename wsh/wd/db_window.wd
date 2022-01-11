@@ -1,0 +1,1340 @@
+# db_window.wd
+# (c) Luxor Datorer AB 1985-09-23
+# Ulf S|dergren
+#
+# Definition av f|nster, pulldown-menyer mm f|r DB.
+#  
+
+#
+#	SCCSID(@(#)Internversion db_window.wd 1.14@(#))
+#
+
+#
+# What to do on initialization.
+#
+init:substitute0:menu0:
+
+substitute0:init#0:onof#0xee:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:mpul#0xad:\
+:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:lpdo#0xb3:lple#0xbc:lpri#0xb4:\
+:lpul#0xbd:lpur#0xb5:lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:mtxt#0xcd:\
+:step#4:lstp#16
+
+#
+# The main menu.
+#
+menu0:window0:string0:choice1:choice2:choice3:choice4:choice5:choice6:choice7:\
+choice8:choice9:choice10:choice11:choice12:choice13:choice15:\
+choice16:choice17:choice19:choice20:
+
+#
+# The dokument pull down menu.
+#
+menu1:window1:string1:choice1_1:choice1_2:choice1_3:choice1_4:choice1_5:choice1_6:
+
+#
+# The Data pull down menu.
+#
+menu2:window2:string2:choice2_1:choice2_2:choice2_3:choice2_4:choice2_5:
+
+#
+# The Kommunikation pull down menu.
+#
+menu7:window7:string7:choice7_1:choice7_2:choice7_3:choice7_4:choice7_5:choice7_6:
+
+#
+# The Utskrift pull down menu.
+#
+menu8:window8:string8:choice8_1:choice8_2:choice8_3:choice8_4:
+
+#
+# The Arkiv pull down menu.
+#
+menu9:window9:string9:choice9_1:choice9_2:choice9_3:choice9_4:
+
+#
+# The ovrigt pull down menu.
+#
+menu17:window17:string17:choice17_1:choice17_2:choice17_3:choice17_4:choice17_5:
+
+#
+# The Status pull down menu.
+#
+menu19:window19:string19:choice19_1:choice19_2:choice19_3:choice19_4:\
+choice19_5:choice19_6:choice19_7:
+
+
+#
+# The choices in the main menu.
+#
+choice1:icon1:action1:
+choice2:icon2:action2:
+choice3:icon3:action3:
+choice4:icon4:action4:
+choice5:icon5:action5:
+choice6:icon6:action6:
+choice7:icon7:action7:
+choice8:icon8:action8:
+choice9:icon9:action9:
+choice10:icon10:action10:
+choice11:icon11:action11:
+choice12:icon12:action12:
+choice13:icon13:action13:
+choice15:icon15:action15:
+choice16:icon16:action16:
+choice17:icon17:action17:
+choice19:icon19:action19:
+choice20:icon20:action20:
+
+
+#
+# The choices in the dokument pull down menu.
+#
+choice1_1:icon1_1:action1_1:
+choice1_2:icon1_2:action1_2:
+choice1_3:icon1_3:action1_3:
+choice1_4:icon1_4:action1_4:
+choice1_5:icon1_5:action1_5:
+choice1_6:icon1_6:action1_5:
+
+#
+# The choices in the Data pull down menu.
+#
+choice2_1:icon2_1:action2_1:
+choice2_2:icon2_2:action2_2:
+choice2_3:icon2_3:action2_3:
+choice2_4:icon2_4:action2_4:
+choice2_5:icon2_5:action2_4:
+
+#
+# The choices in the Kommunikation pull down menu.
+#
+choice7_1:icon7_1:action7_1:
+choice7_2:icon7_2:action7_2:
+choice7_3:icon7_3:action7_3:
+choice7_4:icon7_4:action7_4:
+choice7_5:icon7_5:action7_5:
+choice7_6:icon7_6:action7_5:
+
+#
+# The choices in the Utskrift pull down menu.
+#
+choice8_1:icon8_1:action8_1:
+choice8_2:icon8_2:action8_2:
+choice8_3:icon8_3:action8_3:
+choice8_4:icon8_4:action8_3:
+
+#
+# The choices in the Arkiv pull down menu.
+#
+choice9_1:icon9_1:action9_1:
+choice9_2:icon9_2:action9_2:
+choice9_3:icon9_3:action9_3:
+choice9_4:icon9_4:action9_3:
+
+#
+# The choices in the "|vrigt" pull down menu.
+#
+choice17_1:icon17_1:action17_1:
+choice17_2:icon17_2:action17_2:
+choice17_3:icon17_3:action17_3:
+choice17_4:icon17_4:action17_4:
+choice17_5:icon17_5:action17_4:
+
+#
+# The choices in the Status pull down menu.
+#
+choice19_1:icon19_1:action19_1:
+choice19_2:icon19_2:action19_2:
+choice19_3:icon19_3:action19_3:
+choice19_4:icon19_4:action19_4:
+choice19_5:icon19_5:action19_5:
+choice19_6:icon19_6:action19_6:
+choice19_7:icon19_7:action19_6:
+
+#
+# The action when choosing the dokument option.
+#
+action1:menu1:
+
+#
+# The action when starting Data.
+#
+action2:menu2:
+
+#
+# The action when starting Katalog.
+#
+action3:terminal3:menu0:
+
+#
+# The action when starting Stada.
+#
+action4:terminal4:menu0:
+
+#
+# The action when starting Hj{lp.
+#
+action5:terminal5:menu0:
+
+#
+# The action when starting Grafik.
+#
+action6:terminal6:menu0:
+
+#
+# The action when starting Kommunikation.
+#
+action7:menu7:
+
+#
+# The action when starting Utskrift.
+#
+action8:menu8:
+
+#
+# The action when starting Arkiv.
+#
+action9:menu9:
+
+#
+# The action when choosing Ge kommando.
+#
+action10:terminal10:menu0:
+
+#
+# The action when starting Kalkyl.
+#
+action11:terminal11:menu0:
+
+#
+# The action when starting Kalender.
+#
+action12:terminal12:menu0:
+
+#
+# The action when choosing Resultat option.
+#
+action13:terminal13:menu0:
+
+#
+# The action when starting Diarieforing.
+#
+action14:terminal14:menu0:
+
+#
+# The action when starting Rida.
+#
+action15:terminal15:menu0:
+
+#
+# The action when starting Statistik.
+#
+action16:terminal16:menu0:
+
+#
+# The action when choosing "\vrigt".
+#
+action17:menu17:
+
+#
+# The action when starting Status.
+#
+action19:menu19:
+
+#
+# The action when choosing the exit option.
+#
+action20:logout:close:menu0:
+
+#
+# The action when choosing new dokument in the dokument pull down menu.
+#
+action1_1:flags1:terminal1_1:close:menu0:
+
+#
+# The action when choosing the read dokument option.
+#
+action1_2:flags1:terminal1_2:close:menu0:
+
+#
+# The action when choosing the change dokument option.
+#
+action1_3:flags1:terminal1_3:close:menu0:
+
+#
+# The action when choosing the dokument koppla etikett option.
+#
+action1_4:flags1:terminal1_4:close:menu0:
+
+#
+# The action when leaving the dokument pull down menu.
+#
+action1_5:close:menu0:
+
+#
+# The action when choosing the Data Skapa urval option.
+#
+action2_1:flags1:terminal2_1:close:menu0:
+
+#
+# The action when choosing the Data Datahantering option.
+#
+action2_2:flags1:terminal2_2:close:menu0:
+
+#
+# The action when choosing the Data Konvertera data option.
+#
+action2_3:flags1:terminal2_3:close:menu0:
+
+#
+# The action when leaving the Data pull down menu.
+#
+action2_4:close:menu0:
+
+#
+# The action when choosing the Komm. elektronisk post option.
+#
+action7_1:flags1:terminal7_1:close:menu0:
+
+#
+# The action when choosing the Komm. Brev post option.
+#
+action7_2:flags1:terminal7_2:close:menu0:
+
+#
+# The action when choosing the Komm. Teletex option.
+#
+action7_3:flags1:terminal7_3:close:menu0:
+
+#
+# The action when choosing the Komm. Kontakta dator option.
+#
+action7_4:flags1:terminal7_4:close:menu0:
+
+#
+# The action when leaving the Kommunikation pull down menu.
+#
+action7_5:close:menu0:
+
+#
+# The action when choosing the Utskrift Skriv ut option.
+#
+action8_1:flags1:terminal8_1:close:menu0:
+
+#
+# The action when choosing the Utskrift Utskriftsk| option.
+#
+action8_2:flags1:terminal8_2:close:menu0:
+
+#
+# The action when leaving the Utskrift pull down menu.
+#
+action8_3:close:menu0:
+
+#
+# The action when choosing the Arkiv Arkivera option.
+#
+action9_1:flags1:terminal9_1:close:menu0:
+
+#
+# The action when choosing the Arkiv H{mta in option.
+#
+action9_2:flags1:terminal9_2:close:menu0:
+
+#
+# The action when leaving the Arkiv pull down menu.
+#
+action9_3:close:menu0:
+
+#
+# The action when choosing the Eget program 1 option.
+#
+action17_1:flags1:terminal17_1:close:menu0:
+
+#
+# The action when choosing the Eget program 2 option.
+#
+action17_2:flags1:terminal17_2:close:menu0:
+
+#
+# The action when choosing the Eget program 3 option.
+#
+action17_3:flags1:terminal17_3:close:menu0:
+
+#
+# The action when leaving the "\vrigt" pull down menu.
+#
+action17_4:close:menu0:
+
+#
+# The action when choosing the Status Byt grupp option.
+#
+action19_1:flags1:terminal19_1:close:menu0:
+
+#
+# The action when choosing the Status Visa anv{ndare option.
+#
+action19_2:flags1:terminal19_2:close:menu0:
+
+#
+# The action when choosing the Status Visa grupp option.
+#
+action19_3:flags1:terminal19_3:close:menu0:
+
+#
+# The action when choosing the Status Visa klocka option.
+#
+action19_4:flags1:terminal19_4:close:menu0:
+
+#
+# The action when choosing the Status Skriv om sk{rmen option.
+#
+action19_5:restore:close:menu0:
+
+#
+# The action when leaving the Status pull down menu.
+#
+action19_6:close:menu0:
+
+
+#
+# Data for the main menu window.
+#
+window0:pxor#0:pyor#893:pxsi#768:pysi#130:pvxo#0:pvyo#0:pvxs#768:pvys#130:\
+       :bord#0:colr#1:pfnt#0x51:\
+       :pmod:ncur:nmov:alls:spec
+
+#
+# The text and graphic contents of the main menu window.
+#
+string0:\
+\e:0;0m\
+\e:767;4;1;1f\
+\
+\e:0;126m\
+\e:767;129;1;1f\
+\
+\e:0;5m\
+\e:4;125;1;1f\
+\
+\e:122;5m\
+\e:140;125;1;1f\
+\
+\e:490;5m\
+\e:508;125;1;1f\
+\
+\e:626;5m\
+\e:644;125;1;1f\
+\
+\e:762;5m\
+\e:767;125;1;1f\
+\
+\
+\e:5;5m\
+\e:121;5;0;1d\
+\e:121;125;0;1d\
+\e:5;125;0;1d\
+\e:5;5;0;1d\
+\
+\e:5;45m\
+\e:121;45;0;1d\
+\e:82;45m\
+\e:82;125;0;1d\
+\
+\e:12;15m\
+\e:1H\
+Katalog\
+\e7\
+\e(A\
+\e:8;46m\
+\e:1H\
+Dokument\
+\e8\
+\e:94;90m\
+\e:1H\
+R\
+\e:94;70m\
+\e:1H\
+e\
+\e:94;50m\
+\e:1H\
+s\
+\
+\
+\e:141;5m\
+\e:257;5;0;1d\
+\e:257;125;0;1d\
+\e:141;125;0;1d\
+\e:141;5;0;1d\
+\
+\e:141;45m\
+\e:257;45;0;1d\
+\e:141;85m\
+\e:257;85;0;1d\
+\e:141;125m\
+\e:257;125;0;1d\
+\
+\e:148;55m\
+\e:1H\
+Statistik\
+\e:148;95m\
+\e:1H\
+Data\
+\
+\
+\e:257;5m\
+\e:373;5;0;1d\
+\e:373;125;0;1d\
+\e:257;125;0;1d\
+\e:257;5;0;1d\
+\
+\e:257;45m\
+\e:373;45;0;1d\
+\e:257;85m\
+\e:373;85;0;1d\
+\e:257;125m\
+\e:373;125;0;1d\
+\
+\e:264;15m\
+\e:1H\
+\\vrigt\
+\e:264;55m\
+\e:1H\
+Kalkyl\
+\e:264;95m\
+\e:1H\
+Grafik\
+\
+\
+\e:373;5m\
+\e:489;5;0;1d\
+\e:489;125;0;1d\
+\e:373;125;0;1d\
+\e:373;5;0;1d\
+\
+\e:373;45m\
+\e:489;45;0;1d\
+\e:373;85m\
+\e:489;85;0;1d\
+\e:373;125m\
+\e:489;125;0;1d\
+\
+\e:380;55m\
+\e:1H\
+Kommunik.\
+\e:380;95m\
+\e:1H\
+Kalender\
+\
+\
+\e:509;5m\
+\e:625;5;0;1d\
+\e:625;125;0;1d\
+\e:509;125;0;1d\
+\e:509;5;0;1d\
+\
+\e:509;45m\
+\e:625;45;0;1d\
+\e:509;85m\
+\e:625;85;0;1d\
+\e:509;125m\
+\e:625;125;0;1d\
+\e:567;45m\
+\e:567;125;0;1d\
+\
+\e:516;15m\
+\e:1H\
+Utskrift\
+\e:516;95m\
+\e:1H\
+ S\
+\
+\
+\e:645;5m\
+\e:761;5;0;1d\
+\e:761;125;0;1d\
+\e:645;125;0;1d\
+\e:645;5;0;1d\
+\
+\e:645;45m\
+\e:761;45;0;1d\
+\e:645;85m\
+\e:761;85;0;1d\
+\e:645;125m\
+\e:761;125;0;1d\
+\e:703;45m\
+\e:703;125;0;1d\
+\
+\e:652;15m\
+\e:1H\
+Avsluta\
+\e:652;95m\
+\e:1H\
+ ?\
+\e:652;55m\
+\e:1H\
+ K\
+\
+\
+\e:10;15O\
+\e:12;63903;0;0;2R\e7\e:0020;0096m\e:0025;0093;00;1d\e:0031;0085;00;1d\
+\e:0032;0080;00;1d\e:0034;0074;00;1d\e:0035;0072;00;1d\e:0038;0072;00;1d\
+\e:0041;0072;00;1d\e:0043;0072;00;1d\e:0044;0070;00;1d\e:0045;0068;00;1d\
+\e:0043;0067;00;1d\e:0040;0068;00;1d\e:0037;0069;00;1d\e8\e7\e:0037;0069m\
+\e:0035;0069;00;1d\e:0033;0067;00;1d\e:0032;0066;00;1d\e:0023;0065m\
+\e:0023;0068;00;1d\e:0022;0069;00;1d\e:0020;0070;00;1d\e:0014;0071;00;1d\
+\e:0017;0079m\e:0022;0078;00;1d\e:0025;0076;00;1d\e:0026;0078;00;1d\
+\e:0025;0081;00;1d\e:0025;0083;00;1d\e:0018;0097m\e8\e7\e:0018;0097m\
+\e:0020;0096;00;1d\e:0014;0071m\e:0007;0072;00;1d\e:0012;0083m\
+\e:0015;0082;00;1d\e:0017;0079;00;1d\e:0025;0083m\e:0022;0087;00;1d\
+\e:0019;0092;00;1d\e:0016;0095;00;1d\e:0014;0098;00;1d\e:0019;0097;00;1d\
+\e:0032;0066m\e:0030;0054;00;1d\e:0028;0048;00;1d\e8\e7\e:0028;0048m\
+\e:0026;0045;00;1d\e:0023;0045;00;1d\e:0023;0065m\e:0024;0060;00;1d\
+\e:0025;0055;00;1d\e:0024;0049;00;1d\e:0023;0045;00;1d\e:0012;0083m\
+\e:0007;0077;00;1d\e:0007;0073;00;1d\e:0007;0072;00;1d\e8\
+\e:0;0O\
+\
+\
+\e:519;5O\
+\e:12;63903;0;0;2R\e7\e:0006;0072m\e:0004;0071;00;1d\e:0025;0051;00;1d\
+\e:0027;0052;00;1d\e:0006;0072;00;1d\e:0027;0052m\e:0025;0058;00;1d\
+\e:0027;0052m\e:0027;0058;00;1d\e:0025;0051m\e:0020;0052;00;1d\e:0025;0051m\
+\e:0019;0051;00;1d\e:0027;0052m\e:0036;0052;00;1d\e8\e7\e:0027;0052m\
+\e:0027;0052m\e:0036;0051;00;1d\e:0025;0051m\e:0028;0044;00;1d\e:0025;0051m\
+\e:0029;0044;00;1d\e:0026;0051m\e:0034;0047;00;1d\e:0026;0051m\
+\e:0033;0046;00;1d\e:0025;0051m\e:0031;0045;00;1d\e:0027;0052m\
+\e:0035;0049;00;1d\e:0025;0051m\e:0027;0043;00;1d\e8\e7\e:0006;0072m\
+\e:0006;0072m\e:0027;0052;00;1d\e:0026;0051;00;1d\e:0005;0072;00;1d\e8\
+\e:0;0O\
+\
+\
+\e:577;45O\
+\e:12;63903;0;0;2R\e7\e:0010;0062m\e:0010;0067;00;1d\e:0010;0067m\
+\e:0023;0067;00;1d\e:0023;0062m\e:0023;0067;00;1d\e:0010;0062m\
+\e:0023;0062;00;1d\e:0010;0054m\e:0010;0059;00;1d\e:0010;0059m\
+\e:0023;0059;00;1d\e:0023;0054m\e:0023;0059;00;1d\e:0010;0054m\
+\e:0023;0054;00;1d\e8\e7\e:0004;0042m\e:0004;0042m\e:0004;0049;00;1d\
+\e:0004;0049m\e:0017;0049;00;1d\e:0017;0042m\e:0017;0049;00;1d\e:0004;0042m\
+\e:0017;0042;00;1d\e:0017;0042m\e:0023;0045;00;1d\e:0017;0049m\
+\e:0023;0052;00;1d\e:0004;0049m\e:0010;0052;00;1d\e:0023;0052;00;1d\
+\e:0023;0045;00;1d\e8\e7\e:0009;0069m\e:0009;0069m\e:0009;0052;00;1d\
+\e:0019;0044m\e:0025;0044;00;1d\e:0025;0069;00;1d\e:0009;0069;00;1d\
+\e:0014;0063m\e:0014;0064;00;1d\e:0014;0064m\e:0018;0064;00;1d\e:0018;0063m\
+\e:0018;0064;00;1d\e:0014;0063m\e:0018;0063;00;1d\e:0014;0056m\
+\e:0014;0057;00;1d\e8\e7\e:0014;0057m\e:0014;0057m\e:0018;0057;00;1d\
+\e:0018;0056m\e:0018;0057;00;1d\e:0014;0056m\e:0018;0056;00;1d\e:0008;0045m\
+\e:0008;0046;00;1d\e:0008;0046m\e:0012;0046;00;1d\e:0012;0045m\
+\e:0012;0046;00;1d\e:0008;0045m\e:0012;0045;00;1d\e:0025;0044m\
+\e:0037;0050;00;1d\e8\e7\e:0025;0069m\e:0025;0069m\e:0037;0075;00;1d\
+\e:0009;0069m\e:0021;0075;00;1d\e:0037;0075;00;1d\e:0037;0050;00;1d\e8\
+\e:0;0O\
+\
+\
+\e:708;50O\
+\e:12;63903;0;0;2R\e7\e:0002;0041m\e:0002;0069;00;1d\e:0002;0069m\
+\e:0047;0069;00;1d\e:0047;0041m\e:0047;0069;00;1d\e:0002;0041m\
+\e:0047;0041;00;1d\e:0038;0062m\e:0038;0067;00;1d\e:0038;0067m\
+\e:0043;0067;00;1d\e:0043;0062m\e:0043;0067;00;1d\e:0038;0062m\
+\e:0043;0062;00;1d\e8\e7\e:0022;0055m\e:0022;0055m\e:0022;0056;00;1d\
+\e:0022;0056m\e:0040;0056;00;1d\e:0040;0055m\e:0040;0056;00;1d\
+\e:0022;0055m\e:0040;0055;00;1d\e:0022;0052m\e:0022;0053;00;1d\
+\e:0022;0053m\e:0036;0053;00;1d\e:0036;0052m\e:0036;0053;00;1d\
+\e:0022;0052m\e:0036;0052;00;1d\e8\e7\e:0022;0049m\e:0022;0049m\
+\e:0022;0050;00;1d\e:0022;0050m\e:0042;0050;00;1d\e:0042;0049m\
+\e:0042;0050;00;1d\e:0022;0049m\e:0042;0049;00;1d\e:0022;0046m\
+\e:0022;0047;00;1d\e:0022;0047m\e:0037;0047;00;1d\e:0037;0046m\
+\e:0037;0047;00;1d\e:0022;0046m\e:0037;0046;00;1d\e8\
+\e:0;0O\
+\
+\
+\e:715;10O\
+\e:12;63903;0;0;2R\e7\e:0002;0049m\e:0002;0067;00;1d\e:0023;0049m\
+\e:0023;0067;00;1d\e:0002;0067m\e:0023;0067;00;1d\e:0002;0049m\
+\e:0003;0046;00;1d\e:0006;0046;00;1d\e:0007;0049;00;1d\e:0008;0046;00;1d\
+\e:0011;0046;00;1d\e:0012;0049;00;1d\e:0014;0046;00;1d\e:0016;0046;00;1d\
+\e8\e7\e:0016;0046m\e:0017;0049;00;1d\e:0019;0046;00;1d\e:0021;0046;00;1d\
+\e:0023;0049;00;1d\e:0012;0040m\e:0012;0041;00;1d\e:0012;0041m\
+\e:0013;0041;00;1d\e:0013;0040m\e:0013;0041;00;1d\e:0012;0040m\
+\e:0013;0040;00;1d\e:0021;0067m\e:0002;0048;00;1d\e:0013;0067m\e8\
+\e7\e:0013;0067m\e:0002;0056;00;1d\e:0005;0067m\e:0002;0064;00;1d\
+\e:0023;0061m\e:0008;0046;00;1d\e:0023;0053m\e:0018;0049;00;1d\
+\e:0012;0041m\e:0012;0049;00;1d\e8\
+\e:0;0O
+
+
+
+
+#
+# Icons in the main menu window.
+#
+icon1:pxor#6:pyor#46:pxsi#76:pysi#79:\
+     :pmod:inve:rqst
+
+icon3:pxor#6:pyor#6:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon13:pxor#83:pyor#46:pxsi#38:pysi#79:\
+     :pmod:inve:rqst
+
+
+
+icon2:pxor#142:pyor#86:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon16:pxor#142:pyor#46:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon6:pxor#258:pyor#86:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon11:pxor#258:pyor#46:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon17:pxor#258:pyor#6:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+icon12:pxor#374:pyor#86:pxsi#115:pysi#39:\
+      :pmod:inve:rqst
+
+icon7:pxor#374:pyor#46:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+
+
+icon19:pxor#510:pyor#86:pxsi#57:pysi#39:\
+      :pmod:inve:rqst
+
+icon4:pxor#510:pyor#46:pxsi#57:pysi#39:\
+     :pmod:inve:rqst
+
+icon9:pxor#568:pyor#86:pxsi#57:pysi#39:\
+      :pmod:inve:rqst
+
+icon8:pxor#510:pyor#6:pxsi#115:pysi#39:\
+     :pmod:inve:rqst
+
+
+
+icon5:pxor#646:pyor#86:pxsi#57:pysi#39:\
+      :pmod:inve:rqst
+
+icon10:pxor#646:pyor#46:pxsi#57:pysi#39:\
+      :pmod:inve:rqst
+
+icon15:pxor#704:pyor#46:pxsi#57:pysi#39:\
+      :pmod:inve:rqst
+
+icon20:pxor#646:pyor#6:pxsi#115:pysi#39:\
+      :pmod:inve:rqst
+
+
+
+#
+# Data for the dokument menu window.
+#
+
+window1:pxor#8:pyor#825:pxsi#200:pysi#193:pvxs#200:pvys#112:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the dokument menu window.
+#
+string1:\
+\e:0;104m\
+\e:0H\
+ Skapa nytt dokument\
+\n\n\r L{sa dokument\
+\n\n\r [ndra dokument\
+\n\n\r Koppla etiketter
+
+#
+# Icons in the dokument menu window.
+#
+icon1_1:pxor#0:pyor#84:pxsi#200:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon1_2:pxor#0:pyor#56:pxsi#200:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon1_3:pxor#0:pyor#28:pxsi#200:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon1_4:pxor#0:pyor#0:pxsi#200:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon1_5:pxor#74:pyor#113:pxsi#125:pysi#79:\
+      :pmod:entr:schk
+
+icon1_6:pxor#0:pyor#0:pxsi#200:pysi#193:\
+       :pmod:leav:schk
+
+
+
+#
+# Data for the Data menu window.
+#
+window2:pxor#144:pyor#893:pxsi#150:pysi#125:pvxs#150:pvys#84:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the Data menu window.
+#
+string2:\
+\e:0;76m\
+\e:0H\
+ Skapa urval\
+\n\n\r Datahantering\
+\n\n\r Konvertera data
+
+#
+# Icons in the Data menu window.
+#
+icon2_1:pxor#0:pyor#56:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon2_2:pxor#0:pyor#28:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon2_3:pxor#0:pyor#0:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon2_4:pxor#113:pyor#84:pxsi#37:pysi#41:\
+      :pmod:entr:schk
+
+icon2_5:pxor#0:pyor#0:pxsi#150:pysi#125:\
+      :pmod:leav:schk
+
+
+#
+# Data for the Kommunikation menu window.
+#
+window7:pxor#376:pyor#825:pxsi#158:pysi#153:pvxs#158:pvys#112:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the Kommunikation menu window.
+#
+string7:\
+\e:0;104m\
+\e:0H\
+ Elektronisk post\
+\n\n\r Brev post\
+\n\n\r Teletex\
+\n\n\r Kontakta dator
+
+#
+# Icons in the Kommunikation menu window.
+#
+icon7_1:pxor#0:pyor#84:pxsi#158:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon7_2:pxor#0:pyor#56:pxsi#158:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon7_3:pxor#0:pyor#28:pxsi#158:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon7_4:pxor#0:pyor#0:pxsi#158:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon7_5:pxor#113:pyor#112:pxsi#45:pysi#41:\
+      :pmod:entr:schk
+
+icon7_6:pxor#0:pyor#0:pxsi#158:pysi#153:\
+      :pmod:leav:schk
+
+#
+# Data for the Utskrift menu window.
+#
+window8:pxor#512:pyor#841:pxsi#150:pysi#97:pvxs#150:pvys#56:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the Utskrift menu window.
+#
+string8:\
+\e:0;48m\
+\e:0H\
+ Skriv ut\
+\n\n\r Utskriftsk|
+
+#
+# Icons in the Utskrift menu window.
+#
+icon8_1:pxor#0:pyor#28:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon8_2:pxor#0:pyor#0:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon8_3:pxor#113:pyor#56:pxsi#37:pysi#41:\
+      :pmod:entr:schk
+
+icon8_4:pxor#0:pyor#0:pxsi#150:pysi#97:\
+      :pmod:leav:schk
+
+
+#
+# Data for the Arkiv menu window.
+#
+window9:pxor#570:pyor#921:pxsi#150:pysi#97:pvxs#150:pvys#56:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the Arkiv menu window.
+#
+string9:\
+\e:0;48m\
+\e:0H\
+ Arkivera\
+\n\n\r H{mta in
+
+#
+# Icons in the Arkiv menu window.
+#
+icon9_1:pxor#0:pyor#28:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon9_2:pxor#0:pyor#0:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon9_3:pxor#55:pyor#56:pxsi#95:pysi#41:\
+      :pmod:entr:schk
+
+icon9_4:pxor#0:pyor#0:pxsi#150:pysi#97:\
+      :pmod:leav:schk
+
+
+
+#
+# Data for the "\vrigt" pull down menu window.
+#
+window17:pxor#260:pyor#813:pxsi#150:pysi#125:pvxs#150:pvys#84:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# The text contents of the "\vrigt" pull down menu.
+#
+string17:\
+\e:0;76m\
+\e:0H\
+ Eget program 1\
+\n\n\r Eget program 2\
+\n\n\r Eget program 3
+
+
+#
+# The icons in the "\vrigt" pull down menu.
+#
+icon17_1:pxor#0:pyor#56:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon17_2:pxor#0:pyor#28:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon17_3:pxor#0:pyor#0:pxsi#150:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon17_4:pxor#113:pyor#84:pxsi#37:pysi#41:\
+      :pmod:entr:schk
+
+icon17_5:pxor#0:pyor#0:pxsi#150:pysi#125:\
+      :pmod:leav:schk
+
+
+#
+# Data for the Status menu window.
+#
+window19:pxor#512:pyor#837:pxsi#155:pysi#181:pvxs#155:pvys#140:\
+        :bord#1:colr#1:pfnt#0x41:\
+        :pmod:lock:ncur:nmov
+
+#
+# Text in the Status menu window.
+#
+string19:\
+\e:0;132m\
+\e:0H\
+ Byt grupp\
+\n\n\r Visa anv{ndare\
+\n\n\r Visa grupp\
+\n\n\r Visa klocka\
+\n\n\r Skriv om sk{rmen
+
+#
+# Icons in the Status menu window.
+#
+icon19_1:pxor#0:pyor#112:pxsi#155:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon19_2:pxor#0:pyor#84:pxsi#155:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon19_3:pxor#0:pyor#56:pxsi#155:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon19_4:pxor#0:pyor#28:pxsi#155:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon19_5:pxor#0:pyor#0:pxsi#155:pysi#28:\
+      :pmod:inve:rlse:pres
+
+icon19_6:pxor#55:pyor#140:pxsi#100:pysi#41:\
+      :pmod:entr:schk
+
+icon19_7:pxor#0:pyor#0:pxsi#155:pysi#181:\
+      :pmod:leav:schk
+
+
+
+#
+# The new dokument terminal.
+#
+terminal1_1:window1_1:header1_1:command1_1:
+
+window1_1:pxor#24:pyor#534:pxsi#720:pysi#336:pvxo#0:pvyo#0:pvxs#720:pvys#336:\
+        :bord#2:colr#1:pfnt#0x41:rsig#0:csig#1:\
+        :pmod:stxt:sbox:mbox:bbox:avis:hbox:cbox:hscr:vscr:kscr:wscr
+
+header1_1:head= Skapa nytt dokument :invt
+
+command1_1:I,lutex/create
+
+
+#
+# The read dokument terminal.
+#
+terminal1_2:window1_1:header1_2:command1_2:
+
+header1_2:head= L{sa dokument :invt
+
+command1_2:I,lutex/read
+
+
+#
+# The change dokument terminal.
+#
+terminal1_3:window1_1:header1_3:command1_3:
+
+header1_3:head= [ndra dokument :invt
+
+command1_3:I,lutex/change
+
+
+#
+# The koppla etiketter terminal.
+#
+terminal1_4:window1_1:header1_4:command1_4:
+
+header1_4:head= Koppla etiketter :invt
+
+command1_4:I,lutex/connect
+
+#
+# The Data Skapa urval terminal.
+#
+terminal2_1:window6:header2_1:command2_1:
+
+header2_1:head= Skapa urval :invt
+
+command2_1:data/urval
+
+#
+# The Data Datahantering terminal.
+#
+terminal2_2:window6:header2_2:command2_2:
+
+header2_2:head= Datahantering :invt
+
+command2_2:data/datahantering
+
+#
+# The Data Konvertera data terminal.
+#
+terminal2_3:window1_1:header2_3:command2_3:
+
+header2_3:head= Konvertera data :invt
+
+command2_3:data/konvertera
+
+#
+# The Katalog terminal.
+#
+terminal3:window3:header3:icon3_1:icon3_2:icon3_3:icon3_4:command3:
+
+window3:pxor#23:pyor#-108:pxsi#722:pysi#978:pvxo#0:pvyo#642:pvxs#722:pvys#336:\
+        :bord#2:colr#1:pfnt#0x41:rsig#14:csig#1:\
+        :pmod:stxt:sbox:mbox:bbox:avis:hbox:cbox:hscr:vscr:ncur:wgrp
+
+header3:head= Katalog :invt
+
+icon3_1:pxor#1:pyor#939:pxsi#180:pysi#38:\
+	pmod:inve:pres:rqst:lzer:cseq=\200
+
+icon3_2:pxor#181:pyor#939:pxsi#180:pysi#38:\
+	pmod:inve:pres:rqst:lzer:cseq=\201
+
+icon3_3:pxor#361:pyor#939:pxsi#180:pysi#38:\
+	pmod:inve:pres:rqst:lzer:cseq=\202
+
+icon3_4:pxor#541:pyor#939:pxsi#180:pysi#38:\
+	pmod:inve:pres:rqst:lzer:cseq=\203
+
+command3:I,directory
+
+#
+# The Stada terminal.
+#
+terminal4:window1_1:header4:command4:
+
+header4:head= St{da :invt
+
+command4:I,clean
+
+#
+# The Hj{lp terminal.
+#
+terminal5:window1_1:header5:command5:
+
+header5:head= Hj{lp :invt
+
+command5:I,help
+
+#
+# The Grafik terminal.
+#
+terminal6:window6:header6:super:command6:
+
+window6:pxor#23:pyor#-108:pxsi#722:pysi#978:pvxo#0:pvyo#130:pvxs#722:pvys#848:\
+        :bord#2:colr#1:pfnt#0x41:rsig#0:csig#0:\
+        :pmod:stxt:sbox:mbox:bbox:avis:hbox:cbox:hscr:vscr:kscr
+
+header6:head= Grafik :invt
+
+command6:grafik
+
+#
+# The Kommunikation Elektronisk post terminal.
+#
+terminal7_1:window6:header7_1:command7_1:
+
+header7_1:head= Elektronisk post :invt
+
+command7_1:kommunikation/el_post
+
+#
+# The Kommunikation Brev post terminal.
+#
+terminal7_2:window6:header7_2:command7_2:
+
+header7_2:head= Brev post :invt
+
+command7_2:kommunikation/brev_post
+
+#
+# The Kommunikation Teletex terminal.
+#
+terminal7_3:window6:header7_3:command7_3:
+
+header7_3:head= Teletex :invt
+
+command7_3:kommunikation/teletex
+
+#
+# The Kommunikation Kontakta dator terminal.
+#
+terminal7_4:window6:header7_4:command7_4:
+
+header7_4:head= Kontakta dator :invt
+
+command7_4:kommunikation/kontakta_dator
+
+#
+# The Utskrift Skriv ut terminal.
+#
+terminal8_1:window1_1:header8_1:command8_1:
+
+header8_1:head= Skriv ut :invt
+
+command8_1:I,pr/print
+
+#
+# The Utskrift Utskriftsk| terminal.
+#
+terminal8_2:window1_1:header8_2:command8_2:
+
+header8_2:head= Utskriftsk| :invt
+
+command8_2:I,pr/queue
+
+#
+# The Arkiv Arkivera terminal.
+#
+terminal9_1:window1_1:header9_1:command9_1:
+
+header9_1:head= Arkivera :invt
+
+command9_1:I,archive/store
+
+#
+# The Arkiv H{mta in terminal.
+#
+terminal9_2:window1_1:header9_2:command9_2:
+
+header9_2:head= H{mta in :invt
+
+command9_2:I,archive/restore
+
+#
+# The Ge kommando terminal.
+#
+terminal10:window1_1:header10:command10:
+
+header10:head= Ge kommando :invt
+
+command10:I,command
+
+#
+# The Kalkyl terminal.
+#
+terminal11:window6:header11:command11:
+
+header11:head= Kalkyl :invt
+
+command11:kalkyl
+
+#
+# The Kalender terminal.
+#
+terminal12:window6:header12:command12:
+
+header12:head= Kalender :invt
+
+command12:kalender
+
+
+#
+# The Resultat terminal.
+#
+terminal13:window1_1:header13:command13:
+
+header13:head= Resultat :invt
+
+command13:I,result
+
+
+#
+# The Diarieforing terminal.
+#
+terminal14:window6:header14:command14:
+
+header14:head= Diarieforing :invt
+
+command14:diarie
+
+#
+# The Rida terminal.
+#
+terminal15:window15:string15:command15:
+
+window15:pxor#0:pyor#0:pxsi#768:pysi#1024:pvxo#0:pvyo#0:pvxs#768:pvys#1024:\
+        :bord#0:colr#0:pfnt#0x41:rsig#0:csig#0:\
+        :pmod:stxt:hscr:vscr:kscr:lock
+
+string15:\e[H\e[J\e:96;256m\e:672;896;6;0f\
+\e:144;256;48;6;0c\e:240;256;48;6;0c\e:336;256;48;6;0c\
+\e:432;256;48;6;0c\e:528;256;48;6;0c\e:624;256;48;6;0c\
+\e:384;256m\e:384;160;;1d\e:384;148;96;;1a
+
+command15:I,curtain
+
+
+#
+# The Statistik terminal.
+#
+terminal16:window6:header16:command16:
+
+header16:head= Statistik :invt
+
+command16:statistik
+
+#
+# The Eget program 1 program terminal.
+#
+terminal17_1:window6:header17_1:command17_1:
+
+header17_1:head= Eget program 1 :invt
+
+command17_1:ovrigt/eget1
+
+
+#
+# The Eget program 2 program terminal.
+#
+terminal17_2:window17_2:header17_2:super:command17_2:
+
+window17_2:pxor#23:pyor#23:pxsi#722:pysi#978:pvxo#0:pvyo#900:pvxs#1:pvys#1:\
+        :bord#1:colr#1:pfnt#0x41:rsig#0:csig#0:\
+        :pmod:stxt:sbox:mbox:bbox:avis:hbox:cbox:hscr:vscr:kscr
+
+header17_2:head= Eget program 2 :invt
+
+command17_2:ovrigt/eget2
+
+
+#
+# The Eget program 3 program terminal.
+#
+terminal17_3:window6:header17_3:super:command17_3:
+
+header17_3:head= Eget program 3 :invt
+
+command17_3:ovrigt/eget3
+
+
+#
+# The Status Byt grupp terminal.
+#
+terminal19_1:window1_1:header19_1:command19_1:
+
+header19_1:head= Byt grupp :invt
+
+command19_1:I,status/newgrp
+
+#
+# The Status Visa anv{ndare terminal.
+#
+terminal19_2:window1_1:header19_2:command19_2:
+
+header19_2:head= Visa anv{ndare :invt
+
+command19_2:I,status/who
+
+#
+# The Status Visa grupp terminal.
+#
+terminal19_3:window1_1:header19_3:command19_3:
+
+header19_3:head= Visa grupp :invt
+
+command19_3:I,status/showgrp
+
+#
+# The Status Visa klocka terminal.
+#
+terminal19_4:command19_4:
+
+command19_4:I,status/time
+
+#
+# New flags used when creating a terminal from pull down menu.
+#
+flags1:ncur:nmov
+
+#  

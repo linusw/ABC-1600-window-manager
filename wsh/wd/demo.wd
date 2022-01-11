@@ -530,7 +530,7 @@ command300:/bin/sh,sh
 #
 # The Big Shell terminal.
 #
-terminal310:window310:header300:zoomlist310:environ310:command300
+terminal310:wait:super:directory310:command310
 
 window310:pxor#121:pyor#169:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
 	 :lxor#121:lyor#24:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
@@ -538,9 +538,9 @@ window310:pxor#121:pyor#169:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
          :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr
 
 environ310:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#64:tc=abc1600w:
-
 zoomlist310:plst=HQ:llst=HQ:pmod:lmod
-
+directory310:subdir
+command310:/usr/window/wsh,wsh,-n
 
 #
 # The BASIC-III terminal.

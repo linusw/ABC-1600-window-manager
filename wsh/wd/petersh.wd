@@ -1,0 +1,600 @@
+#########################################
+#                                       #
+#                                       #
+#########################################
+
+
+#
+# Detta skall g|ras vid initieringen.
+#
+
+init:substitute1:terminal9:menu1
+
+#
+substitute1:init#0:onof#0xfe:mpup#0xa1:mpdo#0xa3:mple#0xac:mpri#0xa4:\
+:mpul#0xad:\
+:mpur#0xa5:mpdl#0xaf:mpdr#0xa7:lpup#0xb1:lpdo#0xb3:lple#0xbc:lpri#0xb4:\
+:lpul#0xbd:lpur#0xb5:lpdl#0xbf:lpdr#0xb7:pcmd#0xcc:cwin#0xce:mtxt#0xcd:\
+:step#4:lstp#16
+
+string9:\e[?34l\e[?33h
+
+terminal9:header9:window9:command9
+
+window9:pxor#615:pyor#860:pxsi#100:pysi#100:pvxo#0:pvyo#0:pvxs#100:pvys#100:\
+       :lxor#871:lyor#604:lxsi#100:lysi#100:lvxo#0:lvyo#0:lvxs#100:lvys#100:\
+       :bord#2:colr#1:pfnt#0x48:lfnt#0x48:rsig#16:csig#17:\
+       :pmod:lmod:ncur:cbox:mbox:ncpi:spec
+
+header9:head= ABC1600 
+
+command9:/usr/window/demo/clock,clock,-n
+
+#
+# Huvudf|nster deklarationer
+#
+
+window1:pxor#0:pyor#982:pxsi#768:pysi#42:pvxo#0:pvyo#10:pvxs#768:pvys#32:\
+       :lxor#0:lyor#726:lxsi#1024:lysi#42:lvxo#0:lvyo#10:lvxs#1024:lvys#32:\
+       :bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+       :pmod:lmod:ncur:spec
+
+icon1:pxor#20:pyor#12:pxsi#76:pysi#30:\
+     :lxor#20:lyor#12:lxsi#76:lysi#30:\
+     :pmod:lmod:rqst:inve
+
+icon2:pxor#101:pyor#12:pxsi#189:pysi#30:\
+     :lxor#101:lyor#12:lxsi#189:lysi#30:\
+     :pmod:lmod:rqst:inve
+
+icon3:pxor#299:pyor#12:pxsi#126:pysi#30:\
+     :lxor#299:lyor#12:lxsi#126:lysi#30:\
+     :pmod:lmod:rqst:inve
+
+icon4:pxor#434:pyor#12:pxsi#81:pysi#30:\
+     :lxor#434:lyor#12:lxsi#81:lysi#30:\
+     :pmod:lmod:rqst:inve
+
+
+#
+# Main Menu
+#
+
+menu1:window1:pstring1:lstring1:choice1:choice2:choice3:choice4
+
+#
+pstring1:\
+\e:0;10O\
+\e:0;0m\e:767;1;;1f\
+\e:29;9m\e:1HSYSTEM\
+\e:110;9m\e:1HPROGRAM DEVELOPMENT\
+\e:308;9m\e:1HAPPLICATIONS\
+\e:443;9m\e:1HNETWORK
+
+lstring1:\
+\e:0;10O\
+\e:0;0m\e:1023;1;;1f\
+\e:29;9m\e:1HSYSTEM\
+\e:110;9m\e:1HPROGRAM DEVELOPMENT\
+\e:308;9m\e:1HAPPLICATIONS\
+\e:443;9m\e:1HNETWORK
+#
+choice1:icon1:action1
+choice2:icon2:action2
+choice3:icon3:action3
+choice4:icon4:action4
+
+#
+# Action - SYSTEM
+#
+action1:menu10
+
+menu10:window10:string10:choice10:choice11:choice12:choice13:choice14:\
+      :choice15:choice16:choice17:choice18:choice19
+
+window10:pxor#20:pyor#845:pxsi#154:pysi#179:pvxs#154:pvys#147:\
+        :lxor#20:lyor#589:lxsi#154:lysi#179:lvxs#154:lvys#147:\
+        :bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+
+string10:\
+\e:0;0m\e:0;147;;1d\
+\e:153;147m\e:151;0;;1f\
+\e:0;2;;1f\
+\e:10;5m\e:1HLogout\
+\e:10;23m\e:1HTurn Screen\
+\e:10;41m\e:1HRedraw Screen\
+\e:10;59m\e:1HInverse Video\
+\e:10;77m\e:1HNormal Video\
+\e:10;95m\e:1HClock\
+\e:10;113m\e:1HSuper User\
+\e:10;131m\e:1HDemo
+
+#
+# The icons in the system pull down menu.
+#
+icon10:pxor#76:pyor#146:pxsi#75:pysi#33:\
+      :lxor#76:lyor#146:lxsi#75:lysi#33:\
+      :pmod:lmod:entr:schk
+
+icon11:pxor#1:pyor#0:pxsi#150:pysi#179:\
+      :lxor#1:lyor#0:lxsi#150:lysi#179:\
+      :pmod:lmod:leav:schk
+
+icon12:pxor#1:pyor#3:pxsi#150:pysi#18:\
+      :lxor#1:lyor#3:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon13:pxor#1:pyor#21:pxsi#150:pysi#18:\
+      :lxor#1:lyor#21:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon14:pxor#1:pyor#39:pxsi#150:pysi#18:\
+      :lxor#1:lyor#39:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon15:pxor#1:pyor#57:pxsi#150:pysi#18:\
+      :lxor#1:lyor#57:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon16:pxor#1:pyor#75:pxsi#150:pysi#18:\
+      :lxor#1:lyor#75:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon17:pxor#1:pyor#93:pxsi#150:pysi#18:\
+      :lxor#1:lyor#93:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon18:pxor#1:pyor#111:pxsi#150:pysi#18:\
+      :lxor#1:lyor#111:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon19:pxor#1:pyor#129:pxsi#150:pysi#18:\
+      :lxor#1:lyor#129:lxsi#150:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+choice10:icon10:action10
+choice11:icon11:action11
+choice12:icon12:action12
+choice13:icon13:action13
+choice14:icon14:action14
+choice15:icon15:action15
+choice16:icon16:action16
+choice17:icon17:action17
+choice18:icon18:action18
+choice19:icon19:action19
+
+action10:close:menu1
+action11:close:menu1
+action12:logout:close:menu1
+action13:turn:close:menu1
+action14:close:restore:menu1
+action15:inverse:menu10
+action16:normal:menu10
+action17:close:terminal9:menu1
+action18:terminal300:close:menu1
+action19:terminal520:close:menu1
+
+#
+# Action - PROGRAM DEVELOPMENT
+#
+action2:menu20
+
+menu20:window20:string20:choice20:choice21:choice22:choice23:choice24:\
+      :choice25:choice26
+
+window20:pxor#101:pyor#899:pxsi#231:pysi#125:pvxs#231:pvys#93:\
+        :lxor#101:lyor#643:lxsi#231:lysi#125:lvxs#231:lvys#93:\
+        :bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+
+string20:\
+\e:0;0m\e:0;93;;1d\
+\e:230;93m\e:228;0;;1f\
+\e:0;2;;1f\
+\e:10;5m\e:1HSuper Shell (Bourne)\
+\e:10;23m\e:1HBIG Cshell (64 lines)\
+\e:10;41m\e:1HCshell (24 lines)\
+\e:10;59m\e:1HSiv Editor\
+\e:10;77m\e:1HEmacs Editor
+
+icon20:pxor#189:pyor#92:pxsi#39:pysi#33:\
+      :lxor#189:lyor#92:lxsi#39:lysi#33:\
+      :pmod:lmod:entr:schk
+
+icon21:pxor#1:pyor#0:pxsi#227:pysi#125:\
+      :lxor#1:lyor#0:lxsi#227:lysi#125:\
+      :pmod:lmod:leav:schk
+
+icon22:pxor#1:pyor#3:pxsi#227:pysi#18:\
+      :lxor#1:lyor#3:lxsi#227:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon23:pxor#1:pyor#21:pxsi#227:pysi#18:\
+      :lxor#1:lyor#21:lxsi#227:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon24:pxor#1:pyor#39:pxsi#227:pysi#18:\
+      :lxor#1:lyor#39:lxsi#227:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon25:pxor#1:pyor#57:pxsi#227:pysi#18:\
+      :lxor#1:lyor#57:lxsi#227:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon26:pxor#1:pyor#75:pxsi#227:pysi#18:\
+      :lxor#1:lyor#75:lxsi#227:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+choice20:icon20:action20
+choice21:icon21:action21
+choice22:icon22:action22
+choice23:icon23:action23
+choice24:icon24:action24
+choice25:icon25:action25
+choice26:icon26:action26
+
+action20:close:menu1
+action21:close:menu1
+action22:terminal307:close:menu1
+action23:terminal310:close:menu1
+action24:terminal305:close:menu1
+action25:terminal340:close:menu1
+action26:terminal330:close:menu1
+
+
+#
+# Applications menu
+#
+action3:menu30
+
+menu30:window30:string30:choice30:choice31:choice32:choice33:choice34
+
+window30:pxor#299:pyor#935:pxsi#139:pysi#89:pvxs#139:pvys#57:\
+        :lxor#299:lyor#679:lxsi#139:lysi#89:lvxs#139:lvys#57:\
+        :bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+
+string30:\
+\e:0;0m\e:0;57;;1d\
+\e:138;57m\e:136;0;;1f\
+\e:0;2;;1f\
+\e:10;5m\e:1HBasic III\
+\e:10;23m\e:1HPaint1600\
+\e:10;41m\e:1HFont Editor
+
+icon30:pxor#126:pyor#56:pxsi#10:pysi#33:\
+      :lxor#126:lyor#56:lxsi#10:lysi#33:\
+      :pmod:lmod:entr:schk
+
+icon31:pxor#1:pyor#0:pxsi#135:pysi#89:\
+      :lxor#1:lyor#0:lxsi#135:lysi#89:\
+      :pmod:lmod:leav:schk
+
+icon32:pxor#1:pyor#3:pxsi#135:pysi#18:\
+      :lxor#1:lyor#3:lxsi#135:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon33:pxor#1:pyor#21:pxsi#135:pysi#18:\
+      :lxor#1:lyor#21:lxsi#135:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon34:pxor#1:pyor#39:pxsi#135:pysi#18:\
+      :lxor#1:lyor#39:lxsi#135:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+choice30:icon30:action30
+choice31:icon31:action31
+choice32:icon32:action32
+choice33:icon33:action33
+choice34:icon34:action34
+
+action30:close:menu1
+action31:close:menu1
+action32:terminal320:close:menu1
+action33:terminal530:close:menu1
+action34:terminal500:close:menu1
+
+
+#
+# Network actions
+#
+action4:menu40
+
+menu40:window40:string40:choice40:choice41:choice42:choice43:choice44:\
+      :choice45
+
+window40:pxor#434:pyor#917:pxsi#148:pysi#107:pvxs#148:pvys#75:\
+        :lxor#434:lyor#661:lxsi#148:lysi#107:lvxs#148:lvys#75:\
+        :bord#0:colr#1:pfnt#0x48:lfnt#0x48:\
+        :pmod:lmod:ncur:nmov:stxt
+
+string40:\
+\e:0;0m\e:0;75;;1d\
+\e:147;93m\e:145;0;;1f\
+\e:0;2;;1f\
+\e:10;5m\e:1HLuxor\
+\e:10;23m\e:1HLuxor1\
+\e:10;41m\e:1HLennart\
+\e:10;59m\e:1HKundsupport1
+
+icon40:pxor#81:pyor#74:pxsi#64:pysi#33:\
+      :lxor#81:lyor#74:lxsi#64:lysi#33:\
+      :pmod:lmod:entr:schk
+
+icon41:pxor#1:pyor#0:pxsi#144:pysi#107:\
+      :lxor#1:lyor#0:lxsi#144:lysi#107:\
+      :pmod:lmod:leav:schk
+
+icon42:pxor#1:pyor#3:pxsi#144:pysi#18:\
+      :lxor#1:lyor#3:lxsi#144:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon43:pxor#1:pyor#21:pxsi#144:pysi#18:\
+      :lxor#1:lyor#21:lxsi#144:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon44:pxor#1:pyor#39:pxsi#144:pysi#18:\
+      :lxor#1:lyor#39:lxsi#144:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+icon45:pxor#1:pyor#57:pxsi#144:pysi#18:\
+      :lxor#1:lyor#57:lxsi#144:lysi#18:\
+      :pmod:lmod:inve:rlse:pres
+
+choice40:icon40:action40
+choice41:icon41:action41
+choice42:icon42:action42
+choice43:icon43:action43
+choice44:icon44:action44
+choice45:icon45:action45
+
+action40:close:menu1
+action41:close:menu1
+action42:terminal600:close:menu1
+action43:terminal610:close:menu1
+action44:terminal620:close:menu1
+action45:terminal630:close:menu1
+
+
+#
+# Terminaldefinitioner
+#
+
+
+#
+# Super Users Shell terminal.
+#
+terminal300:window300:string9:string300:header300:zoomlist300:\
+           :penviron300:lenviron300:command300
+
+window300:pxor#23:pyor#550:pxsi#540:pysi#320:pvxo#0:pvyo#0:pvxs#540:pvys#320:\
+        :lxor#431:lyor#261:lxsi#540:lysi#240:lvxo#0:lvyo#0:lvxs#540:lvys#240:\
+         :colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox
+
+string300:login root\n\r
+
+header300:head= SuperUser :invt
+
+zoomlist300:plst=BIH:llst=BIH:pmod:lmod
+
+penviron300:TERM=win,TERMCAP=w0|win|w:co#80:li#32:tc=abc1600w:
+
+lenviron300:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command300:/bin/login,login,root
+
+#
+# CSHELL terminal
+#
+terminal305:window305:string9:header305:zoomlist305:\
+           :penviron305:lenviron305:command305
+
+window305:pxor#55:pyor#34:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#73:pvys#24:\
+         :lxor#265:lyor#44:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox
+
+header305:head= CSHELL :invt
+
+zoomlist305:plst=H:llst=H:pmod:lmod
+
+penviron305:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+lenviron305:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command305:/bin/csh,-csh
+
+#
+# Super SHELL terminal
+#
+terminal307:window307:super:string9:header307:zoomlist307:\
+           :penviron307:lenviron307:command307
+
+window307:pxor#70:pyor#450:pxsi#540:pysi#320:pvxo#0:pvyo#0:pvxs#540:pvys#320:\
+        :lxor#208:lyor#376:lxsi#540:lysi#240:lvxo#0:lvyo#0:lvxs#540:lvys#240:\
+         :colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:cbox
+
+header307:head= SuperSHELL :invt
+
+zoomlist307:plst=BIH:llst=BIH:pmod:lmod
+
+penviron307:TERM=win,TERMCAP=w0|win|w:co#80:li#32:tc=abc1600w:
+
+lenviron307:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command307:/bin/sh,sh
+
+#
+# BIG CSHELL terminal.
+#
+terminal310:window310:string9:header310:zoomlist310:\
+           :environ310:command310
+
+window310:pxor#43:pyor#320:pxsi#80:pysi#64:pvxo#1:pvyo#1:pvxs#80:pvys#64:\
+         :lxor#160:lyor#48:lxsi#80:lysi#64:lvxo#1:lvyo#1:lvxs#80:lvys#64:\
+         :colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr:cbox
+
+header310:head= BIG CSHELL :invt
+
+environ310:TERM=win,TERMCAP=w0|win|w:co#80:li#64:tc=abc1600w:
+
+zoomlist310:plst=BIH:llst=BIH:pmod:lmod
+
+command310:/bin/csh,-csh
+
+#
+# BASIC-III terminal.
+#
+
+terminal320:window320:string9:header320:zoomlist320:environ320:command320
+
+window320:pxor#116:pyor#350:pxsi#80:pysi#24:pvxo#1:pvyo#1:pvxs#68:pvys#24:\
+         :lxor#136:lyor#200:lxsi#80:lysi#24:lvxo#1:lvyo#1:lvxs#80:lvys#24:\
+         :colr#1:bord#2:pfnt#0x48:lfnt#0x48:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:text:zbox
+
+header320:head= BASIC-III :invt
+
+zoomlist320:plst=I:llst=I:pmod:lmod
+
+environ320:TERM=win,TERMCAP=w0|win|w:co#80:li#24:tc=abc1600w:
+
+command320:/bin/basic,basic
+
+
+#
+# Emacs editor terminal.
+#
+terminal330:header330:window330:string9:zoomlist330:environ330:command330
+
+window330:pxor#24:pyor#244:pxsi#80:pysi#40:pvxo#1:pvyo#1:pvxs#80:pvys#40:\
+         :lxor#76:lyor#72:lxsi#80:lysi#40:lvxo#1:lvyo#1:lvxs#80:lvys#40:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:zbox:hscr:vscr:text
+
+header330:head= EMACS :invt
+
+zoomlist330:plst=H:llst=H:pmod:lmod
+
+environ330:TERM=win,TERMCAP=w0|win|w:co#80:li#40:tc=abc1600w:
+
+command330:/usr/bin/emacs,emacs
+
+#
+# SIV editor terminal.
+#
+terminal340:header340:window340:string9:zoomlist340:penviron340:lenviron340:\
+           :command340
+
+window340:pxor#33:pyor#30:pxsi#80:pysi#93:pvxo#1:pvyo#1:pvxs#80:pvys#93:\
+         :lxor#33:lyor#33:lxsi#80:lysi#66:lvxo#1:lvyo#1:lvxs#80:lvys#66:\
+         :colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:zbox:hscr:vscr:text
+
+header340:head= SIV :invt
+
+zoomlist340:plst=BIH:llst=BIH:pmod:lmod
+
+penviron340:TERM=win,TERMCAP=w0|win|w:co#80:li#93:tc=abc1600w:
+
+lenviron340:TERM=win,TERMCAP=w0|win|w:co#80:li#66:tc=abc1600w:
+
+command340:/usr/bin/siv,siv
+
+#
+# Font Editor terminal.
+#
+terminal500:window500:string9:header500:command500
+
+window500:pxor#34:pyor#150:pxsi#700:pysi#700:pvxo#0:pvyo#0:pvxs#700:pvys#700:\
+         :lxor#23:lyor#23:lxsi#700:lysi#700:lvxo#0:lvyo#0:lvxs#700:lvys#690:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#2:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:ncpi
+
+header500:head= FONT EDITOR :invt
+
+command500:/usr/bin/fe,fe
+
+#
+# Demo terminal
+#
+terminal520:directory520:string9:command520
+
+directory520:/usr/window/demo
+
+command520:demo,demo
+
+
+#
+# Paint1600
+#
+terminal530:window530:string9:header530:environ530:directory530:command530
+
+window530:pxor#23:pyor#23:pxsi#722:pysi#978:pvxo#0:pvyo#0:pvxs#722:pvys#978:\
+         :lxor#23:lyor#23:lxsi#978:lysi#722:lvxo#0:lvyo#0:lvxs#978:lvys#722:\
+         :colr#1:bord#2:pfnt#0x49:lfnt#0x49:rsig#0:csig#0:\
+         :pmod:lmod
+
+directory530:/user/users/lw/paint1600
+
+header530:head= PAINT1600 
+
+environ530:TERM=vt100,TERMCAP=v0|vt100|v:co#80:li#40:tc=abc1600w
+
+command530:/usr/bin/paint,paint,-nw
+
+
+#
+# Network standard terminal
+#
+# ncu luxor
+#
+terminal600:window600:string9:header600:zoomlist600:\
+           :environ600:command600
+
+window600:pxor#200:pyor#160:pxsi#80:pysi#32:pvxo#1:pvyo#1:pvxs#80:pvys#32:\
+         :lxor#100:lyor#140:lxsi#80:lysi#32:lvxo#1:lvyo#1:lvxs#80:lvys#32:\
+         :colr#1:bord#2:pfnt#0x43:lfnt#0x43:rsig#0:csig#0:\
+         :pmod:lmod:stxt:sbox:mbox:hscr:vscr:zbox:text:kscr
+
+header600:head= Network - LUXOR :invt
+
+environ600:TERM=win,TERMCAP=w0|win|w:co#80:li#32:tc=abc1600w:
+
+zoomlist600:plst=BIH:llst=BIH:pmod:lmod
+
+command600:/usr/bin/ncu,ncu,luxor
+
+#
+# ncu luxor1
+#
+terminal610:window600:string9:header610:zoomlist600:\
+           :environ600:command610
+
+header610:head= Network - LUXOR1 :invt
+
+command610:/usr/bin/ncu,ncu,luxor1
+
+#
+# ncu peter
+#
+terminal620:window600:string9:header620:zoomlist600:\
+           :environ600:command620
+
+header620:head= Network - PETER :invt
+
+command620:/usr/bin/ncu,ncu,peter
+
+#
+# ncu kundsupport
+#
+terminal630:window600:string9:header630:zoomlist600:\
+           :environ600:command630
+
+header630:head= Network - KS1 :invt
+
+command630:/usr/bin/ncu,ncu,ks1
